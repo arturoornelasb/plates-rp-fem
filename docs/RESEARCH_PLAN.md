@@ -92,6 +92,16 @@ tiny V (small lambda) is indistinguishable from Poisson at accessible N.
 Registered follow-up: Gap A eigenvector diagnostics on the ellipse to
 separate 'no coupling' from 'tiny dense coupling'.
 
+E3c (disk sector, theta = 2.0, executed 2026-07-03): all gates green
+(internal N* = 800/800, zero ambiguous S/A labels). Pooled <r> = 0.4213 +/-
+0.0095 vs disk baseline 0.3972 +/- 0.0100: +1.7 sigma, both classes positive
+-- AMBIGUOUS per preregistration (weak intermediate). Fits the emerging
+corner-sharpness ordering (triangle 60deg: 0.489 > rectangle 90deg:
+0.44-0.46 > sector 90-115deg + arc: 0.421 > smooth ellipse: 0.373 ~ disk
+control: 0.391). Not a contradiction of the published COMSOL sector study
+(10^4 modes, angle sweep) and not yet a confirmation; a decisive comparison
+needs longer ladders or their exact angles.
+
 ## E4 -- Gap A on the true operator [PLANNED]
 
 Eigenvector statistics (IPR / D2 vs sector size N, Dq flatness, Sigma^2(L) to

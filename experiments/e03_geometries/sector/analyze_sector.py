@@ -115,6 +115,23 @@ def main():
     else:
         verdict = "AMBIGUOUS (below preregistered threshold)"
     md.append(f"\n**Reading: {verdict}**")
+    md.append(
+        "\nDiscussion. A weak positive signal (+1.7 sigma pooled, both classes "
+        "positive) fits the corner-sharpness ordering emerging across the "
+        "campaign: triangle (three 60-degree corners) 0.489; rectangle (four "
+        "90-degree corners) 0.44--0.46; sector (one ~115-degree + two "
+        "90-degree corners plus a disk-like arc) 0.421; smooth ellipse 0.373; "
+        "disk (control) 0.391 -- i.e., the effective coupling appears graded "
+        "by corner sharpness and prevalence, not by broken separability alone. "
+        "Relation to the published COMSOL sector study: not a contradiction "
+        "and not yet a confirmation -- that study used ~10^4 modes and an "
+        "angle sweep; our single angle (theta = 2.0) at 800 modes shows the "
+        "same tendency without reaching the preregistered threshold. A "
+        "decisive comparison needs longer ladders and/or their exact sector "
+        "angles. The decreasing spectral trend (0.439 -> 0.408) is noted; "
+        "under the corner picture the apex dominates low-k modes whose "
+        "evanescent lengths span it, while high-k modes see proportionally "
+        "more of the uncoupled arc.")
 
     fig, ax = plt.subplots(figsize=(6, 4.2))
     xpos = np.arange(3)
