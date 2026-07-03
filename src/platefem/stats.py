@@ -141,6 +141,20 @@ def classify_parity_resolved(lam, V, P, Pmx, Pmy, K, M, corr_thresh=0.95,
     return labels, quality, n_resolved
 
 
+def centered_probe_operators(basis, a, b, npts=1500, seed=13):
+    """Evaluation operators for Z2xZ2 parity classification on a CENTERED
+    domain symmetric under x -> -x and y -> -y (ellipse with semi-axes a, b;
+    disk with a = b). Random interior points plus their two mirror images."""
+    rng = np.random.default_rng(seed)
+    r = np.sqrt(rng.uniform(0.0, 0.94, npts))
+    th = rng.uniform(0.0, 2.0 * np.pi, npts)
+    pts = np.vstack([a * r * np.cos(th), b * r * np.sin(th)])
+    P = basis.probes(pts)
+    Pmx = basis.probes(np.vstack([-pts[0], pts[1]]))
+    Pmy = basis.probes(np.vstack([pts[0], -pts[1]]))
+    return P, Pmx, Pmy
+
+
 def triangle_probe_operators(basis, L=1.0, npts=1500, seed=11):
     """Evaluation operators for C3v classification on the equilateral triangle
     of platefem.kirchhoff.triangle_basis (centroid at origin, vertex on +y).

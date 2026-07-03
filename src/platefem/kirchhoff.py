@@ -233,6 +233,27 @@ def triangle_basis(nrefine, L=1.0, element_cls=ElementTriArgyris):
     return mesh, Basis(mesh, element_cls()), verts
 
 
+def disk_basis(nrefine, element_cls=ElementTriArgyris):
+    """Unit disk (R = 1) via MeshTri.init_circle (boundary vertices projected
+    onto the circle at every refinement -- inscribed-polygon geometry, so the
+    boundary error is O(h^2) and must be GATED against the semi-analytic disk
+    reference, see platefem.disk)."""
+    mesh = MeshTri.init_circle(nrefine)
+    return mesh, Basis(mesh, element_cls())
+
+
+def ellipse_basis(nrefine, a, b, element_cls=ElementTriArgyris):
+    """Ellipse with semi-axes (a, b), centroid at origin, axes on x/y:
+    the init_circle mesh scaled anisotropically (boundary vertices land
+    exactly on the ellipse)."""
+    m0 = MeshTri.init_circle(nrefine)
+    p = m0.p.copy()
+    p[0] *= a
+    p[1] *= b
+    mesh = MeshTri(p, m0.t.copy())
+    return mesh, Basis(mesh, element_cls())
+
+
 def triangle_ss_exact(L, n_modes):
     """Exact simply-supported equilateral-triangle PLATE spectrum. On a
     straight-edged polygon the SS (Navier) plate factorizes through the
