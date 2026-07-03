@@ -254,6 +254,44 @@ def ellipse_basis(nrefine, a, b, element_cls=ElementTriArgyris):
     return mesh, Basis(mesh, element_cls())
 
 
+def superellipse_basis(nrefine, a, b, p, element_cls=ElementTriArgyris):
+    """Superellipse |x/a|^p + |y/b|^p = 1 (p = 2: ellipse; p -> inf:
+    rectangle), centered, axes-aligned: the init_circle mesh mapped radially
+    by rho(theta), so boundary vertices land exactly on the superellipse.
+    Corner-region curvature grows with p at fixed smoothness -- the E5 knob."""
+    m0 = MeshTri.init_circle(nrefine)
+    x, y = m0.p
+    th = np.arctan2(y, x)
+    rho = (np.abs(np.cos(th) / a) ** p + np.abs(np.sin(th) / b) ** p) ** (-1.0 / p)
+    pcoord = np.vstack([x * rho, y * rho])
+    mesh = MeshTri(pcoord, m0.t.copy())
+    return mesh, Basis(mesh, element_cls())
+
+
+def sector_basis(nrings, theta=2.0, R=1.0, element_cls=ElementTriArgyris):
+    """Disk sector of opening angle theta (radians), symmetric about the
+    x-axis, apex at the origin. Polar-graded point rings (arc spacing ~ radial
+    spacing) triangulated by Delaunay -- the domain is convex for theta < pi,
+    so the triangulation fills it exactly; arc vertices lie exactly on the
+    circle (inscribed-polygon arc, straight radial edges exact)."""
+    from scipy.spatial import Delaunay
+    assert theta < np.pi, "sector mesh assumes a convex sector (theta < pi)"
+    pts = [(0.0, 0.0)]
+    for k in range(1, nrings + 1):
+        r = R * k / nrings
+        n_th = max(3, int(np.ceil(theta * k)) + 1)
+        ang = np.linspace(-0.5 * theta, 0.5 * theta, n_th)
+        pts.extend(zip(r * np.cos(ang), r * np.sin(ang)))
+    p = np.array(pts).T
+    tri = Delaunay(p.T)
+    t = tri.simplices.T
+    a, b, c = p[:, t[0]], p[:, t[1]], p[:, t[2]]
+    area2 = np.abs((b[0] - a[0]) * (c[1] - a[1]) - (c[0] - a[0]) * (b[1] - a[1]))
+    t = t[:, area2 > 1e-12]
+    mesh = MeshTri(p.copy(), np.ascontiguousarray(t))
+    return mesh, Basis(mesh, element_cls())
+
+
 def triangle_ss_exact(L, n_modes):
     """Exact simply-supported equilateral-triangle PLATE spectrum. On a
     straight-edged polygon the SS (Navier) plate factorizes through the

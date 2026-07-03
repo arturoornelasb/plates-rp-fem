@@ -4,8 +4,9 @@ Validated in experiments/e01_validation (2026-07-03). See docs/CONVENTIONS.md.
 """
 from .kirchhoff import (ElementTriArgyris, ElementTriMorley, assemble_plate,
                         boundary_matrix, disk_basis, ellipse_basis, make_forms,
-                        rectangle_basis, solve_lowest, solve_modes, split_rigid,
-                        ssss_exact, triangle_basis, triangle_ss_exact)
+                        rectangle_basis, sector_basis, solve_lowest, solve_modes,
+                        split_rigid, ssss_exact, superellipse_basis,
+                        triangle_basis, triangle_ss_exact)
 from .stats import (R_GOE, R_POISSON, SECTORS, centered_probe_operators,
                     classify_c3v, classify_parity, classify_parity_resolved,
                     dedupe_doublets, local_spacing, mean_r, n_star,
