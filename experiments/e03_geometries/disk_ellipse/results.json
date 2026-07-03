@@ -1,0 +1,52 @@
+{
+ "n_use": 800,
+ "disk_control": [
+  0.3905428942433234,
+  0.007253381944274898,
+  1458
+ ],
+ "disk_baseline": [
+  0.3985052656425627,
+  0.010111570635728892,
+  752
+ ],
+ "ellipse_per_sector": {
+  "ee": [
+   0.38452661083700157,
+   0.019271627072402094,
+   199
+  ],
+  "eo": [
+   0.3551903288051164,
+   0.020926186776376907,
+   186
+  ],
+  "oe": [
+   0.3763360251324272,
+   0.020938814953556137,
+   189
+  ],
+  "oo": [
+   0.3966906244381195,
+   0.020718077717079397,
+   178
+  ]
+ },
+ "ellipse_pooled": [
+  0.3780912720935225,
+  0.010239073101765885,
+  752
+ ],
+ "amplitude_sigma": -1.4185880459499915,
+ "per_sector_sigma": {
+  "ee": -0.642305198220169,
+  "eo": -1.8637207282151325,
+  "oe": -0.9534140178771492,
+  "oo": -0.07871295930995084
+ },
+ "g1s_pass": {
+  "5": true,
+  "6": true
+ },
+ "verdict": "AMBIGUOUS -- weak-coupling regime: sub-Poisson at low modes with a significant upward spectral trend. This matches the paper's preregistered caveat that at weak coupling level repulsion 'has not developed and can even reverse sign, so a single weak-coupling run must not be read as refutation'. The registered decider is a longer ladder (v2)."
+}

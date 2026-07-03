@@ -71,11 +71,20 @@ def main():
         r_fem = mean_r(seq_fem[:n_cmp], SKIP_LOW)
         r_sa = mean_r(lam_class[:n_cmp], SKIP_LOW)
         sep = abs(r_fem[0] - r_sa[0]) / np.sqrt(r_fem[1] ** 2 + r_sa[1] ** 2)
-        g1s_pass[r] = sep < 2.0
+        # v2: the UPPER half of the extended ladder is where the verdict lives,
+        # so it gets its own statistics gate (discretization error grows with
+        # mode index and is not smooth -- must be shown harmless there).
+        half = n_cmp // 2
+        rf_hi = mean_r(seq_fem[half:n_cmp], 0)
+        rs_hi = mean_r(lam_class[half:n_cmp], 0)
+        sep_hi = abs(rf_hi[0] - rs_hi[0]) / np.sqrt(rf_hi[1] ** 2 + rs_hi[1] ** 2)
+        g1s_pass[r] = sep < 2.0 and sep_hi < 2.0
         md.append(f"- refine {r}: FEM class <r> = {r_fem[0]:.4f} +/- {r_fem[1]:.4f} "
                   f"vs semi-analytic {r_sa[0]:.4f} +/- {r_sa[1]:.4f} on the same "
-                  f"{n_cmp} levels ({sep:.1f} sigma apart; doublet max splitting "
-                  f"{max_split:.1e}): {'PASS' if g1s_pass[r] else 'FAIL'}")
+                  f"{n_cmp} levels ({sep:.1f} sigma apart; upper half "
+                  f"{rf_hi[0]:.4f} vs {rs_hi[0]:.4f}, {sep_hi:.1f} sigma; doublet "
+                  f"max splitting {max_split:.1e}): "
+                  f"{'PASS' if g1s_pass[r] else 'FAIL'}")
 
     # ---------------- ellipse sectors ----------------
     # N_use: per the preregistered protocol the OPERATIONAL gate governs --

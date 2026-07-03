@@ -72,9 +72,19 @@ uniform refinement of the macro triangle). Exact anchor: SS polygon plate =
 (Dirichlet Helmholtz)^2 = Lame lattice squared, reached through the validated
 kappa = 1e10 Winkler limit -- smoke-validated to 1.7e-6 including doublets.
 
-Curved geometries (disk, annulus, ellipse, sector) still need a
-geometry-error strategy: polygonal boundary approximation caps eigenvalue
-convergence at O(h^2) regardless of element order.
+E3b (disk control + ellipse, v1 executed 2026-07-03): the curved-boundary
+strategy is measurement-based -- the semi-analytic free disk (per-m J/I
+determinant, fundamental 5.262 vs lit. ~5.25) gates the FEM both strictly
+(N* = 480/800 at refine 6; flat 2e-4 = smooth O(h^2) geometry error) and
+operationally (FEM-disk class <r> reproduces the semi-analytic Poisson value
+to 0.0 sigma over the full ladder -- smooth error does not corrupt spacing
+statistics). Disk control: Poisson-consistent, 0.3905 +/- 0.0073 (paper:
+0.386 +/- 0.007). Ellipse v1 (800 modes): pooled <r> = 0.3781 +/- 0.0102 with
+a sub-Poisson low end (0.354) and a +2.3 sigma upward spectral trend
+(high third 0.4128 +/- 0.0183). READING: AMBIGUOUS -- weak-coupling regime,
+exactly the paper's preregistered caveat (smooth boundary, no corners ->
+weaker evanescent mixing at low k than the triangle's 60-degree corners);
+v2 doubles the ladder to 1600 modes as the registered decider.
 
 ## E4 -- Gap A on the true operator [PLANNED]
 
