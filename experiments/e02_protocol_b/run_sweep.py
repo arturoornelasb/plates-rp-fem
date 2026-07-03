@@ -86,7 +86,8 @@ def main():
 
     # ---------------- G2: free-end internal check ----------------
     t0 = time.time()
-    lam0, V0, solve_info0 = solve_modes(K, M, cfg["n_modes"] + 3, cfg["sigma"])
+    lam0, V0, solve_info0, Ywarm = solve_modes(K, M, cfg["n_modes"] + 3,
+                                               cfg["sigma"])
     lam0, V0, n_rigid, rigid_max = split_rigid(lam0, V0)
     print(f"[G2] kappa=0 96x60: rigid {n_rigid} (max {rigid_max:.1e}), "
           f"solve {solve_info0} ({time.time()-t0:.1f} s)")
@@ -137,7 +138,8 @@ def main():
             n_rig, rig_max, sinfo, n_res = n_rigid, rigid_max, solve_info0, n_res0
         else:
             Kk = (K + kap * B).tocsc()
-            lam, V, sinfo = solve_modes(Kk, M, cfg["n_modes"], cfg["sigma"])
+            lam, V, sinfo, Ywarm = solve_modes(Kk, M, cfg["n_modes"],
+                                               cfg["sigma"], Y0=Ywarm)
             n_rig, rig_max = 0, 0.0
             labels, qual, n_res = classify_parity_resolved(lam, V, P, Pmx, Pmy,
                                                            Kk, M)

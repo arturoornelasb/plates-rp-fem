@@ -20,10 +20,27 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
-from platefem import R_GOE, R_POISSON, SECTORS, mean_r, r_values
+from platefem import R_GOE, R_POISSON, SECTORS, mean_r, r_values, ritz
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 SKIP_LOW = 10
+
+
+def exact_ssss_sectors(a, b, n_modes):
+    """Exact SSSS spectrum split into parity sectors. sin(m pi x / a) is even
+    about x = a/2 for odd m -- so sector label = (m odd -> 'e', else 'o') etc."""
+    mmax = int(np.ceil(np.sqrt(n_modes) * 8))
+    mm = np.arange(1, mmax + 1)
+    kx2 = (mm * np.pi / a) ** 2
+    ky2 = (mm * np.pi / b) ** 2
+    lam = (kx2[:, None] + ky2[None, :]) ** 2
+    order = np.argsort(lam.ravel())[:n_modes]
+    mi, ni = np.unravel_index(order, lam.shape)
+    series = {s: [] for s in SECTORS}
+    for i, (m_, n_) in enumerate(zip(mm[mi], mm[ni])):
+        s = ("e" if m_ % 2 == 1 else "o") + ("e" if n_ % 2 == 1 else "o")
+        series[s].append(lam[m_ - 1, n_ - 1])
+    return {s: np.sort(np.array(v)) for s, v in series.items()}
 
 
 def sector_series(rec, n_use):
@@ -68,6 +85,28 @@ def main():
                           for s in SECTORS)
               + f"; ambiguous {g['G3']['n_ambiguous']}")
 
+    # -------- finite-size baselines with the IDENTICAL protocol --------
+    # Poisson end: exact SSSS spectrum, same N, same sector split and windows.
+    # Free end: the Legendre-Ritz per-sector spectra (paper T1 protocol).
+    ssss = exact_ssss_sectors(cfg["a"], cfg["b"], n_use)
+    base_ss = pooled_r(ssss)
+    spectra = ritz.converged_spectrum(cfg["a"], cfg["b"], cfg["nu"],
+                                      nleg=cfg["ritz_nleg"],
+                                      nleg_conv=cfg["ritz_nleg_conv"],
+                                      tol=cfg["ritz_tol"])
+    n_per_sec = min(min(spectra[s]["n_conv"] for s in SECTORS),
+                    max(len(ssss[s]) for s in SECTORS))
+    ritz_series = {s: spectra[s]["elastic"][:n_per_sec] for s in SECTORS}
+    base_free = pooled_r(ritz_series)
+    md.append(f"\n## Finite-size baselines (identical protocol, ~{n_use//4} "
+              f"levels/sector)\n")
+    md.append(f"- exact SSSS (separable -> Poisson limit): pooled <r> = "
+              f"**{base_ss[0]:.4f} +/- {base_ss[1]:.4f}** (asymptotic 0.3863; "
+              f"the excess is pure finite-size, measured on the EXACT spectrum)")
+    md.append(f"- Legendre-Ritz FFFF ({n_per_sec}/sector): pooled <r> = "
+              f"**{base_free[0]:.4f} +/- {base_free[1]:.4f}** (independent "
+              f"method, free-plate reference)")
+
     kaps, rows = [], []
     for key, rec in sorted(res["sweep"].items(), key=lambda kv: kv[1]["kappa"]):
         series = sector_series(rec, n_use)
@@ -94,28 +133,42 @@ def main():
                   f" | {row['pooled'][2]} | {row['min_quality']:.2f} |")
 
     # ---------------- verdict ----------------
-    r_free = rows[0]["pooled"][0]
-    r_ss = rows[-1]["pooled"][0]
-    se_free = rows[0]["pooled"][1]
-    se_ss = rows[-1]["pooled"][1]
+    # endpoints are judged against the finite-size baselines, not the
+    # asymptotic constants: the SS end must agree with the EXACT separable
+    # spectrum's own <r> at this ladder length, and the free end must agree
+    # with the independent Ritz reference AND sit significantly above the
+    # separable baseline (that separation IS the transition amplitude).
+    r_free, se_free = rows[0]["pooled"][0], rows[0]["pooled"][1]
+    r_ss, se_ss = rows[-1]["pooled"][0], rows[-1]["pooled"][1]
     r_seq = np.array([r["pooled"][0] for r in rows])
     se_seq = np.array([r["pooled"][1] for r in rows])
-    # monotone within noise: fit means decreasing kappa->0 ... sequence sorted by
-    # kappa ascending; expect r to DEcrease with kappa (free end high, SS end low)
     viol = np.sum(np.diff(r_seq) > 3 * np.sqrt(se_seq[1:] ** 2 + se_seq[:-1] ** 2))
-    near_ss_intermediate = rows[-2]["pooled"][0] > R_POISSON + 5 * rows[-2]["pooled"][1] \
-        and rows[-2]["kappa"] >= 1e8
-    ok_endpoints = (abs(r_ss - R_POISSON) < 4 * se_ss) and \
-        (r_free > R_POISSON + 5 * se_free)
-    md.append("\n## Verdict (preregistered readings)\n")
-    md.append(f"- endpoints: <r>(kappa=0) = {r_free:.4f} +/- {se_free:.4f} "
-              f"(intermediate expected), <r>(kappa=1e10) = {r_ss:.4f} +/- {se_ss:.4f} "
-              f"(Poisson {R_POISSON} expected): {'OK' if ok_endpoints else 'NOT OK'}")
+    sep_amp = (r_free - base_ss[0]) / np.sqrt(se_free ** 2 + base_ss[1] ** 2)
+    ok_ss_end = abs(r_ss - base_ss[0]) < 3 * np.sqrt(se_ss ** 2 + base_ss[1] ** 2)
+    ok_free_end = abs(r_free - base_free[0]) < 3 * np.sqrt(se_free ** 2 + base_free[1] ** 2)
+    near_ss_intermediate = (rows[-2]["kappa"] >= 1e8) and \
+        (rows[-2]["pooled"][0] - base_ss[0]
+         > 3 * np.sqrt(rows[-2]["pooled"][1] ** 2 + base_ss[1] ** 2)) and \
+        (abs(rows[-2]["pooled"][0] - r_free) < abs(rows[-2]["pooled"][0] - base_ss[0]))
+    md.append("\n## Verdict (preregistered readings, finite-size-corrected)\n")
+    md.append(f"- SS end: <r>(kappa=1e10) = {r_ss:.4f} +/- {se_ss:.4f} vs exact-SSSS "
+              f"baseline {base_ss[0]:.4f} +/- {base_ss[1]:.4f}: "
+              f"{'consistent' if ok_ss_end else 'INCONSISTENT'}")
+    md.append(f"- free end: <r>(kappa=0) = {r_free:.4f} +/- {se_free:.4f} vs Ritz "
+              f"baseline {base_free[0]:.4f} +/- {base_free[1]:.4f}: "
+              f"{'consistent' if ok_free_end else 'INCONSISTENT'}")
+    md.append(f"- transition amplitude: free end sits {sep_amp:.1f} sigma above the "
+              f"separable (exact SSSS) baseline")
     md.append(f"- monotonicity (3-sigma violations along the kappa grid): {viol}")
     md.append(f"- intermediate already at kappa >= 1e8 (challenge condition): "
               f"{near_ss_intermediate}")
-    supports = ok_endpoints and viol == 0 and not near_ss_intermediate
+    supports = ok_ss_end and ok_free_end and sep_amp > 3 and viol == 0 \
+        and not near_ss_intermediate
     md.append(f"\n**Reading: {'SUPPORTS the hypothesis' if supports else 'CHECK -- see flags above'}**")
+    md.append(f"\nCaveats: ~{n_use//4} levels/sector is a short ladder -- the "
+              f"finite-size excess of the separable baseline over asymptotic "
+              f"Poisson ({base_ss[0]:.3f} vs {R_POISSON}) is measured, not assumed; "
+              f"a longer-ladder rerun (800+ modes) is the natural sharpening step.")
 
     # ---------------- figure ----------------
     fig, ax = plt.subplots(figsize=(7, 4.6))
@@ -129,6 +182,11 @@ def main():
     ax.errorbar(kplot, y, yerr=e, color="k", marker="D", ms=5, lw=2, label="pooled")
     ax.axhline(R_POISSON, color="gray", ls="--", lw=1)
     ax.text(kplot[-1], R_POISSON + 0.002, "Poisson", fontsize=8, color="gray")
+    ax.axhline(base_ss[0], color="tab:blue", ls="--", lw=1, alpha=0.7)
+    ax.text(kplot[0], base_ss[0] + 0.002, "exact SSSS (finite-size)",
+            fontsize=8, color="tab:blue")
+    ax.axhline(base_free[0], color="tab:red", ls="--", lw=1, alpha=0.7)
+    ax.text(kplot[0], base_free[0] + 0.002, "Ritz FFFF", fontsize=8, color="tab:red")
     ax.axhline(R_GOE, color="gray", ls=":", lw=1)
     ax.text(kplot[-1], R_GOE + 0.002, "GOE", fontsize=8, color="gray")
     ax.set_xscale("log")
@@ -142,7 +200,8 @@ def main():
     with open(os.path.join(HERE, "RESULTS.md"), "w", encoding="utf-8") as f:
         f.write("\n".join(md) + "\n")
     with open(os.path.join(HERE, "results.json"), "w") as f:
-        json.dump(dict(n_use=n_use, rows=rows, supports=bool(supports)), f,
+        json.dump(dict(n_use=n_use, rows=rows, supports=bool(supports),
+                       baseline_ssss=base_ss, baseline_ritz_ffff=base_free), f,
                   indent=1, default=float)
     print("\n".join(md))
     print(f"\nWrote RESULTS.md / results.json / r_vs_kappa.png in {HERE}")
