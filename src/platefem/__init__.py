@@ -4,10 +4,12 @@ Validated in experiments/e01_validation (2026-07-03). See docs/CONVENTIONS.md.
 """
 from .kirchhoff import (ElementTriArgyris, ElementTriMorley, assemble_plate,
                         boundary_matrix, make_forms, rectangle_basis,
-                        solve_lowest, solve_modes, split_rigid, ssss_exact)
-from .stats import (R_GOE, R_POISSON, SECTORS, classify_parity,
-                    classify_parity_resolved, local_spacing, mean_r, n_star,
-                    probe_operators, r_values)
+                        solve_lowest, solve_modes, split_rigid, ssss_exact,
+                        triangle_basis, triangle_ss_exact)
+from .stats import (R_GOE, R_POISSON, SECTORS, classify_c3v, classify_parity,
+                    classify_parity_resolved, dedupe_doublets, local_spacing,
+                    mean_r, n_star, probe_operators, r_values,
+                    triangle_probe_operators)
 from . import ritz
 
 __version__ = "0.1.0"

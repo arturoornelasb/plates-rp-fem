@@ -219,3 +219,28 @@ def ssss_exact(a, b, n_modes):
     ky2 = (m * np.pi / b) ** 2
     lam = (kx2[:, None] + ky2[None, :]) ** 2
     return np.sort(lam.ravel())[:n_modes]
+
+
+def triangle_basis(nrefine, L=1.0, element_cls=ElementTriArgyris):
+    """Equilateral triangle of side L, centroid at the origin, one vertex on
+    the +y axis, meshed by uniform midpoint refinement of the single macro
+    triangle -- the mesh is therefore C3v-symmetric by construction (E-doublet
+    splittings stay at round-off level). Returns (mesh, basis, verts)."""
+    verts = np.array([[-0.5 * L, -np.sqrt(3) / 6 * L],
+                      [0.5 * L, -np.sqrt(3) / 6 * L],
+                      [0.0, np.sqrt(3) / 3 * L]])
+    mesh = MeshTri(verts.T.copy(), np.array([[0, 1, 2]]).T.copy()).refined(nrefine)
+    return mesh, Basis(mesh, element_cls()), verts
+
+
+def triangle_ss_exact(L, n_modes):
+    """Exact simply-supported equilateral-triangle PLATE spectrum. On a
+    straight-edged polygon the SS (Navier) plate factorizes through the
+    Dirichlet Helmholtz problem, whose equilateral-triangle eigenvalues are
+    the Lame lattice lam_H = (16 pi^2 / (9 L^2)) (m^2 + m n + n^2), m,n >= 1
+    (both (m,n) and (n,m) count; m != n is the doublet). Plate: Lambda = lam_H^2."""
+    mmax = int(np.ceil(np.sqrt(n_modes) * 8))
+    m = np.arange(1, mmax + 1)
+    q = m[:, None] ** 2 + m[:, None] * m[None, :] + m[None, :] ** 2
+    lam_h = (16.0 * np.pi ** 2 / (9.0 * L ** 2)) * q
+    return np.sort(lam_h.ravel() ** 2)[:n_modes]

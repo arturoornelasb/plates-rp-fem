@@ -47,12 +47,23 @@ judged against finite-size baselines measured with the identical protocol
 (exact SSSS spectrum; independent Legendre-Ritz), never against asymptotic
 constants.
 
-## E3 -- Geometry tests [PLANNED]
+## E3 -- Geometry tests [E3a triangle RUNNING; rest planned]
 
 Free-edge ellipse and triangle (biharmonic separability broken -> expect
 intermediate), full disk and annulus (separable -> Poisson controls), disk
-sector (paper's RP case). Curved boundaries need mesh generation beyond
-init_tensor and a convergence study on curved-element geometry error.
+sector (paper's RP case).
+
+E3a (equilateral triangle, preregistered in its README before execution):
+straight edges keep the Argyris machinery exact; C3v symmetry needs the new
+irrep classifier (rotation character +1 for A-type, exactly -1/2 inside an E
+doublet; E doublets deduplicated before statistics; C3v-symmetric mesh by
+uniform refinement of the macro triangle). Exact anchor: SS polygon plate =
+(Dirichlet Helmholtz)^2 = Lame lattice squared, reached through the validated
+kappa = 1e10 Winkler limit -- smoke-validated to 1.7e-6 including doublets.
+
+Curved geometries (disk, annulus, ellipse, sector) still need a
+geometry-error strategy: polygonal boundary approximation caps eigenvalue
+convergence at O(h^2) regardless of element order.
 
 ## E4 -- Gap A on the true operator [PLANNED]
 
