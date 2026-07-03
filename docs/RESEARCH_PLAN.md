@@ -47,7 +47,18 @@ judged against finite-size baselines measured with the identical protocol
 (exact SSSS spectrum; independent Legendre-Ritz), never against asymptotic
 constants.
 
-## E3 -- Geometry tests [E3a triangle RUNNING; rest planned]
+## E3 -- Geometry tests [E3a triangle DONE 2026-07-03 -- SUPPORTS; rest planned]
+
+E3a result (all gates green: N* = 1000/1000 against the EXACT Lame^2
+reference at 3.0e-5; zero ambiguous labels; 333 exact E-doublets, max
+splitting 7.5e-6): free triangle pooled <r> = 0.4889 +/- 0.0099
+(intermediate) vs same-protocol SS baseline 0.3753 +/- 0.0134
+(Poisson-consistent) -- separation 6.8 sigma (preregistered threshold 3).
+Per sector: A1 +3.8 sigma, E +5.6 sigma, A2 +1.9 sigma (all positive; A2 is
+the shortest sequence). READING: SUPPORTS the geometry prediction --
+breaking biharmonic separability alone (Helmholtz-integrable domain, free
+edges) produces intermediate statistics, now in a symmetry group (C3v)
+disjoint from the rectangle's Z2xZ2.
 
 Free-edge ellipse and triangle (biharmonic separability broken -> expect
 intermediate), full disk and annulus (separable -> Poisson controls), disk

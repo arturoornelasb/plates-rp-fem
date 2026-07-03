@@ -53,7 +53,8 @@ python experiments/e01_validation/step1_validate.py
 |---|---|---|
 | E1 | is the stack statistics-grade accurate? | PASS (2026-07-03) |
 | E2 | boundary-controlled Poisson -> RP transition | SUPPORTS, 3.6 sigma (2026-07-03) |
-| E3 | geometry dichotomy (separability) | planned |
+| E3a | free equilateral triangle (C3v, non-separable) | SUPPORTS, 6.8 sigma (2026-07-03) |
+| E3b | curved geometries: disk/annulus controls, ellipse, sector | planned |
 | E4 | Gap A: eigenvector statistics of the true operator | planned |
 
 ## License
