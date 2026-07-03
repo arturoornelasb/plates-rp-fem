@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "platefem"
+version = "0.1.0"
+description = "FEM machinery for spectral statistics of Kirchhoff plates (Rosenzweig-Porter program)"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "J. Arturo Ornelas Brand", email = "arturoornelas62@gmail.com" }]
+dependencies = ["numpy", "scipy", "scikit-fem>=12"]
+
+[tool.setuptools.packages.find]
+where = ["src"]

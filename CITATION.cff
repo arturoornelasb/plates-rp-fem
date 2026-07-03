@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "plates-rp-fem: open-source finite-element tests of the Rosenzweig-Porter hypothesis for freely vibrating plates"
+authors:
+  - family-names: "Ornelas Brand"
+    given-names: "J. Arturo"
+    affiliation: "Independent Researcher, Aguascalientes, Mexico"
+type: software
+version: "0.1.0"
+date-released: "2026-07-03"
+license: MIT
+keywords:
+  - Rosenzweig-Porter model
+  - random matrix theory
+  - spectral statistics
+  - Kirchhoff plates
+  - free boundary conditions
+  - finite element method
+  - scikit-fem
