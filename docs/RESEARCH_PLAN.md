@@ -72,19 +72,25 @@ uniform refinement of the macro triangle). Exact anchor: SS polygon plate =
 (Dirichlet Helmholtz)^2 = Lame lattice squared, reached through the validated
 kappa = 1e10 Winkler limit -- smoke-validated to 1.7e-6 including doublets.
 
-E3b (disk control + ellipse, v1 executed 2026-07-03): the curved-boundary
-strategy is measurement-based -- the semi-analytic free disk (per-m J/I
-determinant, fundamental 5.262 vs lit. ~5.25) gates the FEM both strictly
-(N* = 480/800 at refine 6; flat 2e-4 = smooth O(h^2) geometry error) and
-operationally (FEM-disk class <r> reproduces the semi-analytic Poisson value
-to 0.0 sigma over the full ladder -- smooth error does not corrupt spacing
-statistics). Disk control: Poisson-consistent, 0.3905 +/- 0.0073 (paper:
-0.386 +/- 0.007). Ellipse v1 (800 modes): pooled <r> = 0.3781 +/- 0.0102 with
-a sub-Poisson low end (0.354) and a +2.3 sigma upward spectral trend
-(high third 0.4128 +/- 0.0183). READING: AMBIGUOUS -- weak-coupling regime,
-exactly the paper's preregistered caveat (smooth boundary, no corners ->
-weaker evanescent mixing at low k than the triangle's 60-degree corners);
-v2 doubles the ladder to 1600 modes as the registered decider.
+E3b (disk control + ellipse; v1 + v2 decider executed 2026-07-03): the
+curved-boundary strategy is measurement-based -- the semi-analytic free disk
+(per-m J/I determinant, fundamental 5.262 vs lit. ~5.25) gates the FEM both
+strictly (flat 2e-4 = smooth O(h^2) geometry error through mode 1600) and
+operationally (FEM-disk class <r> = semi-analytic value to 0.0 sigma on both
+halves of the extended ladder; non-smooth error component max-median =
+1.4e-5, ~0.3% of a sector spacing -- cannot wash out repulsion).
+
+DISK CONTROL: Poisson CONFIRMED, 0.3905 +/- 0.0073 (paper: 0.386 +/- 0.007).
+ELLIPSE (v2 decider, 1600 modes): pooled <r> = 0.3732 +/- 0.0071,
+Poisson-consistent; the v1 upward trend (+2.3 sigma at 800 modes) did NOT
+continue (thirds 0.361/0.389/0.370, +0.5 sigma). READING per the
+preregistered v2 criteria: CHALLENGES the naive geometry reading ("any
+broken separability -> visibly intermediate"). Split E3 verdict (triangle
+6.8 sigma intermediate, ellipse Poisson-like) points to boundary CORNERS as
+the strong evanescent-coupling drivers; within the RP framework a dense but
+tiny V (small lambda) is indistinguishable from Poisson at accessible N.
+Registered follow-up: Gap A eigenvector diagnostics on the ellipse to
+separate 'no coupling' from 'tiny dense coupling'.
 
 ## E4 -- Gap A on the true operator [PLANNED]
 

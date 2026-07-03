@@ -54,7 +54,7 @@ python experiments/e01_validation/step1_validate.py
 | E1 | is the stack statistics-grade accurate? | PASS (2026-07-03) |
 | E2 | boundary-controlled Poisson -> RP transition | SUPPORTS, 3.6 sigma (2026-07-03) |
 | E3a | free equilateral triangle (C3v, non-separable) | SUPPORTS, 6.8 sigma (2026-07-03) |
-| E3b | disk control (Poisson) + free ellipse | disk control CONFIRMED; ellipse ambiguous (weak coupling, +2.3 sigma trend) -- v2 running |
+| E3b | disk control (Poisson) + free ellipse | disk CONFIRMED Poisson; ellipse CHALLENGES the naive reading (Poisson-like at 1600 modes; corners, not curvature, drive coupling) |
 | E3c | disk sector (paper's RP case) | planned |
 | E4 | Gap A: eigenvector statistics of the true operator | planned |
 

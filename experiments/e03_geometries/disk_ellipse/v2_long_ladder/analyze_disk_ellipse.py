@@ -184,6 +184,22 @@ def main():
     else:
         verdict = "AMBIGUOUS (separation below preregistered threshold)"
     md.append(f"\n**Reading: {verdict}**")
+    md.append(
+        "\nDiscussion. The split E3 verdict (triangle strongly intermediate at "
+        "6.8 sigma, ellipse Poisson-consistent at 1600 modes) is itself "
+        "informative: 'broken biharmonic separability' is not a binary switch. "
+        "In the paper's own RP framework the coupling magnitude lambda is a "
+        "parameter -- a dense but TINY V yields RP statistics indistinguishable "
+        "from Poisson at accessible N. The data point to boundary corners as "
+        "the strong evanescent-coupling drivers (the triangle's 60-degree "
+        "corners vs the ellipse's smooth boundary, which behaves quasi-separably "
+        "here). What this challenges is the naive reading 'any broken "
+        "separability -> visibly intermediate'; what would decide between 'no "
+        "coupling' and 'tiny dense coupling' is the eigenvector diagnostic of "
+        "Gap A applied to the ellipse -- registered as a follow-up. Noise blind "
+        "spot closed by measurement: the non-smooth FEM error component on the "
+        "disk is max-median = 1.4e-5 relative, ~0.3% of a sector-level spacing "
+        "at mode 1600, far too small to wash out genuine repulsion.")
 
     # ---------------- figure ----------------
     fig, ax = plt.subplots(figsize=(6.5, 4.3))
