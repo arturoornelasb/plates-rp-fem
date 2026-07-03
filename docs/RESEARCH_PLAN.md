@@ -26,25 +26,26 @@ mesh (gap-based detection required, uniform-mesh ceiling ~128x80); the
 Legendre-Ritz reference has a ~1e-4 round-off floor (non-monotone in NLEG
 beyond ~96 -- diag_ritz_nleg.py), so NLEG 64/72 is its sweet spot.
 
-## E2 -- Protocol B: boundary-controlled transition [RUNNING]
+## E2 -- Protocol B: boundary-controlled transition [DONE 2026-07-03 -- SUPPORTS]
+
+Executed twice: v1 (400 modes, full 14-point kappa map) and v2 (800 modes,
+7-point grid). All accuracy gates green in both. v1 established the map and
+the finite-size methodology (endpoints match their baselines exactly; exact
+SSSS gives <r> = 0.417 at ~100 levels/sector, NOT the asymptotic 0.3863) but
+was underpowered (2.1 sigma). v2 (~200 levels/sector): SS end 0.3908 = exact-
+SSSS baseline 0.3908; free end 0.4422 = Ritz baseline 0.4434; transition
+monotone within errors; amplitude 3.6 sigma > preregistered 3 sigma; no
+intermediate statistics at nearly-simply-supported. READING: SUPPORTS the
+boundary-controlled-transition prediction.
 
 Paper prediction ("Boundary-controlled transition"): per-sector <r> should
-interpolate continuously from Poisson (0.3863) at simply supported to the
+interpolate continuously from Poisson at simply supported to the
 intermediate/RP value at free, as the symmetric Winkler restraint
 V_n + kappa w = 0 (with M_n = 0 throughout) is tuned from kappa = inf to 0.
-
-Method: full rectangle (E1 geometry), Argyris 96x60, ~400 elastic modes with
-eigenvectors, kappa grid {0, 1e2 ... 1e8 half-decade, 1e10}; modes classified
-into ee/eo/oe/oo by mirror-correlation of probed mode shapes; <r> per sector
-(drop lowest 10). Accuracy gates before the sweep: kappa = 1e10 vs exact SSSS
-(N*), kappa = 0 vs a finer 128x80 mesh (internal N*), and kappa = 0
-sector-resolved check against the Ritz per-sector spectra (classifier
-validation).
-
-Preregistered readings (from the paper): SUPPORTS = monotonic transition
-0.3863 -> intermediate. CHALLENGES = abrupt transition, non-monotonic
-behavior, or intermediate statistics already at nearly-simply-supported
-(kappa >= 1e8).
+Method and preregistered readings: see the experiment folder. Endpoints are
+judged against finite-size baselines measured with the identical protocol
+(exact SSSS spectrum; independent Legendre-Ritz), never against asymptotic
+constants.
 
 ## E3 -- Geometry tests [PLANNED]
 

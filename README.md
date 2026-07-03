@@ -52,7 +52,7 @@ python experiments/e01_validation/step1_validate.py
 | experiment | question | status |
 |---|---|---|
 | E1 | is the stack statistics-grade accurate? | PASS (2026-07-03) |
-| E2 | boundary-controlled Poisson -> RP transition | running |
+| E2 | boundary-controlled Poisson -> RP transition | SUPPORTS, 3.6 sigma (2026-07-03) |
 | E3 | geometry dichotomy (separability) | planned |
 | E4 | Gap A: eigenvector statistics of the true operator | planned |
 
