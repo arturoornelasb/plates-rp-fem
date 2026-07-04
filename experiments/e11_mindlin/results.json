@@ -187,5 +187,7 @@
    "rigid": 3,
    "ndof": 70059
   }
- }
+ },
+ "verdict": "SUPPORTS the thick-plate prediction (systematic increase of <r> with thickness)",
+ "wall_time_s": 1442.2
 }
