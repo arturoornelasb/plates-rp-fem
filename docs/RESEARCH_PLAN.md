@@ -118,3 +118,32 @@ density); and since effective coupling grows with mode index, the verdict
 could flip at the paper's registered N ~ 2048 rung -- quarter-plate
 reduction is the registered instrument for that follow-up. Sigma^2(L <= 5)
 intermediate, mildly below Poisson; larger L unfolding-limited.
+
+## E5 -- Superellipse sweep [DONE 2026-07-03 -- SEPARABLE-BOUNDARY STEP]
+
+Novel discriminator (|x/a|^p + |y/b|^p = 1, p in {2,3,4,6,10}, 1600 modes
+each, identical protocol; p = 2 = the E3b ellipse). Result: <r>(p) = 0.373,
+0.494, 0.489, 0.494, 0.516 -- a +12.2 sigma STEP between p = 2 and p = 3
+(soft smooth corners!), a flat plateau p = 3..6 (0.7 sigma spread), and a
+mild +2.3 sigma rise at p = 10. Neither preregistered shape fits; the
+operative variable is the boundary's compatibility with separable
+coordinates (the ellipse is the family's unique quasi-separable member),
+corners are secondary. Statistics refinement-stable at 0.1 sigma for p = 3
+and p = 10 (diag_stability.py).
+
+## Campaign synthesis (2026-07-03)
+
+Seven geometries, one hierarchy: (i) exact reduction -> Poisson (disk
+0.391); (ii) coordinate-adapted / quasi-separable boundaries -> weak sparse
+coupling (ellipse 0.373, sector 0.421, rectangle 0.442--0.46, whose true
+modes are ~single beam products per E4); (iii) unadapted boundaries -> full
+coupling (triangle 0.489, superellipse p != 2: 0.49--0.52). The
+boundary-controlled transition (E2, 3.6 sigma) confirms the coupling lives
+in the free-edge condition. Gap A on the true operator (E4) shows the
+accessible-N mixing is SPARSE (avoided-crossing hybridization), not
+RP-fractal -- the model-based (Ritz) route overestimated coupling density.
+Open registered follow-ups: (a) the N ~ 2048 Gap A rung via quarter-plate
+reduction (where the RP phase could still appear); (b) longer sector
+ladders / the published study's exact angles; (c) Dq flatness and form-
+factor rival exclusion on the strongest-coupling geometries (triangle,
+superellipse p = 10).

@@ -57,7 +57,7 @@ python experiments/e01_validation/step1_validate.py
 | E3b | disk control (Poisson) + free ellipse | disk CONFIRMED Poisson; ellipse CHALLENGES the naive reading (Poisson-like at 1600 modes; corners, not curvature, drive coupling) |
 | E3c | disk sector (paper's RP case) | AMBIGUOUS +1.7 sigma (weak intermediate; fits corner-sharpness ordering) |
 | E4 | Gap A: eigenvector statistics of the true operator | LOCALIZED-LEANING at N<=324: modes ~1-2 beam products; sparse hybridization, not RP-fractal (could flip at N~2048) |
-| E5 | superellipse corner sweep (novel discriminator) | queued |
+| E5 | superellipse sweep (novel discriminator) | SEPARABLE-BOUNDARY STEP: +12.2 sigma jump at p=2->3, plateau after; coupling set by boundary adaptedness to separable coordinates, corners secondary |
 
 ## License
 
