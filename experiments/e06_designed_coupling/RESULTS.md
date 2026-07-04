@@ -1,28 +1,26 @@
-# E6 -- designed contact coupling and inverse design (RESULTS, v2)
+# E6 -- designed contact coupling and inverse design (RESULTS, v3)
 
-Two identical free plates (campaign rectangle), ee sector, N = 100 each (doubled system 2N = 200), mean spacing 475483.4. Patterns as preregistered; coupling swept via c = lambda <|C|>/d. References: Poisson 0.3863, GOE 0.5307.
+Two identical free plates, all four parity sectors pooled (~95/sector), doubled spectra = symmetric kernel block (unshifted) + antisymmetric block H0 + 2 lambda C. References: Poisson 0.3863, GOE 0.5307.
 
-## <r> and mid-spectrum IPR vs dimensionless coupling c
-
-| c | dense <r> | dense IPR | banded <r> | banded IPR | central <r> |
+| c | dense <r> | dense IPR(anti) | banded <r> | banded IPR | central <r> |
 |---|---|---|---|---|---|
-| 0.01 | 0.333 | 0.492 | 0.279 | 0.489 | 0.071 |
-| 0.03 | 0.393 | 0.454 | 0.412 | 0.447 | 0.179 |
-| 0.10 | 0.413 | 0.353 | 0.453 | 0.371 | 0.365 |
-| 0.32 | 0.415 | 0.263 | 0.429 | 0.305 | 0.484 |
-| 1.00 | 0.410 | 0.269 | 0.472 | 0.315 | 0.452 |
-| 3.16 | 0.457 | 0.315 | 0.463 | 0.314 | 0.434 |
-| 10.00 | 0.460 | 0.328 | 0.455 | 0.311 | 0.429 |
-| 31.62 | 0.505 | 0.324 | 0.422 | 0.316 | 0.428 |
-| 100.00 | 0.483 | 0.313 | 0.444 | 0.316 | 0.427 |
+| 0.01 | 0.361 | 0.976 | 0.264 | 0.952 | 0.058 |
+| 0.03 | 0.456 | 0.849 | 0.390 | 0.800 | 0.081 |
+| 0.10 | 0.429 | 0.525 | 0.447 | 0.500 | 0.120 |
+| 0.32 | 0.442 | 0.150 | 0.445 | 0.243 | 0.151 |
+| 1.00 | 0.422 | 0.052 | 0.434 | 0.232 | 0.141 |
+| 3.16 | 0.452 | 0.038 | 0.452 | 0.211 | 0.136 |
+| 10.00 | 0.461 | 0.036 | 0.440 | 0.194 | 0.135 |
+| 31.62 | 0.460 | 0.034 | 0.456 | 0.187 | 0.135 |
+| 100.00 | 0.477 | 0.033 | 0.443 | 0.182 | 0.135 |
 
-- effective ranks: dense 68/100, banded 20/100, central 1/100
+- effective ranks/sector: dense {'ee': 66, 'eo': 67, 'oe': 68, 'oo': 69}, banded {'ee': 20, 'eo': 20, 'oe': 20, 'oo': 20}, central {'ee': 1, 'eo': 1, 'oe': 1, 'oo': 1}
 
 ## Verdict elements
 
-- dense reaches <r> = 0.505 +/- 0.020 at c = 31.6 (GOE 0.5307), IPR 0.324
-- banded at the same c: <r> = 0.422 +/- 0.022, IPR 0.316 (separation 2.8 sigma)
-- designed-structure dichotomy: NOT OK
-- inverse design (control law lambda = Delta / (2 q phi^2)): max rel err 62.2%, min pair content 0.653: NOT OK
+- dense reaches <r> = 0.477 +/- 0.010 at c = 100.0; banded there 0.443 +/- 0.010 (separation 2.3 sigma): NOT OK
+- control law (2nd order): max rel err 23.5% (1st order alone: 165.9%): NOT OK
 
 **Reading: PARTIAL -- see elements above**
+
+Control law (P10): to split the doubled level i by Delta, place the post quartet at the nodal-map point x* maximizing local selectivity and set lambda = Delta / (2 q phi_i(x*)^2), then correct with the closed-form second-order term sum_j (2 lam q phi_i phi_j)^2 / (E_i - E_j) -- all quantities readable from the mode shapes, none requiring the solver.

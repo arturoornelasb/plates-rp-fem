@@ -254,6 +254,30 @@ def ellipse_basis(nrefine, a, b, element_cls=ElementTriArgyris):
     return mesh, Basis(mesh, element_cls())
 
 
+def annulus_basis(n_r, r_in=0.4, r_out=1.0, element_cls=ElementTriArgyris):
+    """Annulus r_in <= r <= r_out: structured polar grid (n_r radial cells,
+    angular spacing ~ radial spacing), quads split into triangles; vertices
+    exactly on both circles."""
+    radii = np.linspace(r_in, r_out, n_r + 1)
+    h = (r_out - r_in) / n_r
+    n_th = int(np.ceil(2 * np.pi * 0.5 * (r_in + r_out) / h))
+    th = np.linspace(0.0, 2 * np.pi, n_th, endpoint=False)
+    pts = np.array([[r * np.cos(t), r * np.sin(t)]
+                    for r in radii for t in th]).T
+    tris = []
+    for i in range(n_r):
+        for j in range(n_th):
+            j2 = (j + 1) % n_th
+            v00 = i * n_th + j
+            v01 = i * n_th + j2
+            v10 = (i + 1) * n_th + j
+            v11 = (i + 1) * n_th + j2
+            tris.append([v00, v10, v11])
+            tris.append([v00, v11, v01])
+    mesh = MeshTri(pts.copy(), np.array(tris).T.copy())
+    return mesh, Basis(mesh, element_cls())
+
+
 def superellipse_basis(nrefine, a, b, p, element_cls=ElementTriArgyris):
     """Superellipse |x/a|^p + |y/b|^p = 1 (p = 2: ellipse; p -> inf:
     rectangle), centered, axes-aligned: the init_circle mesh mapped radially
