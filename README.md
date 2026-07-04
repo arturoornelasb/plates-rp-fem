@@ -62,7 +62,8 @@ python experiments/e01_validation/step1_validate.py
 | E7 | Protocol A mixed + nu sweep | mixed config = Levy-separable -> ON Poisson (hierarchy confirmed); coupling material-tunable, matches T1 value-by-value |
 | E8 | unified Gap A across geometries + Dq | eigenvector hierarchy mirrors E5: adapted -> flat IPR (ellipse = tiny SPARSE coupling); unadapted -> scaling D2 0.22-0.50; RP-vs-PBRM split, decision at N~2048 |
 | E10 | annulus (second Poisson control) | SUPPORTS: Poisson 0.3734+/-0.0076; 4x4 J/Y/I/K determinant FEM-cross-validated at 4.3e-4 |
-| E11 | Mindlin thick plates (thickness sweep) | running |
+| E9 | Gap A at the registered N=2048 rung | RP PHASE DEVELOPS: D2 = 0.42-0.50 with flat Dq (PBRM excluded); P12's D2 = 0.76 not confirmed |
+| E11 | Mindlin thick plates (thickness sweep) | SUPPORTS +5.4 sigma: <r> 0.454 -> 0.557 over t = 0.02 -> 0.15, GOE-ward |
 
 ## License
 

@@ -125,8 +125,8 @@ def main():
         M = cfg["mbasis"]
         even_x = sec[0] == "e"
         even_y = sec[1] == "e"
-        m_vals_x = np.arange(1 if even_x else 2, 2 * M, 2)[:M]
-        m_vals_y = np.arange(1 if even_y else 2, 2 * M, 2)[:M]
+        m_vals_x = np.arange(1 if even_x else 2, 2 * M + 2, 2)[:M]
+        m_vals_y = np.arange(1 if even_y else 2, 2 * M + 2, 2)[:M]
         Sx, ksx = sine_family(m_vals_x, xg, a)
         Sy, ksy = sine_family(m_vals_y, xg, b)
         Bx, kbx = beam_family(M, xg, a, even_x)

@@ -13,7 +13,7 @@
 for freely vibrating plates:\\ preliminary results}
 \author{J.~Arturo Ornelas Brand\\
 \small Independent Researcher, Aguascalientes, M\'exico}
-\date{July 4, 2026 --- draft v0.2 (companion to the ``Why Rosenzweig--Porter?'' program)}
+\date{July 4, 2026 --- draft v0.3 (companion to the ``Why Rosenzweig--Porter?'' program)}
 
 \begin{document}
 \maketitle
@@ -39,8 +39,18 @@ shows $N$-independent inverse participation ratios: at accessible sector
 sizes ($N\le324$) each free-plate mode is $\approx$1--2 free-free beam
 products, i.e.\ sparse avoided-crossing hybridization rather than an
 RP-fractal phase. The results support the free-edge coupling mechanism while
-sharpening it in two ways that only true-operator computations could reveal.
-All experiments, gates, and raw data are reproducible from the repository.
+sharpening it in ways that only true-operator computations could reveal.
+Extending the program beyond the original registry: the L\'evy-separable
+mixed configuration lands exactly on Poisson; both exactly-reduced controls
+(disk, annulus) are confirmed; the coupling is material-tunable
+($\lambda(\nu)$, matching the companion's Ritz values method-to-method) and
+post-designable via a validated second-order control law; the
+Mindlin thickness sweep confirms the thick-plate prediction at $+5.4\sigma$
+(GOE-ward); and at the registered $N=2048$ truncated-operator rung the
+non-ergodic \emph{fractal RP phase develops} ($D_2=0.42$--$0.50$) with flat
+$D_q$ excluding the power-law-banded rival --- while the preregistered
+dimension value ($0.76\pm0.15$) is not confirmed. All experiments, gates,
+and raw data are reproducible from the repository.
 \end{abstract}
 
 \section{Introduction}
@@ -254,6 +264,41 @@ $\rmean$ rises monotonically $0.4208\to0.4497$ over $\nu=0.25$--$0.36$, so
 the effective coupling is \emph{material-tunable} (the Prediction-5 recast)
 rather than strictly material-independent.
 
+\subsection{E9: Gap A at the registered $N=2048$ rung (RP phase develops)}
+
+The paper registers ladder sizes $N=256$--$2048$; E4/E8 reached
+$N\le324$ on true-operator windows. Removing the measured $\sim10^{-4}$
+quadrature floor of the Legendre--Ritz assembly by exact integer-arithmetic
+closed forms --- and diagonalizing only the physically-normed rung
+submatrices, which sidesteps the residual LAPACK backward error against the
+full matrix's $\|K\|\sim n^7$ --- makes the full registered
+truncated-operator ladder clean. The result: IPR falls over three octaves in
+both sectors and both registered bases (e.g.\ sine: $0.123\to0.052$,
+$N=256\to2048$), giving ladder $D_2=0.42$--$0.50$ (s.e.\ $\sim0.02$) with
+\emph{flat} $D_q$ ($D_{1.5}-D_4=0.069$--$0.100$, versus the registered
+power-law-banded rival calibration $0.20$--$0.28$). The non-ergodic
+\emph{fractal (RP) phase develops at the registered ladder, with the PBRM
+rival excluded}; the P12 preregistered dimension value ($0.76\pm0.15$) is
+\emph{not} confirmed (measured $\approx0.46$). The truncated-operator and
+true-operator protocols disagree exactly where the T1 audit predicted they
+could; their reconciliation at matching $N$ (a $C^0$ interior-penalty
+discretization; the Argyris uniform-mesh ceiling is measured at
+$h\approx0.008$ and skfem's Lagrange elements lack second derivatives) is
+the registered follow-up.
+
+\subsection{E10--E11: annulus control and thick plates}
+
+The free annulus --- the program's second exactly-reduced control --- is
+Poisson-confirmed semi-analytically ($4\times4$ $J/Y/I/K$ free-edge
+determinant; pooled class $\rmean=0.3734\pm0.0076$; per-$m$ picket fences)
+and FEM-cross-validated ($N^*=200/200$ at $4.3\times10^{-4}$). The
+Mindlin--Reissner thickness sweep (P2/P2 with selective reduced integration,
+validated in the thin limit against the certified Kirchhoff spectrum)
+confirms the thick-plate prediction at $+5.4\sigma$: pooled $\rmean$ rises
+monotonically $0.454\to0.557$ over $t=0.02\to0.15$, continuous with the
+Kirchhoff value at the thin end and reaching GOE by $t\approx0.1$ --- the
+shear channels increase the net coupling exactly as predicted.
+
 \subsection{E8: the eigenvector hierarchy across geometries}
 
 Repeating Gap~A with the same-domain simply supported eigenbasis (exact
@@ -311,19 +356,17 @@ for the experimental program. Whether the scaling eigenvectors of the
 unadapted tier become RP-fractal (flat $D_q$) or PBRM-multifractal at
 higher rungs is the single most consequential open computation.
 
-\section{In execution and pending registered tests}
+\section{Pending registered tests}
 
-In execution at the time of this draft revision: \textbf{E10} (annulus, the
-second exactly-reduced Poisson control, via a $4\times4$ $J/Y/I/K$
-free-edge determinant with FEM cross-validation) and \textbf{E11}
-(Mindlin--Reissner thickness sweep; formulation validated against the
-certified Kirchhoff spectrum in the thin limit). Pending, registered in the
-research plan: Gap~A at $N\sim2048$ via a $C^0$ interior-penalty
-discretization (the Argyris uniform-mesh ceiling is measured at
-$h\approx0.008$) --- this adjudicates both the RP-phase question and the
-$D_q$ separator; the sector at the published study's exact angles and mode
-counts; a full-rank rerun of the E6 dichotomy; and comparison against the
-measured aluminum-plate spectra of Ref.~\cite{lopez2021}.
+All tests executable with the present machinery are now done (E1--E11).
+Registered follow-ups: reconciliation of the truncated-operator and
+true-operator Gap~A protocols at matching $N\sim1024$--$2048$ (requires a
+$C^0$ interior-penalty discretization with custom reference hessians; the
+Argyris ceiling is measured at $h\approx0.008$); the sector at the
+published study's exact angles and mode counts; a full-rank rerun of the E6
+dichotomy ($\sim$200 quartets); aspect-ratio robustness sweeps; and
+comparison against the measured aluminum-plate spectra of
+Ref.~\cite{lopez2021}.
 
 \section{Reproducibility}
 

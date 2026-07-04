@@ -184,3 +184,32 @@ statistics are strongest. RP-vs-PBRM adjudication split at these N
 registered for the N ~ 2048 rung (C0-IP build).
 
 ## E10/E11 [running 2026-07-04]: annulus control; Mindlin thickness sweep.
+
+## E9 -- Gap A at the registered N = 2048 rung [DONE 2026-07-04 -- RP PHASE DEVELOPS]
+
+T1 truncated-operator ladder with exact integer-arithmetic assembly
+(platefem/ritz_exact.py; quadrature floor removed, eigh applied only to
+physically-normed rung submatrices). IPR falls cleanly over three octaves
+(N = 256..2048) in both sectors and both registered bases: ladder D2 =
+0.42-0.50 (SE ~ 0.02-0.03) with FLAT Dq (D_1.5 - D_4 = 0.069-0.100 -- the
+registered PBRM rival band 0.20-0.28 excluded). The non-ergodic fractal
+(RP) phase develops at the registered ladder; the P12 preregistered D2
+value (0.76 +/- 0.15) is NOT confirmed (measured 0.46). Protocol
+reconciliation with the true-operator windows (flat at N <= 324, E4/E8)
+is the registered follow-up (C0-IP discretization; skfem Lagrange lacks
+second derivatives -> custom reference-hessian assembly needed).
+
+## E10 -- Annulus control [DONE 2026-07-04 -- SUPPORTS]
+
+Second exactly-reduced Poisson control confirmed: semi-analytic 4x4
+J/Y/I/K determinant gives pooled class <r> = 0.3734 +/- 0.0076 (1333
+ratios), per-m picket fences; FEM ring mesh cross-validates at N* =
+200/200, max relerr 4.3e-4.
+
+## E11 -- Mindlin thick plates [DONE 2026-07-04 -- SUPPORTS, +5.4 sigma]
+
+P2/P2 SRI Mindlin (validated: rigid trio, plane-probes, thin-limit
+convergence): pooled <r> rises monotonically 0.4540 -> 0.5568 over
+t = 0.02 -> 0.15, continuous with Kirchhoff at the thin end and reaching
+GOE by t ~ 0.1 -- the paper's thick-plate prediction (shear channels
+increase net coupling toward GOE) confirmed.
