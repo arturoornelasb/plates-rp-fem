@@ -61,7 +61,7 @@ python experiments/e01_validation/step1_validate.py
 | E6 | designed contact coupling + P10 control law | eigenvector dichotomy crisp (IPR 0.033 vs 0.19); control law 3.6% in-domain; spacing dichotomy 2.3 sigma (v4 full-rank registered) |
 | E7 | Protocol A mixed + nu sweep | mixed config = Levy-separable -> ON Poisson (hierarchy confirmed); coupling material-tunable, matches T1 value-by-value |
 | E8 | unified Gap A across geometries + Dq | eigenvector hierarchy mirrors E5: adapted -> flat IPR (ellipse = tiny SPARSE coupling); unadapted -> scaling D2 0.22-0.50; RP-vs-PBRM split, decision at N~2048 |
-| E10 | annulus (second Poisson control) | running |
+| E10 | annulus (second Poisson control) | SUPPORTS: Poisson 0.3734+/-0.0076; 4x4 J/Y/I/K determinant FEM-cross-validated at 4.3e-4 |
 | E11 | Mindlin thick plates (thickness sweep) | running |
 
 ## License
