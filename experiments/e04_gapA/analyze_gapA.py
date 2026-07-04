@@ -108,7 +108,31 @@ def main():
     md.append("\nCaveats: D2 from a representational ladder at these N carries "
               "the T1 basis-dependence systematic (both registered bases "
               "reported); ladders reach N = 324 (paper registers 256--2048; "
-              "larger rungs need quarter-plate reduction -- future work).")
+              "larger rungs need quarter-plate reduction -- future work). "
+              "Sigma^2 beyond L ~ 10 is unfolding-limited (polynomial unfolding "
+              "absorbs long-wavelength fluctuations); the L <= 5 values are the "
+              "reliable ones and sit intermediate, mildly below Poisson.")
+    md.append(
+        "\nDiscussion. The beam-product basis represents the true modes almost "
+        "losslessly (captured p = 0.999--1.000), and there each free-plate "
+        "mode is ~1--2 products (IPR ~ 0.7): the true operator at these mode "
+        "numbers is a WEAKLY PERTURBED SEPARABLE system with sparse strong "
+        "pair-hybridizations -- microscopically, exactly the avoided crossings "
+        "of the original Lopez-Gonzalez observations -- rather than the dense "
+        "ergodic mixing of the RP non-ergodic phase. Combined with the "
+        "campaign's spacing results (intermediate <r> ~ 0.44--0.49 for "
+        "cornered geometries), the accessible-N picture is 'sparse/weak V "
+        "with strong local hybridizations': intermediate spacing statistics "
+        "WITHOUT RP-fractal eigenvectors. Two sharpenings for the paper: "
+        "(i) the true-operator D2 is LOWER than the Ritz-model values (beam "
+        "fixed-N 0.25 vs T1's 0.35--0.42) -- the projection/model route "
+        "overestimates coupling density, as T1's truncation caveat "
+        "anticipated; (ii) since the effective coupling grows with mode index "
+        "(E2 transition; E3b trend), the RP fractal phase may only develop at "
+        "ladders beyond N ~ 324 -- the paper's registered 2048 rung, reachable "
+        "with quarter-plate reduction, is where this verdict could still "
+        "flip. At accessible N, observable 1 favors the banded/weak-coupling "
+        "reading.")
 
     # ---------------- figures ----------------
     fig, axes = plt.subplots(1, 2, figsize=(10, 4.2))

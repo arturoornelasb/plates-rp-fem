@@ -102,12 +102,19 @@ control: 0.391). Not a contradiction of the published COMSOL sector study
 (10^4 modes, angle sweep) and not yet a confirmation; a decisive comparison
 needs longer ladders or their exact angles.
 
-## E4 -- Gap A on the true operator [PLANNED]
+## E4 -- Gap A on the true operator [DONE 2026-07-03 -- LOCALIZED-LEANING at N <= 324]
 
-Eigenvector statistics (IPR / D2 vs sector size N, Dq flatness, Sigma^2(L) to
-L >= 20) of FEM eigenmodes per symmetry sector. Two known constraints:
-(i) T1 basis-dependence -- FEM modes must be projected onto the registered
-reference basis (SS sines / FF beam products) before any IPR is computed,
-never the raw nodal basis; (ii) the Argyris uniform-mesh ceiling caps full-
-plate ladders, so large-N ladders need quarter-plate symmetry reduction
-(sector BCs on the midlines) and possibly a C0 interior-penalty formulation.
+First execution of the paper's decisive test on TRUE-operator modes (1200
+certified eigenpairs, vector residuals <= 8e-6, all gates 1200/1200, zero
+ambiguous labels). Result: IPR is N-INDEPENDENT in both registered bases
+(ladder D2 ~ 0.02--0.13 vs GOE ~1); in the near-lossless beam basis
+(captured p = 0.999--1.000) each free-plate mode is ~1--2 beam products
+(IPR ~ 0.7). Per the preregistered dichotomy this is the localized/banded
+side at accessible N: sparse strong pair-hybridizations (microscopically,
+the avoided crossings of the original observations) producing intermediate
+<r> WITHOUT RP-fractal eigenvectors. Sharpenings: the true-operator D2 is
+LOWER than the T1 Ritz-model values (the model route overestimates coupling
+density); and since effective coupling grows with mode index, the verdict
+could flip at the paper's registered N ~ 2048 rung -- quarter-plate
+reduction is the registered instrument for that follow-up. Sigma^2(L <= 5)
+intermediate, mildly below Poisson; larger L unfolding-limited.
