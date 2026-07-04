@@ -13,7 +13,7 @@
 for freely vibrating plates:\\ preliminary results}
 \author{J.~Arturo Ornelas Brand\\
 \small Independent Researcher, Aguascalientes, M\'exico}
-\date{July 3, 2026 --- draft v0.1 (companion to the ``Why Rosenzweig--Porter?'' program)}
+\date{July 4, 2026 --- draft v0.2 (companion to the ``Why Rosenzweig--Porter?'' program)}
 
 \begin{document}
 \maketitle
@@ -222,6 +222,63 @@ in the sine (left) and beam (right) registered bases, with GOE baselines.}
 \label{fig:e4}
 \end{figure}
 
+\subsection{E6: designed contact coupling and the control law}
+
+The companion's contact test, executed with certified mode shapes at contact
+points on two identical coupled plates (exact reduction: symmetric
+combinations lie in the coupling's kernel; the antisymmetric block feels
+$H_0+2\lambda C$ with $C_{ij}=q\,\phi_i(x_k)\phi_j(x_k)$). The
+\emph{eigenvector} dichotomy of the prediction is crisp --- dense-pattern
+mid-spectrum IPR $0.033$ (extended) vs.\ strip-confined $0.18$--$0.19$
+(localized), central post rank-1 as designed --- while the spacing dichotomy
+points the right way at $2.3\sigma$ (both patterns rank-deficient at 120
+quartets; a full-rank rerun is registered). The P10 \emph{control law} ---
+post position from the nodal maps, stiffness
+$\lambda=\Delta/(2q\phi_i^2(x^*))$ plus a closed-form second-order
+correction --- reproduces the designed splitting to $3.6\%$ at
+$\Delta=0.25\,d_{\rm loc}$ (first order alone: $19.7\%$), degrading exactly
+as the target pair dissolves into its neighbors; the validity boundary
+($\Delta\lesssim0.5\,d_{\rm loc}$) is itself predicted by the pair-content
+collapse.
+
+\subsection{E7: L\'evy configuration and material tunability}
+
+Protocol A's mixed configuration (free $x$-edges, simply supported
+$y$-edges) is the classical L\'evy-separable plate; the hierarchy therefore
+requires Poisson, and the measurement lands on the baseline
+($0.3973\pm0.0103$): one free edge pair does not suffice --- intermediate
+statistics require free edges that break \emph{every} product structure.
+The $\nu$-sweep reproduces the companion repository's Ritz values
+value-by-value ($\approx0.003$ agreement between independent methods):
+$\rmean$ rises monotonically $0.4208\to0.4497$ over $\nu=0.25$--$0.36$, so
+the effective coupling is \emph{material-tunable} (the Prediction-5 recast)
+rather than strictly material-independent.
+
+\subsection{E8: the eigenvector hierarchy across geometries}
+
+Repeating Gap~A with the same-domain simply supported eigenbasis (exact
+$M$-inner-product coefficients) for four geometries
+(Fig.~\ref{fig:e8}): the eigenvector structure \emph{mirrors} the E5
+spacing hierarchy. Adapted boundaries have flat-IPR sparse eigenvectors ---
+rectangle $\approx0.18$ ($D_2\approx0$, cross-validating E4
+method-to-method) and ellipse $\approx0.40$: the registered ellipse decider
+lands between its poles, \emph{tiny sparse coupling} ($\sim$2.5 SS modes per
+free mode, $N$-independent). Unadapted boundaries have genuinely
+\emph{scaling} eigenvectors --- triangle $D_2=0.27/0.36$, superellipse
+$p{=}10$ $D_2=0.22$--$0.50$ --- the RP-candidate regime, sitting exactly
+where the spacing statistics are strongest. The registered RP-vs-PBRM
+$D_q$ separator splits at these $N$ (superellipse flat-$D_q$/RP-leaning,
+triangle multifractal-leaning; both $D_2$ well below the P12 reference
+$0.76\pm0.15$), so that adjudication is registered for the $N\sim2048$
+rung.
+
+\begin{figure}[htb]\centering
+\includegraphics[width=0.6\textwidth]{figs/ipr_geometries.png}
+\caption{E8: sector-mean window IPR vs.\ representation truncation in the
+same-domain SS eigenbasis, all geometries, with GOE baselines.}
+\label{fig:e8}
+\end{figure}
+
 \section{Synthesis}
 
 Seven geometries fall on one hierarchy:
@@ -238,30 +295,35 @@ full coupling\\
 \bottomrule
 \end{tabular}
 \end{center}
-The free-edge origin of the coupling is confirmed directly (E2). What the
-data refine is the \emph{selector}: not corners, not curvature, but whether
-the boundary is adapted to a separable structure of the fourth-order
-operator --- with the rectangle's ``quasi-separability in the beam basis''
-(E4: modes $\approx$ single beam products) unifying the picture. At
-accessible mode numbers the coupling acts as sparse resonant hybridization
-(avoided crossings), not yet as the dense non-ergodic RP phase; whether the
-RP phase develops at higher rungs is the single most consequential open
-computation.
+The free-edge origin of the coupling is confirmed directly (E2), the
+L\'evy configuration (E7) adds an exactly-reduced member to the top tier,
+and the eigenvector program (E4, E8) shows the hierarchy is not only
+spectral: adapted boundaries carry sparse, $N$-independent eigenvector
+spreads (rectangle $\approx$ beam products; ellipse $\approx$ 2.5 SS modes),
+while unadapted boundaries carry genuinely scaling eigenvectors
+($D_2\approx0.2$--$0.5$) --- the RP-candidate regime living exactly where
+the spacing statistics are strongest. What the data refine is the
+\emph{selector}: not corners, not curvature, but whether the boundary is
+adapted to a separable structure of the fourth-order operator. The
+effective coupling is also material-tunable ($\lambda(\nu)$, E7) and
+post-designable with a quantitative control law (E6) --- both usable knobs
+for the experimental program. Whether the scaling eigenvectors of the
+unadapted tier become RP-fractal (flat $D_q$) or PBRM-multifractal at
+higher rungs is the single most consequential open computation.
 
 \section{In execution and pending registered tests}
 
-In execution at the time of this draft: \textbf{E6} (designed contact
-coupling --- the companion's contact test built directly from certified
-mode-shape values at contact points, plus an inverse-design demonstration of
-the control law $V_{ij}=\kappa\sum_k\phi_i(x_k)\phi_j(x_k)$: post placement
-and stiffness computed in closed form for a target hybridization) and
-\textbf{E7} (Protocol~A mixed boundary configuration; $\rmean(\nu)$ material
-independence). Pending, registered in the research plan: the annulus control
-(semi-analytic); Mindlin--Reissner thick plates; $D_q$ flatness and
-form-factor rival exclusion (power-law banded family) on the
-strongest-coupling geometries; Gap~A at $N\sim2048$ via quarter-plate
-reduction; the sector at the published study's exact angles; and comparison
-against the measured aluminum-plate spectra of Ref.~\cite{lopez2021}.
+In execution at the time of this draft revision: \textbf{E10} (annulus, the
+second exactly-reduced Poisson control, via a $4\times4$ $J/Y/I/K$
+free-edge determinant with FEM cross-validation) and \textbf{E11}
+(Mindlin--Reissner thickness sweep; formulation validated against the
+certified Kirchhoff spectrum in the thin limit). Pending, registered in the
+research plan: Gap~A at $N\sim2048$ via a $C^0$ interior-penalty
+discretization (the Argyris uniform-mesh ceiling is measured at
+$h\approx0.008$) --- this adjudicates both the RP-phase question and the
+$D_q$ separator; the sector at the published study's exact angles and mode
+counts; a full-rank rerun of the E6 dichotomy; and comparison against the
+measured aluminum-plate spectra of Ref.~\cite{lopez2021}.
 
 \section{Reproducibility}
 

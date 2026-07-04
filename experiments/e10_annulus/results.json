@@ -1,0 +1,27 @@
+{
+ "config": {
+  "nu": 0.33,
+  "r_in": 0.4,
+  "r_out": 1.0,
+  "x_max": 110.0,
+  "m_max": 120,
+  "fem_nr": 24,
+  "fem_k": 203,
+  "spacing_frac": 0.1
+ },
+ "n_class": 1345,
+ "r_pooled": [
+  0.3734409279605669,
+  0.007550189071235227,
+  1333
+ ],
+ "r_picket_mean": 0.8235619059397049,
+ "fem": {
+  "ndof": 39248,
+  "n_rigid": 3,
+  "n_star": 200,
+  "max_relerr": 0.0004247534009635993
+ },
+ "verdict": "SUPPORTS (annulus control Poisson; FEM cross-validated)",
+ "wall_time_s": 60.2
+}

@@ -147,3 +147,40 @@ reduction (where the RP phase could still appear); (b) longer sector
 ladders / the published study's exact angles; (c) Dq flatness and form-
 factor rival exclusion on the strongest-coupling geometries (triangle,
 superellipse p = 10).
+
+## E6 -- Designed contact coupling + control law [DONE 2026-07-04 -- PARTIAL/IN-DOMAIN]
+
+Two identical free plates coupled by post quartets (paper's contact test,
+built directly from certified mode shapes; exact antisym-block reduction).
+Eigenvector dichotomy CRISP (dense IPR 0.033 extended vs banded 0.18-0.19
+localized; central rank-1 control); spacing dichotomy directionally right at
+2.3 sigma (rank-deficiency capped; v4 with ~200 quartets registered). P10
+CONTROL LAW validated within its physical domain: lambda =
+Delta/(2 q phi_i(x*)^2) + closed-form 2nd-order correction gives 3.6% at
+Delta = 0.25 d_loc; the domain boundary (Delta ~ 0.5 d_loc) is predicted by
+pair-content collapse.
+
+## E7 -- Completeness [DONE 2026-07-04]
+
+(a) Protocol-A mixed config (free-x / SS-y) = the Levy-separable plate ->
+lands ON the Poisson baseline (0.3973 +/- 0.0103): the adaptedness hierarchy
+required this; one free edge pair does not suffice. (b) nu sweep: FEM
+reproduces the T1 Ritz bonus value-by-value (~0.003 agreement); the
+effective coupling is MATERIAL-TUNABLE (+0.029 over nu = 0.25..0.36,
+~3 sigma) -- Prediction-5 recast supported over strict material
+independence.
+
+## E8 -- Unified Gap A across geometries + Dq [DONE 2026-07-04]
+
+Same-domain SS-eigenbasis coefficients (exact M-inner products). The
+eigenvector hierarchy MIRRORS the E5 spacing hierarchy: adapted boundaries
+have flat-IPR sparse vectors (rectangle 0.18, cross-validating E4;
+ellipse 0.40 -- the registered decider lands on TINY SPARSE coupling, ~2.5
+SS modes per free mode, N-independent); unadapted boundaries have genuinely
+SCALING vectors (triangle D2 = 0.27/0.36; superellipse p=10 D2 =
+0.22-0.50) -- the RP-candidate regime sits exactly where the spacing
+statistics are strongest. RP-vs-PBRM adjudication split at these N
+(superellipse Dq-flat/RP-leaning; triangle multifractal-leaning); decision
+registered for the N ~ 2048 rung (C0-IP build).
+
+## E10/E11 [running 2026-07-04]: annulus control; Mindlin thickness sweep.
