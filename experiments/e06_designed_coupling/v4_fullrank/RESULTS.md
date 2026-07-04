@@ -24,3 +24,14 @@ Two identical free plates, all four parity sectors pooled (~95/sector), doubled 
 **Reading: PARTIAL -- see elements above**
 
 Control law (P10): to split the doubled level i by Delta, place the post quartet at the nodal-map point x* maximizing local selectivity and set lambda = Delta / (2 q phi_i(x*)^2), then correct with the closed-form second-order term sum_j (2 lam q phi_i phi_j)^2 / (E_i - E_j) -- all quantities readable from the mode shapes, none requiring the solver.
+
+## Addendum (v4 close-out)
+
+Raising the quartet count 120 -> 220 leaves the dense effective rank at
+~71-76/95: random contact patterns are intrinsically SMOOTHING operators
+whose singular values decay, so full rank is not reachable by adding posts
+and the spacing dichotomy plateaus at ~2.8 sigma. The registered follow-up
+is closed with this reading: the paper's contact prediction is carried by
+the crisp EIGENVECTOR dichotomy (extended 0.034 vs localized 0.20) plus the
+in-domain control law; the pooled-<r> contrast saturates below the 3-sigma
+preregistration for intrinsic-rank reasons, not statistical ones.
