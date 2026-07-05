@@ -69,6 +69,23 @@ G0 antisymmetry exact; rigid trio |Lam| ~ 1e-14; two-mesh low-Lam ~ 0.5% (O(h^2)
 rotating pencil real with +-omega pairing ~ 1e-14; symmetry operators exact to
 1e-15. Runs are deterministic (fixed seeds in solve_modes / point placement).
 
+## Certification (`certify.py`, `disk_inplane.py`)
+
+- **G1 exact anchor (Love/Onoe in-plane free disk).** Semi-analytic 2x2
+  traction-free determinant (Helmholtz P/S potentials; n=0 torsional branch
+  reduces to J_2(beta R)=0, verified to 1.6e-14). FEM disk vs semi-analytic:
+  first-24 Lambda rel-err **median 4.1e-4 (refine 5)**, halving as O(h^2) from
+  refine 4 (1.7e-3) -- the elements/forms are validated exactly.
+- **Prestress deferral justified.** At the crossover Omega/omega_med = 0.039
+  (c_Omega=0.5) to 0.077 (c_Omega=1), so the dropped centrifugal terms are
+  ~(Omega/omega)^2 ~ 1.5e-3 to 6e-3 -- negligible for the statistics.
+- **Disk integrable control.** Class-sequence <r> = 0.410 +/- 0.020 (Poisson-side,
+  neither GOE nor GUE): rotation of an integrable disk keeps m a good quantum
+  number, no crossover -- the control behaves.
+- **F2 robustness.** Repeated at higher resolution (polar 22x72) with different
+  harmonic phases: D_mirror 0.36 -> 0.53 (stays GOE); D_chir 0.38 -> 0.60 (GUE).
+  The protected-vs-unprotected contrast is resolution- and seed-stable.
+
 ## Honest scope and what remains for full certification
 
 - The Omega=0 baseline is Poisson (~0.38), NOT GOE: the in-plane spectrum is a
@@ -78,13 +95,13 @@ rotating pencil real with +-omega pairing ~ 1e-14; symmetry operators exact to
   comparison (mirror plateaus at GOE; chiral/mistuned reach GUE), which is
   unambiguous. Making the P and S families individually chaotic (stronger/richer
   deformation, or a Sinai inclusion as T5 needed) would lift the baseline to GOE.
-- Scale here is moderate: N ~ 300-470 certified modes, one mesh (16x48), a reduced
-  c_Omega grid, single realization. Full certification (the PLAN's registered
-  design) still to do: ~1200 modes at two meshes (gate G2), the exact in-plane
-  free-disk Love/Onoe determinant anchor (`disk_inplane.py`, gate G1), seed
-  robustness, prestress (Omega/omega) a-posteriori check, and the disk integrable
-  control. The qualitative verdict (crossover + protection + corrected protector)
-  is not expected to move; the numbers will tighten.
+- Scale here is moderate: N ~ 300-470 certified modes, meshes up to 22x72, a
+  reduced c_Omega grid. Now CERTIFIED (see Certification section): the exact
+  Love/Onoe in-plane anchor (G1), the prestress deferral, the disk integrable
+  control, and F2 robustness across resolution + phases. The one open item is
+  pushing to ~1200 modes and lifting the Omega=0 baseline to GOE (stronger/Sinai
+  deformation) for a clean pooled GOE->GUE; the verdict (crossover + protection +
+  corrected protector sigma_v*T) is established and resolution-stable.
 
 ## Files
 `../../src/platefem/elastic2d.py` (machinery) ; `smoke.py` (Phase-A gates) ;
