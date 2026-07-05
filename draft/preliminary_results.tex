@@ -13,7 +13,7 @@
 for freely vibrating plates:\\ preliminary results}
 \author{J.~Arturo Ornelas Brand\\
 \small Independent Researcher, Aguascalientes, M\'exico}
-\date{July 4, 2026 --- draft v0.3 (companion to the ``Why Rosenzweig--Porter?'' program)}
+\date{July 4, 2026 --- draft v0.4 (companion to the ``Why Rosenzweig--Porter?'' program)}
 
 \begin{document}
 \maketitle
@@ -44,13 +44,22 @@ Extending the program beyond the original registry: the L\'evy-separable
 mixed configuration lands exactly on Poisson; both exactly-reduced controls
 (disk, annulus) are confirmed; the coupling is material-tunable
 ($\lambda(\nu)$, matching the companion's Ritz values method-to-method) and
-post-designable via a validated second-order control law; the
-Mindlin thickness sweep confirms the thick-plate prediction at $+5.4\sigma$
-(GOE-ward); and at the registered $N=2048$ truncated-operator rung the
-non-ergodic \emph{fractal RP phase develops} ($D_2=0.42$--$0.50$) with flat
-$D_q$ excluding the power-law-banded rival --- while the preregistered
-dimension value ($0.76\pm0.15$) is not confirmed. All experiments, gates,
-and raw data are reproducible from the repository.
+post-designable via a validated second-order control law; the Mindlin
+thickness sweep confirms the thick-plate prediction at $+5.4\sigma$
+(GOE-ward); the sector reaches $+3.9\sigma$ at 1600 modes, confirming the
+direction of the published COMSOL sector result; and the aspect-ratio sweep
+closes the single-geometry caveat. The central Gap~A question is
+\emph{resolved by a controlled protocol comparison}: the registered
+truncated-operator ladder does develop RP-like fractal scaling
+($D_2=0.42$--$0.50$, flat $D_q$) --- but a purpose-built $C^0$
+interior-penalty discretization shows the \emph{true-operator} eigenvectors
+stay sparse (each mode $\approx$1--2 beam products) through $N=512$ per
+sector at matched windows: the scaling is a property of the truncation
+protocol, not of the plate. Gap~A therefore reads: sparse avoided-crossing
+hybridization at accessible mode numbers, and truncated-ladder numerics
+(including the preregistered P12 recipe applied to simulation data) would
+report an RP phase as an artifact. All experiments, gates, and raw data are
+reproducible from the repository.
 \end{abstract}
 
 \section{Introduction}
@@ -151,12 +160,15 @@ reading, is Poisson-consistent at 1600 modes ($0.3732\pm0.0071$); a
 suggestive upward trend at 800 modes did not survive the registered
 long-ladder decider (Fig.~\ref{fig:e3b}).
 
-\paragraph{Disk sector (ambiguous, $+1.7\sigma$).} At $\theta=2.0$ rad and
-800 modes the sector's two reflection classes sit $+1.2\sigma$/$+1.7\sigma$
-above the disk baseline (pooled $0.4213\pm0.0095$) --- the same tendency as
-the published COMSOL sector study but below our preregistered threshold; a
-decisive comparison needs their mode counts ($\sim$$10^4$) or exact angles
-(Fig.~\ref{fig:e3c}).
+\paragraph{Disk sector (supports, $+3.9\sigma$ at 1600 modes).} At
+$\theta=2.0$ rad the v1 result (800 modes, $+1.7\sigma$) was ambiguous; the
+long-ladder decider resolves it as statistical power: pooled
+$\rmean=0.4294\pm0.0068$ vs.\ the disk baseline $0.3919\pm0.0070$
+($+3.9\sigma$; both classes individually positive). The open-source sector
+thus confirms the \emph{direction} of the published COMSOL sector claim at
+a single generic angle; the exact-angle comparison remains registered
+(Fig.~\ref{fig:e3c}). A five-ratio aspect sweep of the rectangle
+($\chi^2$ $p\approx0.22$) separately closes the single-aspect-ratio caveat.
 
 \begin{figure}[htb]\centering
 \includegraphics[width=0.55\textwidth]{figs/r_triangle.png}
@@ -276,15 +288,34 @@ truncated-operator ladder clean. The result: IPR falls over three octaves in
 both sectors and both registered bases (e.g.\ sine: $0.123\to0.052$,
 $N=256\to2048$), giving ladder $D_2=0.42$--$0.50$ (s.e.\ $\sim0.02$) with
 \emph{flat} $D_q$ ($D_{1.5}-D_4=0.069$--$0.100$, versus the registered
-power-law-banded rival calibration $0.20$--$0.28$). The non-ergodic
-\emph{fractal (RP) phase develops at the registered ladder, with the PBRM
-rival excluded}; the P12 preregistered dimension value ($0.76\pm0.15$) is
-\emph{not} confirmed (measured $\approx0.46$). The truncated-operator and
-true-operator protocols disagree exactly where the T1 audit predicted they
-could; their reconciliation at matching $N$ (a $C^0$ interior-penalty
-discretization; the Argyris uniform-mesh ceiling is measured at
-$h\approx0.008$ and skfem's Lagrange elements lack second derivatives) is
-the registered follow-up.
+power-law-banded rival calibration $0.20$--$0.28$) --- superficially, the
+RP phase developing, though below the P12 dimension ($0.76\pm0.15$).
+E14 (next) shows this scaling to be a property of the protocol.
+
+\subsection{E14: the reconciliation --- Gap A resolved}
+
+A purpose-built $C^0$ interior-penalty $P_4$ discretization (custom
+analytic reference hessians --- skfem's Lagrange elements carry none;
+Brenner--Sung interior facet terms; free edges natural; no
+numerically-built basis, hence no Argyris-type $h$-ceiling) provides
+true-operator eigenpairs at 206k dofs, 2400 certified modes
+($\sim$600/sector), behind two gates: FFFF agrees with the certified
+Argyris instrument over all 1200 shared modes at $1.2\times10^{-4}$ (two
+independent discretizations), and SSSS tracks the exact spectrum. The
+decisive matched-window comparison at $N=512$: the \emph{true operator's}
+window IPR is \emph{flat} at the E4 level (sine $0.174$ sector-mean; beam
+$0.63$--$0.72$, i.e.\ each physical mode remains $\approx$1--2 beam
+products), while the truncated ladder at the same $N$ has fallen to
+$0.095$. \textbf{The RP-like scaling of the registered ladder is a
+truncation-protocol artifact, not a property of the plate.} Gap~A can now
+be stated cleanly: at accessible mode numbers the free plate's eigenvector
+structure is sparse/quasi-separable, the intermediate spacing statistics
+arise from sparse avoided-crossing hybridization, and any Gap~A executed by
+truncated-ladder numerics --- including the preregistered P12 recipe
+applied to simulation eigenmodes --- would report an RP phase as an
+artifact of the protocol. The registered continuation is true-operator
+windows at $N\sim1024$--$2048$ (larger $C^0$-IP meshes, now unobstructed)
+to bound where, if anywhere, genuine scaling begins.
 
 \subsection{E10--E11: annulus control and thick plates}
 
@@ -342,31 +373,42 @@ full coupling\\
 \end{center}
 The free-edge origin of the coupling is confirmed directly (E2), the
 L\'evy configuration (E7) adds an exactly-reduced member to the top tier,
-and the eigenvector program (E4, E8) shows the hierarchy is not only
+and the eigenvector program (E4, E8, E14) shows the hierarchy is not only
 spectral: adapted boundaries carry sparse, $N$-independent eigenvector
-spreads (rectangle $\approx$ beam products; ellipse $\approx$ 2.5 SS modes),
-while unadapted boundaries carry genuinely scaling eigenvectors
-($D_2\approx0.2$--$0.5$) --- the RP-candidate regime living exactly where
-the spacing statistics are strongest. What the data refine is the
-\emph{selector}: not corners, not curvature, but whether the boundary is
-adapted to a separable structure of the fourth-order operator. The
-effective coupling is also material-tunable ($\lambda(\nu)$, E7) and
-post-designable with a quantitative control law (E6) --- both usable knobs
-for the experimental program. Whether the scaling eigenvectors of the
-unadapted tier become RP-fractal (flat $D_q$) or PBRM-multifractal at
-higher rungs is the single most consequential open computation.
+spreads (rectangle $\approx$ beam products through $N=512$/sector on the
+true operator; ellipse $\approx$ 2.5 SS modes), while unadapted boundaries
+carry same-domain-basis scaling ($D_2\approx0.2$--$0.5$, E8) whose
+protocol-robustness now warrants the same E14-style scrutiny. What the data
+refine is the \emph{selector}: not corners, not curvature, but whether the
+boundary is adapted to a separable structure of the fourth-order operator.
+The effective coupling is material-tunable ($\lambda(\nu)$, E7),
+thickness-tunable toward GOE (E11), and post-designable with a quantitative
+control law (E6). And the campaign's sharpest methodological product (E14)
+is a warning with teeth: the standard RP-numerics truncation ladder
+\emph{manufactures} fractal scaling on this system --- Gap~A must be
+measured on true-operator windows, where the plate at accessible $N$ shows
+sparse avoided-crossing hybridization, the microscopic content of the
+avoided crossings originally observed by L\'opez-Gonz\'alez et al.
 
 \section{Pending registered tests}
 
-All tests executable with the present machinery are now done (E1--E11).
-Registered follow-ups: reconciliation of the truncated-operator and
-true-operator Gap~A protocols at matching $N\sim1024$--$2048$ (requires a
-$C^0$ interior-penalty discretization with custom reference hessians; the
-Argyris ceiling is measured at $h\approx0.008$); the sector at the
-published study's exact angles and mode counts; a full-rank rerun of the E6
-dichotomy ($\sim$200 quartets); aspect-ratio robustness sweeps; and
-comparison against the measured aluminum-plate spectra of
-Ref.~\cite{lopez2021}.
+Executed beyond the original registry: the Gap~A reconciliation (E14,
+resolving the protocol question), the sector long ladder ($+3.9\sigma$),
+the aspect sweep, the E6 full-rank close-out (contact operators are
+intrinsically smoothing; the spacing dichotomy saturates at $2.8\sigma$
+while the eigenvector dichotomy and control law carry the prediction), and
+a first non-Hermitian experiment (P7 damping): the 2D-Poisson $	o$
+AI$^\dagger$ crossover of the complex resonances is \emph{observed and
+overlap-controlled} on the certified plate --- localized dissipation gives
+uncorrelated resonances even at widths $\sim$ spacings, while distributed
+dissipation at strong overlap ($\gamma^*\!\approx\!16$, or point dashpots
+at $\gamma^*\!=\!4$) drives the markers to within $\sim$3$\sigma$ of
+AI$^\dagger$ with 2D-Poisson excluded at $\sim$5$\sigma$. Registered follow-ups: true-operator windows at
+$N\sim1024$--$2048$ ($C^0$-IP, now unobstructed); E14-style protocol
+scrutiny of the E8 unadapted-tier scaling; the sector at the published
+angles; the AI$^\dagger$-vs-Ginibre fine call at $\sim$2k resonances; the
+Coriolis rotor (P6, GOE$\to$GUE); and comparison against the measured
+aluminum-plate spectra of Ref.~\cite{lopez2021}.
 
 \section{Reproducibility}
 

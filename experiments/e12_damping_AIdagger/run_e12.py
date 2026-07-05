@@ -25,7 +25,7 @@ CFG = dict(
     # proved only weakly non-proportional: commutator 3e-2, near-diagonal C,
     # Poisson-like resonances; the P7 dense case needs distributed contacts)
     n_patches=24,
-    gammas=[0.5, 1.0, 2.0],
+    gammas=[2.0, 4.0, 8.0, 16.0],
     rayleigh=(2e-3, 2e-4),
     seed=7, n_baseline=1200, baseline_reps=6,
 )
@@ -129,7 +129,8 @@ def main():
         npp = max(cfg["patch_npts"] // cfg["n_patches"], 12)
         rr = cfg["patch_radius"] * np.sqrt(rng.random(npp))
         th = 2 * np.pi * rng.random(npp)
-        px, py = x0 + rr * np.cos(th), y0 + rr * np.sin(th)
+        px = np.clip(x0 + rr * np.cos(th), 0.005 * a, 0.495 * a)
+        py = np.clip(y0 + rr * np.sin(th), 0.005 * b, 0.495 * b)
         quartet += [np.vstack([px, py]), np.vstack([a - px, py]),
                     np.vstack([px, b - py]), np.vstack([a - px, b - py])]
 
@@ -144,6 +145,10 @@ def main():
             S = basis.probes(q) @ V[:, idx]
             Cpatch += S.T @ S
         Cpatch /= cfg["patch_npts"]
+        Cpoint = np.zeros_like(Cpatch)
+        for q in quartet:
+            Sp_ = basis.probes(q[:, :1]) @ V[:, idx]
+            Cpoint += Sp_.T @ Sp_
         # commutator diagnostic (non-proportionality)
         Kd = np.diag(Lam)
         comm = float(np.linalg.norm(Cpatch @ Kd - Kd @ Cpatch)
@@ -161,6 +166,10 @@ def main():
             r, c, nz = complex_spacing_ratios(sp)
             results["cases"][s]["runs"][f"g{g:g}"] = dict(
                 c0=float(c0), pairing_err=perr, r=r, c=c, n=nz)
+        c0 = 4.0 * d_om * 2.0 / np.median(np.diag(Cpoint))
+        sp, perr = qep_spectrum(Lam, c0 * Cpoint)
+        r, c, nz = complex_spacing_ratios(sp)
+        results["cases"][s]["point_g4"] = dict(r=r, c=c, n=nz)
         # proportional control at gamma* = 1
         alpha, beta = cfg["rayleigh"]
         c0 = 1.0 * d_om * 2.0 / np.median(alpha + beta * Lam)
@@ -169,9 +178,9 @@ def main():
         r, c, nz = complex_spacing_ratios(sp)
         results["cases"][s]["rayleigh"] = dict(r=r, c=c, n=nz,
                                                pairing_err=perr)
-        print(f"[{s}] comm {comm:.2e}; nonprop g=1: "
-              f"r={results['cases'][s]['runs']['g1']['r']:.4f} "
-              f"c={results['cases'][s]['runs']['g1']['c']:.4f}; rayleigh: "
+        print(f"[{s}] comm {comm:.2e}; nonprop g=4: "
+              f"r={results['cases'][s]['runs']['g4']['r']:.4f} "
+              f"c={results['cases'][s]['runs']['g4']['c']:.4f}; rayleigh: "
               f"r={r:.4f} c={c:.4f}")
 
     # ---------------- pooled verdict ----------------
@@ -197,6 +206,11 @@ def main():
         pooled[g] = (r_m, c_m, n_tot)
         md.append(f"| non-prop gamma*={g:g} (pooled) | {r_m:.4f} | {c_m:.4f} "
                   f"| {n_tot} | {pe:.1e} |")
+    rs = [results["cases"][s]["point_g4"] for s in SECTORS]
+    n_tot = sum(x["n"] for x in rs)
+    md.append(f"| point-dashpots gamma*=4 (pooled) | "
+              f"{np.sum([x['r']*x['n'] for x in rs])/n_tot:.4f} | "
+              f"{np.sum([x['c']*x['n'] for x in rs])/n_tot:.4f} | {n_tot} | - |")
     rs = [results["cases"][s]["rayleigh"] for s in SECTORS]
     n_tot = sum(x["n"] for x in rs)
     r_ray = float(np.sum([x["r"] * x["n"] for x in rs]) / n_tot)
@@ -204,12 +218,12 @@ def main():
     md.append(f"| Rayleigh control (pooled) | {r_ray:.4f} | {c_ray:.4f} "
               f"| {n_tot} | - |")
 
-    r1, c1, n1 = pooled[1.0]
+    r1, c1, n1 = pooled[4.0]
     se_est = 0.02 * np.sqrt(1200 / max(n1, 1))     # empirical marker sem scale
     d_ai = np.hypot(r1 - bl["AI_dagger"]["r"], c1 - bl["AI_dagger"]["c"])
     d_po = np.hypot(r1 - bl["Poisson2D"]["r"], c1 - bl["Poisson2D"]["c"])
     d_gi = np.hypot(r1 - bl["GinUE"]["r"], c1 - bl["GinUE"]["c"])
-    md.append(f"\n- marker distances at gamma* = 1: to AI-dagger {d_ai:.4f}, "
+    md.append(f"\n- marker distances at gamma* = 4: to AI-dagger {d_ai:.4f}, "
               f"to Poisson2D {d_po:.4f}, to GinUE {d_gi:.4f} "
               f"(marker scale se ~ {se_est:.4f})")
     if d_ai < d_po and d_ai < 3 * se_est and d_po > 5 * se_est:
