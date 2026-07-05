@@ -110,3 +110,15 @@ reason: a surviving antiunitary symmetry; a specific ingredient -- mistuning
 / causal mask -- breaks it). The bladed-disk FE re-analysis remains the
 "medio-solo" experimental variant for the collaboration; E15 is the
 self-contained in-silico realization.
+
+## AMENDMENT (2026-07-05, post-execution + review)
+
+The preregistered protector was WRONG: for the in-plane vector field the
+Coriolis form G0 COMMUTES with R_pi (both fields rotate; the cross product
+is invariant) and ANTI-commutes with sigma_v -- so the surviving antiunitary
+is sigma_v * T, not R_pi * T. Measured at machine precision (G0 gate in
+RESULTS) and confirmed behaviorally: the C2 star is NOT protected (crosses
+to GUE per R_pi class); the MIRROR star is the protected control, and
+point-mass mistuning must break sigma_v (asymmetric positions), as executed
+in F3. Design roles of D_prot and D_mirror are therefore swapped relative
+to sections 2 and 4 above; readings F2/F3/F4 carry over with that swap.

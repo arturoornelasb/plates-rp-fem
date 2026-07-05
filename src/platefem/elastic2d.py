@@ -285,14 +285,22 @@ def solve_rotor(Lam, G0m, Omega, Mpts=None, delta=0.0, real_tol=1e-6):
                 n_pos=len(pos), n_neg=len(neg))
 
 
-def parity_adapt_reduce(K, M, G0, X, S):
+def parity_adapt_reduce(K, M, G0, X, S, lam_cap=None):
     """Reduce (K,M,G0) onto the certified span in a sigma-PARITY-ADAPTED,
     M-orthonormal basis (using the exact symmetry operator S). Because S is
     M-orthogonal (S^T M S = M) the even/odd subspaces are M-orthogonal; splitting
     the (possibly cluster-mixed) certified modes X into clean parity blocks makes
     the reduced G0m EXACTLY block-off-diagonal when S anticommutes with G0
     (sigma_v case) -- restoring the sigma_v*T orthogonal-class structure that
-    cluster-mixed vectors destroy. Returns (Lam, G0m, labels, Xn)."""
+    cluster-mixed vectors destroy. Returns (Lam, G0m, labels, Xn).
+
+    lam_cap (review fix, 2026-07-05): the wrong-parity NOISE components of the
+    certified vectors (norm ~ solver residual) survive the 1e-10 Gram keep
+    threshold and appear as spurious directions whose Rayleigh quotients land
+    ABOVE the certified band (measured: 296/296 in-band levels match the
+    certified spectrum to 1e-6 while ~170 junk levels sit above it; effect on
+    verdict cells <= 0.5 sigma, but uncontrolled by design). Pass
+    lam_cap = max certified eigenvalue to truncate each parity block there."""
     def orth(Y):
         B = 0.5 * (Y.T @ (M @ Y) + (Y.T @ (M @ Y)).T)
         ev, U = np.linalg.eigh(B)
@@ -305,6 +313,9 @@ def parity_adapt_reduce(K, M, G0, X, S):
     cols, Lam, lab = [], [], []
     for Yb, s in [(orth(0.5 * (X + SX)), 1), (orth(0.5 * (X - SX)), -1)]:
         eb, Wb = np.linalg.eigh(0.5 * (Yb.T @ (K @ Yb) + (Yb.T @ (K @ Yb)).T))
+        if lam_cap is not None:
+            keep = eb <= lam_cap * (1.0 + 1e-8)
+            eb, Wb = eb[keep], Wb[:, keep]
         cols.append(Yb @ Wb)
         Lam.append(eb)
         lab.append(np.full(len(eb), s))

@@ -113,3 +113,37 @@ expected to move.
 `../../src/platefem/elastic2d.py`, `../../src/platefem/disk_inplane.py` (machinery);
 `smoke.py`, `certify.py`, `baseline_scan.py`, `probe_f2.py`, `probe_f3.py`,
 `probe_crossover.py`, `probe_protection.py`, `PHASE_A_NOTES.md`.
+
+## Independent review (2026-07-05, reviewing agent)
+
+VERIFIED: (i) the sigma_v*T-vs-R_pi*T correction is right -- confirmed by
+independent derivation (R_pi rotates both vector fields, leaving the cross
+product invariant -> commutes with G0; sigma_v flips it -> anticommutes) on
+top of the machine-precision operator-algebra gate; (ii) the Coriolis form
+sign matches -2 rho Omega z x u-dot; (iii) the pencil linearization is
+algebraically correct; (iv) the F3 headline table reproduces exactly; (v)
+the modal-reduction Poisson artifact fix (eigendecompose reduced K) is a
+real catch, correctly executed.
+
+FOUND AND FIXED (latent, measured benign): parity_adapt_reduce admitted
+the wrong-parity NOISE components of the certified vectors through its
+1e-10 Gram threshold -- 466 levels from 300 modes, of which 296 match the
+certified spectrum 1:1 to 1e-6 and ~170 junk directions land ABOVE the
+certified band. Impact on verdict cells <= 0.5 sigma (measured), but the
+channel was uncontrolled: lam_cap band truncation added to the library
+(elastic2d.parity_adapt_reduce) and the decisive tables rerun
+(review_rerun.py) with n and sem quoted:
+
+- D_chir: 0.5347(160) -> 0.6236(134) over c_Om = 0 -> 1  (crossover +4.3
+  sigma; GOE at rest, GUE-side rotating).
+- D_mirror protected: 0.514-0.542 (+/-0.016) at all speeds = GOE.
+- Two-axis: protected row {0.542, 0.527} vs mistuned row {0.576, 0.637}:
+  protected-vs-mistuned separation 5.2 sigma at c_Om = 2. Verdict SUPPORTS
+  stands, sharpened.
+
+OPEN NOTE: with the junk band removed, strong-coupling cells slightly
+overshoot GUE (0.624 +/- 0.013, 0.637 +/- 0.014 vs 0.5996; +1.8 to +2.7
+sigma) -- finite-n or mild super-GUE rigidity at strong gyroscopic mixing;
+to be settled by the registered full-scale (1200-mode) run.
+
+DOC FIX: PLAN.md still stated the R_pi*T protector; amended.
