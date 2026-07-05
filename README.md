@@ -62,7 +62,11 @@ python experiments/e01_validation/step1_validate.py
 | E7 | Protocol A mixed + nu sweep | mixed config = Levy-separable -> ON Poisson (hierarchy confirmed); coupling material-tunable, matches T1 value-by-value |
 | E8 | unified Gap A across geometries + Dq | eigenvector hierarchy mirrors E5: adapted -> flat IPR (ellipse = tiny SPARSE coupling); unadapted -> scaling D2 0.22-0.50; RP-vs-PBRM split, decision at N~2048 |
 | E10 | annulus (second Poisson control) | SUPPORTS: Poisson 0.3734+/-0.0076; 4x4 J/Y/I/K determinant FEM-cross-validated at 4.3e-4 |
-| E9 | Gap A at the registered N=2048 rung | RP PHASE DEVELOPS: D2 = 0.42-0.50 with flat Dq (PBRM excluded); P12's D2 = 0.76 not confirmed |
+| E9 | Gap A at the registered N=2048 rung | truncated ladder shows D2 = 0.42-0.50 flat-Dq -- REINTERPRETED by E14 as a protocol artifact |
+| E12 | P7 damping -> AI-dagger | v1 single-patch: Poisson-like (weak non-proportionality); v2 distributed running |
+| E13 | aspect-ratio sweep | ROBUST (chi2 p ~ 0.22); caveat closed |
+| E3c v2 | sector long ladder | SUPPORTS +3.9 sigma -- confirms the published sector direction |
+| E14 | Gap A reconciliation (C0-IP true operator) | PROTOCOL ARTIFACT: true-operator IPR flat through N = 512/sector; Gap A must be stated on true-operator windows |
 | E11 | Mindlin thick plates (thickness sweep) | SUPPORTS +5.4 sigma: <r> 0.454 -> 0.557 over t = 0.02 -> 0.15, GOE-ward |
 
 ## License

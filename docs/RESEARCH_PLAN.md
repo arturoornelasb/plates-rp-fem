@@ -213,3 +213,35 @@ convergence): pooled <r> rises monotonically 0.4540 -> 0.5568 over
 t = 0.02 -> 0.15, continuous with Kirchhoff at the thin end and reaching
 GOE by t ~ 0.1 -- the paper's thick-plate prediction (shear channels
 increase net coupling toward GOE) confirmed.
+
+## E14 -- Gap A reconciliation [DONE 2026-07-04 -- PROTOCOL ARTIFACT]
+
+The C0-IP instrument (custom analytic-hessian P4 Lagrange + Brenner-Sung
+interior penalty; no ElementGlobal ceiling) resolves the E4/E8-vs-E9
+contradiction: true-operator window IPR is FLAT through N = 512/sector
+(sine 0.174 sector-mean; beam 0.63-0.72 = modes remain ~1-2 beam products)
+where the registered truncated ladder falls to 0.095. E9's RP-like scaling
+is a property of the truncation protocol. GAP A, stated cleanly: at
+accessible mode numbers the true free-plate operator is in the
+sparse/quasi-separable regime; truncated-ladder numerics (incl. the P12
+recipe on COMSOL data) would report RP as an artifact. Gates: G2 FFFF vs
+certified Argyris N* = 1200/1200 at 1.2e-4; G1 SSSS N* = 1099/2400
+(ladders use modes within gate range). Registered next: true-operator
+windows at N ~ 1024-2048 (larger C0-IP meshes) to bound where/if genuine
+scaling begins.
+
+## E3c v2 / E13 / E6 v4 [DONE 2026-07-04]
+
+Sector at 1600 modes: SUPPORTS +3.9 sigma (S +2.8, A +3.5) -- the v1
+ambiguity was statistical power; confirms the published sector direction at
+a generic angle. Aspect sweep: chi2 p ~ 0.22 across five ratios -> robust.
+E6 v4: dense contact rank saturates intrinsically (~75/95); spacing
+dichotomy plateaus at 2.8 sigma; carried result = eigenvector dichotomy +
+in-domain control law.
+
+## E12 -- P7 damping [v1 CHALLENGES-as-run; v2 distributed running]
+
+Single-patch damping is only weakly non-proportional (commutator 3e-2,
+near-diagonal modal C): resonances shift quasi-independently -> 2D-Poisson
+markers. Physical lesson recorded; v2 with 24 distributed quartets (the
+dense-contact analog) is the fair realization of the P7 dense case.

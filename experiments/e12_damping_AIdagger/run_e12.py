@@ -21,6 +21,10 @@ CFG = dict(
     mesh=(96, 60), n_modes=1203,
     n_per_sector=295,
     patch_center=(0.2231, 0.1372), patch_radius=0.06, patch_npts=200,
+    # v2: DISTRIBUTED dissipation -- 24 patch quartets (single-patch damping
+    # proved only weakly non-proportional: commutator 3e-2, near-diagonal C,
+    # Poisson-like resonances; the P7 dense case needs distributed contacts)
+    n_patches=24,
     gammas=[0.5, 1.0, 2.0],
     rayleigh=(2e-3, 2e-4),
     seed=7, n_baseline=1200, baseline_reps=6,
@@ -118,12 +122,16 @@ def main():
           f"({time.time()-t00:.1f} s)")
 
     # patch quadrature points (disk quartet, mirror images -> sector-pure)
-    x0, y0 = cfg["patch_center"]
-    rr = cfg["patch_radius"] * np.sqrt(rng.random(cfg["patch_npts"]))
-    th = 2 * np.pi * rng.random(cfg["patch_npts"])
-    px, py = x0 + rr * np.cos(th), y0 + rr * np.sin(th)
-    quartet = [np.vstack([px, py]), np.vstack([a - px, py]),
-               np.vstack([px, b - py]), np.vstack([a - px, b - py])]
+    quartet = []
+    for _ in range(cfg["n_patches"]):
+        x0 = rng.uniform(0.06 * a, 0.44 * a)
+        y0 = rng.uniform(0.06 * b, 0.44 * b)
+        npp = max(cfg["patch_npts"] // cfg["n_patches"], 12)
+        rr = cfg["patch_radius"] * np.sqrt(rng.random(npp))
+        th = 2 * np.pi * rng.random(npp)
+        px, py = x0 + rr * np.cos(th), y0 + rr * np.sin(th)
+        quartet += [np.vstack([px, py]), np.vstack([a - px, py]),
+                    np.vstack([px, b - py]), np.vstack([a - px, b - py])]
 
     results["cases"] = {}
     for s in SECTORS:
