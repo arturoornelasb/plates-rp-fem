@@ -299,10 +299,18 @@ def parity_adapt_reduce(K, M, G0, X, S):
         keep = ev > 1e-10 * ev[-1]
         return Y @ (U[:, keep] / np.sqrt(ev[keep]))
     SX = S @ X
-    Ye, Yo = orth(0.5 * (X + SX)), orth(0.5 * (X - SX))
-    Xn = np.hstack([Ye, Yo])
-    lab = np.array([1] * Ye.shape[1] + [-1] * Yo.shape[1])
-    Lam = np.diag(Xn.T @ (K @ Xn))
+    # diagonalize K WITHIN each parity block (K commutes with S) -> true
+    # eigenvalues + clean parity eigenvectors (diag(X'KX) alone would discard the
+    # off-diagonal K coupling of cluster-mixed vectors and fake Poisson).
+    cols, Lam, lab = [], [], []
+    for Yb, s in [(orth(0.5 * (X + SX)), 1), (orth(0.5 * (X - SX)), -1)]:
+        eb, Wb = np.linalg.eigh(0.5 * (Yb.T @ (K @ Yb) + (Yb.T @ (K @ Yb)).T))
+        cols.append(Yb @ Wb)
+        Lam.append(eb)
+        lab.append(np.full(len(eb), s))
+    Xn = np.hstack(cols)
+    Lam = np.concatenate(Lam)
+    lab = np.concatenate(lab)
     G0m = Xn.T @ (G0 @ Xn)
     G0m = 0.5 * (G0m - G0m.T)
     return np.asarray(Lam), G0m, lab, Xn
@@ -316,9 +324,14 @@ def modal_reduce(K, M, G0, X):
     B = X.T @ MX
     # symmetric orthonormalization w.r.t. M
     ev, U = np.linalg.eigh(0.5 * (B + B.T))
-    T = U / np.sqrt(np.clip(ev, 1e-14, None))
+    keep = ev > 1e-10 * ev[-1]
+    T = U[:, keep] / np.sqrt(ev[keep])
     Xn = X @ T
-    Lam = np.diag(Xn.T @ (K @ Xn))
+    # diagonalize the reduced K (NOT diag(): that would drop the off-diagonal
+    # coupling of cluster-mixed certified vectors and fake a Poisson spectrum).
+    Km = 0.5 * (Xn.T @ (K @ Xn) + (Xn.T @ (K @ Xn)).T)
+    Lam, W = np.linalg.eigh(Km)
+    Xn = Xn @ W
     G0m = Xn.T @ (G0 @ Xn)
     G0m = 0.5 * (G0m - G0m.T)                        # enforce antisymmetry
     return np.asarray(Lam), G0m, Xn
