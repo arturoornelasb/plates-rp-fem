@@ -99,17 +99,151 @@ def star_basis(nrefine, harmonics, R=1.0):
     return m, _vector_basis(m)
 
 
+def star_polar_basis(nrings, n_th, harmonics, R=1.0):
+    """Structured polar mesh of a star r(theta) = R (1 + sum a_k cos(k th+phi_k)):
+    a center node + nrings rings of n_th angular nodes. n_th MUST be even. The
+    node set respects, EXACTLY as index permutations,
+      sigma_v (theta -> -theta)      when r is even (cos, phi in {0, pi}),
+      R_pi    (theta -> theta + pi)  when r has even k only,
+    so modes carry exact symmetry parity -- required for clean per-class <r>.
+    Returns (mesh, basis, meta) with meta['theta'], meta['n_th'], meta['nrings']."""
+    assert n_th % 2 == 0, "n_th must be even for exact R_pi / sigma_v node maps"
+    th = 2.0 * np.pi * np.arange(n_th) / n_th
+    rmap = np.ones(n_th)
+    for k, a, phi in harmonics:
+        rmap = rmap + a * np.cos(k * th + phi)
+    if rmap.min() <= 0.05:
+        raise ValueError(f"star radial map too thin: min={rmap.min():.3f}")
+    # ring nodes: index(i,j) = 1 + (i-1)*n_th + j, i = 1..nrings ; center = 0.
+    pts = [(0.0, 0.0)]
+    for i in range(1, nrings + 1):
+        frac = i / nrings
+        for j in range(n_th):
+            r = R * frac * rmap[j]
+            pts.append((r * np.cos(th[j]), r * np.sin(th[j])))
+
+    def rn(i, j):
+        return 1 + (i - 1) * n_th + (j % n_th)
+
+    tris = []
+    for j in range(n_th):                         # center fan (already symmetric)
+        tris.append([0, rn(1, j), rn(1, j + 1)])
+    # ring quads split from their CENTROID into 4 tris: symmetric under BOTH
+    # sigma_v (theta->-theta) and R_pi (theta->theta+pi), unlike a fixed diagonal.
+    cbase = len(pts)
+    for i in range(1, nrings):
+        for j in range(n_th):
+            A, B = rn(i, j), rn(i, j + 1)
+            C, D = rn(i + 1, j + 1), rn(i + 1, j)
+            c = cbase + (i - 1) * n_th + j
+            pts.append((0.25 * (pts[A][0] + pts[B][0] + pts[C][0] + pts[D][0]),
+                        0.25 * (pts[A][1] + pts[B][1] + pts[C][1] + pts[D][1])))
+            tris += [[c, A, B], [c, B, C], [c, C, D], [c, D, A]]
+    p = np.array(pts).T
+    mesh = MeshTri(p.copy(), np.array(tris).T.copy())
+    return mesh, _vector_basis(mesh), dict(theta=th, n_th=n_th, nrings=nrings)
+
+
+# ----------------------- symmetry-class separation --------------------------
+def _probe_vals(basis, pts):
+    """(Vx, Vy) sparse->dense probe operators returning per-point components.
+    basis.probes on a vector element returns interleaved (x,y) rows."""
+    pts = np.asarray(pts, float)
+    npts = pts.shape[1]
+    P = basis.probes(pts).tocsr()                # rows blocked: [all x; all y]
+    return P[:npts, :], P[npts:, :]              # (Vx, Vy), each (npts, ndof)
+
+
+def parity_classes(basis, X, kind, harmonics, R=1.0, npts=600, inset=0.92, seed=3):
+    """Classify certified modes X (columns, Omega=0) by an EXACT domain symmetry.
+    kind='mirror_x' (sigma_v about x): image (x,-y), vector (u_x,-u_y).
+    kind='rpi'      (R_pi about z):    image (-x,-y), vector (-u_x,-u_y).
+    Sample points strictly inside the star r(theta)=R(1+sum a_k cos(k th+phi))
+    (radius = u * inset * r(theta)); the image of an interior star point is also
+    interior for the relevant symmetry, so probes never leave the mesh.
+    Returns (labels in {+1,-1,0}, c); 0 = ambiguous (|c| < 0.8)."""
+    rng = np.random.default_rng(seed)
+    ang = rng.uniform(0, 2 * np.pi, npts)
+    rth = np.ones(npts)
+    for k, a, phi in harmonics:
+        rth = rth + a * np.cos(k * ang + phi)
+    rad = R * inset * rth * np.sqrt(rng.uniform(0, 1, npts))
+    p = np.vstack([rad * np.cos(ang), rad * np.sin(ang)])
+    if kind == "mirror_x":
+        pim = np.vstack([p[0], -p[1]]); sx, sy = 1.0, -1.0
+    elif kind == "rpi":
+        pim = np.vstack([-p[0], -p[1]]); sx, sy = -1.0, -1.0
+    else:
+        raise ValueError(kind)
+    Vx, Vy = _probe_vals(basis, p)
+    Wx, Wy = _probe_vals(basis, pim)
+    A = np.vstack([Vx @ X, Vy @ X])              # field at p        (2*npts, Nm)
+    B = np.vstack([sx * (Wx @ X), sy * (Wy @ X)])  # S-transformed field
+    num = np.einsum("ij,ij->j", A, B)
+    c = num / np.sqrt(np.einsum("ij,ij->j", A, A) * np.einsum("ij,ij->j", B, B))
+    lab = np.where(np.abs(c) < 0.8, 0, np.sign(c)).astype(int)
+    return lab, c
+
+
+def build_symop(basis, kind, tol=1e-7):
+    """Exact discrete symmetry operator S (signed dof permutation) for a vector
+    P2 basis on a mesh that respects the symmetry:
+      kind='mirror_x' (sigma_v about x): loc (x,y)->(x,-y), (u_x,u_y)->(u_x,-u_y)
+      kind='rpi'      (R_pi about z):    loc (x,y)->(-x,-y), (u_x,u_y)->(-u_x,-u_y)
+    Returns scipy.sparse S (ndof x ndof), orthogonal involution (S@S = I) IFF the
+    mesh is symmetric to `tol`. Raises if an image dof location is missing."""
+    from scipy.sparse import coo_matrix
+    from scipy.spatial import cKDTree
+    ix, iy = basis.split_indices()               # x-comp dofs, y-comp dofs
+    L = basis.doflocs[:, ix]                      # scalar-dof locations (2, m)
+    m = L.shape[1]
+    if kind == "mirror_x":
+        tgt = np.vstack([L[0], -L[1]]); sgx, sgy = 1.0, -1.0
+    elif kind == "rpi":
+        tgt = np.vstack([-L[0], -L[1]]); sgx, sgy = -1.0, -1.0
+    else:
+        raise ValueError(kind)
+    tree = cKDTree(L.T)
+    dist, perm = tree.query(tgt.T, k=1)
+    if dist.max() > tol:
+        raise RuntimeError(f"symop {kind}: image dof missing (max match dist "
+                           f"{dist.max():.1e} > tol {tol}); mesh not symmetric")
+    rows = np.concatenate([ix, iy])
+    cols = np.concatenate([ix[perm], iy[perm]])
+    data = np.concatenate([np.full(m, sgx), np.full(m, sgy)])
+    return coo_matrix((data, (rows, cols)), shape=(basis.N, basis.N)).tocsr()
+
+
+def sym_residuals(S, K, M, G0):
+    """T5-style check: how exactly does S act on the operators.
+      S involution : ||S@S - I||
+      commutes K   : ||S K S - K|| / ||K||     (want ~0: sigma_v, R_pi keep K,M)
+      commutes M   : ||S M S - M|| / ||M||
+      G0 sign      : ||S G0 S - G0|| and ||S G0 S + G0|| (Coriolis: sigma_v
+                     ANTI-commutes -> +G0 residual ~0; R_pi COMMUTES -> -G0 ~0)."""
+    import scipy.sparse as sp
+    n = K.shape[0]
+    I = sp.identity(n, format="csr")
+    def rel(A, B):
+        return float(sp.linalg.norm(A - B) / (sp.linalg.norm(B) + 1e-300))
+    SKS, SMS, SGS = S @ K @ S, S @ M @ S, S @ G0 @ S
+    return dict(involution=float(sp.linalg.norm(S @ S - I)),
+                commute_K=rel(SKS, K), commute_M=rel(SMS, M),
+                G0_anticommute=rel(SGS, -G0), G0_commute=rel(SGS, G0))
+
+
 # ----------------------- point-mass mistuning (modal) -----------------------
 def point_mass_modal(basis, X, points):
     """Modal mistuning matrix M_pts,ij = sum_k phi_i(x_k) . phi_j(x_k), where
     phi_i are the certified Omega=0 modes (columns of X) and points is (2, npts).
     Returns the real-symmetric N x N modal matrix (unit total point mass /
     normalized so that ||M_pts|| is O(mean spacing) after the c_delta scaling)."""
-    P = basis.probes(np.asarray(points, float))     # (npts * ncomp, ndof) sparse
-    Vals = P @ X                                     # (npts*2, Nmodes)
+    points = np.asarray(points, float)
     npts = points.shape[1]
-    Vx = Vals[0::2, :]                               # x-component at each point
-    Vy = Vals[1::2, :]
+    P = basis.probes(points).tocsr()                 # rows blocked: [all x; all y]
+    Vals = P @ X                                      # (npts*2, Nmodes)
+    Vx = Vals[:npts, :]                               # x-component at each point
+    Vy = Vals[npts:, :]
     # sum over points of outer product of the vector value phi_i(x_k).phi_j(x_k)
     Mpts = Vx.T @ Vx + Vy.T @ Vy                     # (Nmodes, Nmodes)
     assert Vx.shape[0] == npts
@@ -149,6 +283,29 @@ def solve_rotor(Lam, G0m, Omega, Mpts=None, delta=0.0, real_tol=1e-6):
                      (pos[n - 1] if n else 1.0)) if n else np.nan
     return dict(omega=pos, max_imag=max_imag, pair_err=pair_err,
                 n_pos=len(pos), n_neg=len(neg))
+
+
+def parity_adapt_reduce(K, M, G0, X, S):
+    """Reduce (K,M,G0) onto the certified span in a sigma-PARITY-ADAPTED,
+    M-orthonormal basis (using the exact symmetry operator S). Because S is
+    M-orthogonal (S^T M S = M) the even/odd subspaces are M-orthogonal; splitting
+    the (possibly cluster-mixed) certified modes X into clean parity blocks makes
+    the reduced G0m EXACTLY block-off-diagonal when S anticommutes with G0
+    (sigma_v case) -- restoring the sigma_v*T orthogonal-class structure that
+    cluster-mixed vectors destroy. Returns (Lam, G0m, labels, Xn)."""
+    def orth(Y):
+        B = 0.5 * (Y.T @ (M @ Y) + (Y.T @ (M @ Y)).T)
+        ev, U = np.linalg.eigh(B)
+        keep = ev > 1e-10 * ev[-1]
+        return Y @ (U[:, keep] / np.sqrt(ev[keep]))
+    SX = S @ X
+    Ye, Yo = orth(0.5 * (X + SX)), orth(0.5 * (X - SX))
+    Xn = np.hstack([Ye, Yo])
+    lab = np.array([1] * Ye.shape[1] + [-1] * Yo.shape[1])
+    Lam = np.diag(Xn.T @ (K @ Xn))
+    G0m = Xn.T @ (G0 @ Xn)
+    G0m = 0.5 * (G0m - G0m.T)
+    return np.asarray(Lam), G0m, lab, Xn
 
 
 def modal_reduce(K, M, G0, X):
