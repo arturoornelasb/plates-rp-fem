@@ -13,7 +13,7 @@
 for freely vibrating plates:\\ preliminary results}
 \author{J.~Arturo Ornelas Brand\\
 \small Independent Researcher, Aguascalientes, M\'exico}
-\date{July 4, 2026 --- draft v0.4 (companion to the ``Why Rosenzweig--Porter?'' program)}
+\date{July 5, 2026 --- draft v0.5 (companion to the ``Why Rosenzweig--Porter?'' program)}
 
 \begin{document}
 \maketitle
@@ -58,8 +58,14 @@ sector at matched windows: the scaling is a property of the truncation
 protocol, not of the plate. Gap~A therefore reads: sparse avoided-crossing
 hybridization at accessible mode numbers, and truncated-ladder numerics
 (including the preregistered P12 recipe applied to simulation data) would
-report an RP phase as an artifact. All experiments, gates, and raw data are
-reproducible from the repository.
+report an RP phase as an artifact. Finally, an in-plane rotating-plate
+experiment delivers a mechanical GOE $\to$ GUE crossover together with its
+protection theorem: a chiral rotor lands exactly on GUE
+($0.5992\pm0.0071$ at $\sim$1080 spacings) while the mirror-symmetric rotor
+is pinned to GOE at every speed by the surviving antiunitary $\sigma_vT$
+(identified by a machine-precision operator gate), and asymmetric mistuning
+breaks that protection at $+7.8\sigma$. All experiments, gates, and raw
+data are reproducible from the repository.
 \end{abstract}
 
 \section{Introduction}
@@ -355,6 +361,56 @@ same-domain SS eigenbasis, all geometries, with GOE baselines.}
 \label{fig:e8}
 \end{figure}
 
+\subsection{E15: the Coriolis rotor --- a mechanical GOE $\to$ GUE crossover
+with its protection theorem}
+
+The unitary Dyson class requires breaking time reversal --- and, as the
+program's P11 analysis anticipated, breaking it \emph{completely}: uniform
+rotation alone leaves a generalized antiunitary symmetry intact and the
+statistics orthogonal. Since the flat Kirchhoff plate is Coriolis-blind
+about its normal, the realization is \emph{in-plane} (plane-stress)
+elastodynamics of a free 2D rotor, where the gyroscopic form
+$G(u,v)=2\rho\Omega\int(u_xv_y-u_yv_x)\,dA$ makes the rotating problem a
+Hermitian quadratic pencil with real frequencies. A machine-precision
+operator-algebra gate ($10^{-15}$, on structured polar meshes whose
+symmetries are exact dof permutations) identifies the surviving antiunitary
+--- correcting the preregistered guess: $G$ \emph{anti}-commutes with
+in-plane reflections and \emph{commutes} with $R_\pi$, so the protector is
+$\sigma_v T$, and a $C_2$-symmetric rotor is \emph{not} protected.
+
+At the registered full scale ($\sim$1080 spacings per point,
+Fig.~\ref{fig:e15}): a chiral (symmetry-free) rotor starts exactly at GOE
+($\rmean=0.5303\pm0.0077$) and lands \emph{exactly on GUE} at strong
+gyroscopic coupling ($0.5985\pm0.0072$ and $0.5992\pm0.0071$ at
+$c_\Omega=1,2$; $-0.1\sigma$ from the GUE value; crossover amplitude
+$+6.5\sigma$; the small super-GUE overshoot of the exploratory runs
+resolved as finite-$n$). The mirror-symmetric rotor saturates at GOE at
+every speed ($0.523$--$0.530$ for $c_\Omega\ge1$, excluding GUE at
+$9$--$10\sigma$); its sub-GOE dip at $c_\Omega=0.5$ is the transitional
+merging of the two reflection-parity sequences, not a class change. The
+two-axis experiment completes the theorem: asymmetric point-mass mistuning
+of the protected rotor at $\Omega=0$ stays orthogonal, rotation without
+mistuning stays orthogonal, and both together reach
+$\rmean=0.6044\pm0.0071$ (GUE $+0.7\sigma$) --- a protected-vs-mistuned
+contrast of $+7.8\sigma$. Both ingredients are necessary; together they are
+sufficient. Gates: the strict per-eigenvalue two-mesh criterion fails at
+this scale (P2 with chord-boundary $O(h^2)$ smooth error), and the
+operational criterion established on the disk (E3b) governs instead: the
+full sweep repeated on a mesh with $1.8\times$ fewer dofs reproduces every
+verdict cell within $1.4\sigma$ (the decisive chiral cells to $0.1\sigma$)
+--- the statistics are refinement-stable.
+Deferred prestress is bounded at $(\Omega/\omega)^2\approx7\times10^{-3}$
+at the strongest verdict speed.
+
+\begin{figure}[htb]\centering
+\includegraphics[width=0.95\textwidth]{figs/rotor_crossover.png}
+\caption{E15 at full scale. Left: rotation sweep --- the chiral rotor
+crosses GOE$\to$GUE while the $\sigma_vT$-protected mirror rotor saturates
+at GOE. Right: mistuning breaks the protection; rotation and mistuning
+together reach GUE.}
+\label{fig:e15}
+\end{figure}
+
 \section{Synthesis}
 
 Seven geometries fall on one hierarchy:
@@ -383,7 +439,12 @@ refine is the \emph{selector}: not corners, not curvature, but whether the
 boundary is adapted to a separable structure of the fourth-order operator.
 The effective coupling is material-tunable ($\lambda(\nu)$, E7),
 thickness-tunable toward GOE (E11), and post-designable with a quantitative
-control law (E6). And the campaign's sharpest methodological product (E14)
+control law (E6). The program now spans two Dyson-class axes: the
+orthogonal axis (Poisson $\leftrightarrow$ GOE, controlled by boundary
+adaptedness and coupling strength) and, with E15, the unitary axis
+(GOE $\to$ GUE, controlled by rotation \emph{plus} the breaking of the last
+antiunitary symmetry --- geometric chirality or mistuning), each with its
+protected control demonstrated on the same operator. And the campaign's sharpest methodological product (E14)
 is a warning with teeth: the standard RP-numerics truncation ladder
 \emph{manufactures} fractal scaling on this system --- Gap~A must be
 measured on true-operator windows, where the plate at accessible $N$ shows
@@ -397,7 +458,7 @@ resolving the protocol question), the sector long ladder ($+3.9\sigma$),
 the aspect sweep, the E6 full-rank close-out (contact operators are
 intrinsically smoothing; the spacing dichotomy saturates at $2.8\sigma$
 while the eigenvector dichotomy and control law carry the prediction), and
-a first non-Hermitian experiment (P7 damping): the 2D-Poisson $	o$
+a first non-Hermitian experiment (P7 damping): the 2D-Poisson $\to$
 AI$^\dagger$ crossover of the complex resonances is \emph{observed and
 overlap-controlled} on the certified plate --- localized dissipation gives
 uncorrelated resonances even at widths $\sim$ spacings, while distributed
@@ -407,8 +468,9 @@ AI$^\dagger$ with 2D-Poisson excluded at $\sim$5$\sigma$. Registered follow-ups:
 $N\sim1024$--$2048$ ($C^0$-IP, now unobstructed); E14-style protocol
 scrutiny of the E8 unadapted-tier scaling; the sector at the published
 angles; the AI$^\dagger$-vs-Ginibre fine call at $\sim$2k resonances; the
-Coriolis rotor (P6, GOE$\to$GUE); and comparison against the measured
-aluminum-plate spectra of Ref.~\cite{lopez2021}.
+prestressed (centrifugally stiffened) rotor model and the bladed-disk FE
+re-analysis as the experimental variant of E15; and comparison against the
+measured aluminum-plate spectra of Ref.~\cite{lopez2021}.
 
 \section{Reproducibility}
 

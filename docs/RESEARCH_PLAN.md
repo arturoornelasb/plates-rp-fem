@@ -258,3 +258,19 @@ deep-research sweep and toy pretest: rotation alone is signature-protected
 or fully asymmetric geometry) reaches GUE. Controls: protected star, mirror
 star, fully asymmetric star, disk. Anchor: classical in-plane free-disk
 determinant. Budget: ~1 session (build 2-3 h, runs 2-3 h, analysis 1 h).
+
+## E15 -- Coriolis rotor -> GUE [DONE 2026-07-04/05 -- SUPPORTS AT FULL SCALE]
+
+Executed by a second agent, independently reviewed (spurious-band lam_cap
+fix), then run at the registered scale (~1080 spacings/point, 48k dofs,
+refinement-stability gate PASSED at 1.4 sigma worst cell). Physics
+correction to the plan, verified two ways: the surviving antiunitary is
+sigma_v * T (G0 anticommutes with mirrors, commutes with R_pi; measured at
+1e-15). Results: chiral rotor GOE (0.5303) -> exactly GUE (0.5992 +/-
+0.0071, -0.1 sigma; +6.5 sigma crossover; probe-scale overshoot resolved as
+finite-n); mirror rotor pinned to GOE at every speed (GUE excluded at 9-10
+sigma); two-axis mistuning theorem: both ingredients necessary, together
+sufficient (mistuned cell GUE +0.7 sigma; protected-vs-mistuned +7.8
+sigma). First in-silico mechanical GOE -> GUE with its protection theorem
+on the same operator. Registered next: prestressed rotor model;
+bladed-disk FE re-analysis (experimental variant).

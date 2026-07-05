@@ -68,6 +68,7 @@ python experiments/e01_validation/step1_validate.py
 | E3c v2 | sector long ladder | SUPPORTS +3.9 sigma -- confirms the published sector direction |
 | E14 | Gap A reconciliation (C0-IP true operator) | PROTOCOL ARTIFACT: true-operator IPR flat through N = 512/sector; Gap A must be stated on true-operator windows |
 | E11 | Mindlin thick plates (thickness sweep) | SUPPORTS +5.4 sigma: <r> 0.454 -> 0.557 over t = 0.02 -> 0.15, GOE-ward |
+| E15 | Coriolis rotor -> GUE (P6/P11) | SUPPORTS at full scale: chiral rotor lands ON GUE (0.5992+/-0.0071, crossover +6.5 sigma); sigma_v*T protection pins mirror rotor to GOE (GUE excluded 9-10 sigma); mistuning breaks it (+7.8 sigma contrast) |
 
 ## License
 
