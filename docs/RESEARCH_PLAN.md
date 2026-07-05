@@ -245,3 +245,16 @@ Single-patch damping is only weakly non-proportional (commutator 3e-2,
 near-diagonal modal C): resonances shift quasi-independently -> 2D-Poisson
 markers. Physical lesson recorded; v2 with 24 distributed quartets (the
 dense-contact analog) is the fair realization of the P7 dense case.
+
+## E15 -- Coriolis rotor -> GUE [PLANNED; plan preregistered 2026-07-04]
+
+Full execution plan in experiments/e15_coriolis_rotor/PLAN.md. Core design:
+in-plane (plane-stress) elastodynamics of a free 2D rotor (the flat
+Kirchhoff plate is Coriolis-blind about its normal); Hermitian gyroscopic
+pencil with real frequencies; two-axis (Omega, mistuning) sweep on a
+C2-symmetric chiral star realizing the CORRECTED mechanism from the P11
+deep-research sweep and toy pretest: rotation alone is signature-protected
+(R_pi x T) and must stay GOE; breaking the signature (point-mass mistuning
+or fully asymmetric geometry) reaches GUE. Controls: protected star, mirror
+star, fully asymmetric star, disk. Anchor: classical in-plane free-disk
+determinant. Budget: ~1 session (build 2-3 h, runs 2-3 h, analysis 1 h).
