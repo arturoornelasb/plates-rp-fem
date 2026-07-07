@@ -13,7 +13,7 @@
 for freely vibrating plates:\\ preliminary results}
 \author{J.~Arturo Ornelas Brand\\
 \small Independent Researcher, Aguascalientes, M\'exico}
-\date{July 7, 2026 --- draft v0.6 (companion to the ``Why Rosenzweig--Porter?'' program)}
+\date{July 7, 2026 --- draft v0.7 (companion to the ``Why Rosenzweig--Porter?'' program)}
 
 \begin{document}
 \maketitle
@@ -46,8 +46,11 @@ mixed configuration lands exactly on Poisson; both exactly-reduced controls
 ($\lambda(\nu)$, matching the companion's Ritz values method-to-method) and
 post-designable via a validated second-order control law; the Mindlin
 thickness sweep confirms the thick-plate prediction at $+5.4\sigma$
-(GOE-ward); the sector reaches $+3.9\sigma$ at 1600 modes, confirming the
-direction of the published COMSOL sector result; and the aspect-ratio sweep
+(GOE-ward); the sector reaches $+3.9\sigma$ at 1600 modes, and a faithful
+replication of the published sector protocol itself --- which the source
+reveals to be a pooled \emph{angle sweep} --- supports its direction at
+$+9.5\sigma$, with the pooled-sweep methodology validated as bias-free
+against matched fixed-angle references; and the aspect-ratio sweep
 closes the single-geometry caveat. The central Gap~A question is
 \emph{resolved by a controlled protocol comparison}: the registered
 truncated-operator ladder does develop RP-like fractal scaling
@@ -462,9 +465,59 @@ $\Omega_{\rm nd}=0.25$ (10.7\% strain) and crosses the GOE/GUE midpoint
 at $\Omega_{\rm nd}=0.30$ (15.5\%, just outside). Translated to a soft
 silicone disk ($R=10$\,cm, $E=2$\,MPa): crossover onset at
 $\approx$1100--1300\,RPM with the measured window at $\approx$2.4\,kHz
---- laboratory-trivial speeds. The registered follow-up is the
-hyperelastic (finite-deformation) rotor model, to carry the quantitative
-prediction through the 15--25\% strain regime where completion occurs.
+--- laboratory-trivial speeds (Fig.~\ref{fig:e15c}). The registered
+follow-up is the hyperelastic (finite-deformation) rotor model, to carry
+the quantitative prediction through the 15--25\% strain regime where
+completion occurs.
+
+\begin{figure}[htb]\centering
+\includegraphics[width=0.95\textwidth]{figs/rotor_prestress.png}
+\caption{E15c: prestressed vs.\ bare-Coriolis pooled $\rmean$ for the
+chiral (left) and $\sigma_vT$-protected mirror (right) rotors. The
+$\Omega^2$ terms \emph{advance} the chiral crossover at every speed and
+leave the protection intact; the shaded region marks centrifugal strain
+$>15\%$, the preregistered linear-validity boundary.}
+\label{fig:e15c}
+\end{figure}
+
+\subsection{E16: the published sector protocol, replicated faithfully}
+\label{sec:e16}
+
+Obtaining the source paper of the sector claim~\cite{lopez2024comsol}
+reveals that the published object is not a fixed-angle spectrum but a
+pooled \emph{angle sweep}: $\sim$70 out-of-plane modes per angle, the
+angle varied (range unpublished; a $50^\circ$ example shown), modes
+classified S/A by the bisector mirror, and the pooled spacing-ratio
+histogram compared to the RP model. E16 replicates that protocol
+faithfully --- $\theta\in[30^\circ,150^\circ]$, 200 angles $\times$ the
+first 70 elastic modes, S/A per angle, both ratio conventions --- behind
+the campaign gates (two-mesh $N^*=70/70$ at three reference angles; zero
+ambiguous labels among 14\,000 modes). Three preregistered readings
+(Fig.~\ref{fig:e16}): \emph{(R1)} the pooled $\rmean=0.4266\pm0.0027$
+sits $+9.5\sigma$ above the same-protocol pooled-Poisson baseline
+($0.3865\pm0.0032$, identical pooling of matched-length Poisson
+sequences) --- the published direction replicates; \emph{(R2)} the pooled
+value sits $+0.1\sigma$ from the matched-window fixed-angle references,
+so the sweep-pooling protocol is \emph{benign} --- the truncation-protocol
+caution of E14 does \emph{not} extend to this methodology; \emph{(R3)}
+the pooled $0.427$ matches the fixed-angle long ladder of E3c ($0.429$),
+placing the sector consistently in the coordinate-adapted tier across
+protocols and windows. Beneath the pooled value lies a real angle
+dependence ($0.35$ near $50^\circ$ to $0.49$ near $115^\circ$ in the
+70-mode window): the low-mode statistic is angle-graded, not uniform,
+so the (unpublished) sweep range enters the published number; ours,
+bracketing the shown $50^\circ$, is declared. The two spectral-variable
+conventions agree in practice ($\Lambda$: $0.4266$; frequency:
+$0.4261$).
+
+\begin{figure}[htb]\centering
+\includegraphics[width=0.72\textwidth]{figs/r_vs_theta.png}
+\caption{E16: per-angle pooled $\rmean$ (first 70 modes, S/A pooled)
+across the sector angle sweep, with the pooled sweep value, the
+same-protocol pooled-Poisson baseline, and the two-mesh-gated
+fixed-angle references.}
+\label{fig:e16}
+\end{figure}
 
 \section{Synthesis}
 
@@ -517,14 +570,7 @@ rotor feasibility analysis (E15b: the burst invariant caps stiff rotors
 $2$--$4\times$ below the crossover; soft rotors are the accessible route),
 the prestressed rotor (E15c: the $\Omega^2$ terms advance the crossover;
 onset within linear validity at $\sim$1100\,RPM for a silicone disk),
-the sector angle-sweep replication (E16: reading the source shows the
-published sector result is a pooled \emph{angle-sweep} statistic, not a
-set of fixed angles; the faithful protocol replicates its direction at
-$+9.5\sigma$ over a same-protocol pooled-Poisson baseline, the pooling
-itself is shown benign at $+0.1\sigma$ against matched fixed-angle
-references --- so the truncation-protocol concern of E14 does \emph{not}
-extend to that methodology --- and the pooled value $0.427$ matches the
-E3c ladder $0.429$, with a real angle gradient, $0.35$--$0.48$, underneath),
+the sector angle-sweep replication (E16, \S\ref{sec:e16}),
 and a first non-Hermitian experiment (P7 damping): the 2D-Poisson $\to$
 AI$^\dagger$ crossover of the complex resonances is \emph{observed and
 overlap-controlled} on the certified plate --- localized dissipation gives
