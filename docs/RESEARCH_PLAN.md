@@ -330,3 +330,43 @@ E14 lesson applied to the source: pooled sweep vs matched-window
 fixed-angle references at 50 / 90 / 114.59 deg); R3 hierarchy consistency
 (sector = coordinate-adapted tier; compare the E3c ladder 0.4294 and disk
 0.391). Run after E15c frees the CPU.
+
+## E17 -- Gap A: true-operator windows at N = 1024-2048 [PREREGISTERED 2026-07-07; runner ready]
+
+The registered continuation of E14 over the full ladder range of the
+paper's registry (N = 256..2048 per sector). Instrument: the same C0-IP
+P4, scaled to mesh (216, 133) ~ 461k dofs, 5600 certified modes
+(~1400/sector; the N = 2048 window [819, 1229) needs >= 1229 in the
+smallest sector); T1 projection bases at n_funcs_axis = 96 (ratio-form
+beam functions, stable), Gauss grid (384, 240), chunked projections.
+Gates: G1 SSSS-vs-exact (informational), G2 FFFF vs certified Argyris
+first 1200, and the DECISIVE G3 two-mesh eigenvalue gate (216,133) vs
+(184,114) over all 5600 -- ladders use only gate-covered modes, and a
+coverage shortfall is reported as COVERAGE-LIMITED with the continuation
+mesh registered. Preregistered readings (frozen in
+experiments/e17_gapA_true2048/README.md + verdict block in run_e17.py):
+references E9-truncated sine IPR 0.052 at N = 2048 vs the E4/E14 flat
+level ~0.174; I2048 >= 0.14 -> PROTOCOL ARTIFACT THROUGH THE FULL
+REGISTERED RANGE; I2048 <= 0.09 -> SCALING ONSET (report fitted D2_true
+over N >= 512; RECONCILED-RP if in E9's 0.42-0.50 band); else
+INTERMEDIATE. Budget: overnight (~4-10 h solve, ~25 GB peak RAM); run
+serially after E15c and E16.
+
+## E18 -- Unadapted-tier protocol scrutiny (triangle first) [REGISTERED 2026-07-07, design level]
+
+The E8 verdicts that place genuinely SCALING eigenvectors on the
+unadapted tier (triangle D2 = 0.27/0.36; superellipse p=10 D2 =
+0.22-0.50) were measured in a same-domain representation basis -- the
+protocol family E14 showed manufactures RP-like scaling on the rectangle.
+Until an E14-style comparison runs on an unadapted geometry, "genuine RP
+phase in free plates" remains unverified everywhere. Design: C0-IP P4 on
+the free equilateral triangle (straight edges, so no curved-boundary
+complication; SSSS gate = the exact Lame^2 anchor of E3a; FFFF gate =
+the certified Argyris E3a instrument), then the matched-window
+comparison: (i) true-operator windows in the same-domain SS eigenbasis at
+increasing N vs (ii) the truncated-operator ladder built in the SAME
+basis (the E9 analog: project the free operator onto the first N SS
+eigenfunctions, diagonalize rung submatrices). Superellipse p = 10
+follows the same design if the triangle verdict warrants it. Runner and
+frozen readings deferred until E17 executes (serial discipline);
+readings will follow the E14 dichotomy.
