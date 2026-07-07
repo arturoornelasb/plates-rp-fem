@@ -312,3 +312,21 @@ completed inside linear validity) and the hyperelastic/large-deformation
 model is registered as the follow-up. Setup: chiral + mirror stars, polar
 mesh (24, 72), 1203 certified modes, same protocol as E15 full scale;
 bare-Coriolis pencil computed alongside as the contrast.
+
+## E16 -- Sector angle-sweep (protocol-faithful COMSOL replication) [PREREGISTERED 2026-07-07]
+
+The published COMSOL-2024 sector result turns out to be a pooled
+ANGLE-SWEEP statistic, not a fixed-angle ladder: ~70 out-of-plane modes
+per angle, angle swept (range unpublished; 50 deg shown), S/A classes,
+14,000 modes, pooled P(r) envelope ~ RP (source PDF archived in the
+dossier repo, 05_avoided_crossings_comsol/). This replaces the earlier
+"sector at the published angles" follow-up, which is ill-posed as stated.
+E16 replicates the protocol faithfully: theta in [30, 150] deg x 200
+values, first 70 elastic modes per angle, S/A by the bisector mirror,
+pooled statistics in both ratio conventions. Preregistered readings in
+experiments/e16_sector_sweep/README.md: R1 replication vs same-protocol
+pooled-Poisson baseline (>= 3 sigma SUPPORTS); R2 protocol scrutiny (the
+E14 lesson applied to the source: pooled sweep vs matched-window
+fixed-angle references at 50 / 90 / 114.59 deg); R3 hierarchy consistency
+(sector = coordinate-adapted tier; compare the E3c ladder 0.4294 and disk
+0.391). Run after E15c frees the CPU.
