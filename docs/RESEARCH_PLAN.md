@@ -313,6 +313,24 @@ model is registered as the follow-up. Setup: chiral + mirror stars, polar
 mesh (24, 72), 1203 certified modes, same protocol as E15 full scale;
 bare-Coriolis pencil computed alongside as the contrast.
 
+## E15c -- Prestressed rotor [DONE 2026-07-07 -- PARTIAL; prestress ACCELERATES the crossover]
+
+Executed at the preregistered setup (resid <= 9.2e-4; rigid load frac
+~1e-14; Om = 0 prestressed == bare exactly -- built-in null). Measured
+strain scales: s1 = 1.719 (chiral) / 0.984 (mirror). Findings: the
+prestressed pooled <r> exceeds the bare pencil at EVERY Om > 0 (up to
++0.030) -- the Omega^2 physics (spin softening + centrifugal Kg) ADVANCES
+the GOE->GUE crossover rather than washing it out; the sigma_v T
+protection survives prestress (mirror 0.43-0.49 at all speeds, GUE
+excluded). Frozen-criteria verdict PARTIAL: within strain <= 15% the
+top-third window reaches <r> = 0.547 at Om = 0.25 (10.7%); the GOE/GUE
+midpoint is crossed at Om = 0.30 (15.5% -- just outside). Soft-rotor
+prediction delivered: silicone disk R = 0.1 m, E = 2 MPa -> crossover
+onset at ~1,100-1,300 RPM, measured window ~2.4 kHz -- laboratory-trivial
+speeds. REGISTERED NEXT (E15d): hyperelastic / finite-deformation rotor
+(neo-Hookean prestate) to carry the quantitative prediction through the
+15-25% strain regime where completion occurs.
+
 ## E16 -- Sector angle-sweep (protocol-faithful COMSOL replication) [PREREGISTERED 2026-07-07]
 
 The published COMSOL-2024 sector result turns out to be a pooled

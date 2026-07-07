@@ -13,7 +13,7 @@
 for freely vibrating plates:\\ preliminary results}
 \author{J.~Arturo Ornelas Brand\\
 \small Independent Researcher, Aguascalientes, M\'exico}
-\date{July 5, 2026 --- draft v0.5 (companion to the ``Why Rosenzweig--Porter?'' program)}
+\date{July 7, 2026 --- draft v0.6 (companion to the ``Why Rosenzweig--Porter?'' program)}
 
 \begin{document}
 \maketitle
@@ -64,8 +64,12 @@ protection theorem: a chiral rotor lands exactly on GUE
 ($0.5992\pm0.0071$ at $\sim$1080 spacings) while the mirror-symmetric rotor
 is pinned to GOE at every speed by the surviving antiunitary $\sigma_vT$
 (identified by a machine-precision operator gate), and asymmetric mistuning
-breaks that protection at $+7.8\sigma$. All experiments, gates, and raw
-data are reproducible from the repository.
+breaks that protection at $+7.8\sigma$; feasibility and prestress
+analyses single out soft (elastomer) rotors as the laboratory route ---
+the $\Omega^2$ terms \emph{advance} the crossover, protection survives
+them, and the onset sits at $\sim$10$^3$\,RPM for a decimeter silicone
+disk. All experiments, gates, and raw data are reproducible from the
+repository.
 \end{abstract}
 
 \section{Introduction}
@@ -73,8 +77,8 @@ data are reproducible from the repository.
 L\'opez-Gonz\'alez and coworkers reported that flexural spectra of freely
 vibrating rectangular plates exhibit avoided crossings and intermediate
 spacing statistics within each symmetry sector, well fitted by the
-Rosenzweig--Porter (RP) random-matrix model, while simply supported plates
-are Poissonian~\cite{lopez2021}; the finding extends to a freely vibrating
+Rosenzweig--Porter (RP) random-matrix model~\cite{kravtsov2015}, while
+simply supported plates are Poissonian~\cite{lopez2021}; the finding extends to a freely vibrating
 disk sector~\cite{lopez2024comsol}. The companion hypothesis
 paper~\cite{ornelas2026} formalizes a mechanism --- evanescent components of
 free-edge eigenfunctions generate an inter-mode coupling $V$ on an
@@ -113,7 +117,7 @@ $0.1\times$ the local mean level spacing for every mode used. Every
 experiment runs behind gates: an exact or semi-analytic anchor where one
 exists (SSSS rectangle; Lam\'e$^2$ for the simply supported triangle; the
 per-$m$ Bessel $J/I$ free-disk determinant, fundamental $x^2=5.262$ vs.\
-literature $\approx5.25$), two-mesh internal checks otherwise, and --- for
+literature $\approx5.25$~\cite{leissa1969}), two-mesh internal checks otherwise, and --- for
 curved boundaries, where inscribed-polygon geometry error caps convergence
 at $O(h^2)$ --- an \emph{operational} gate: the FEM disk's class-sequence
 statistics must reproduce the semi-analytic Poisson control ($0.0\sigma$
@@ -411,6 +415,57 @@ together reach GUE.}
 \label{fig:e15}
 \end{figure}
 
+\subsection{E15b: feasibility --- the burst invariant and the two
+observable routes}
+
+Rotation speed is the controlling knob (the crossover tracks
+$\Omega_{\rm nd}=\Omega R/c_0$ in every run), but it cannot be turned
+arbitrarily: the burst limit caps rim speed at
+$v_{\max}\sim\sqrt{\sigma/\rho}$, making the achievable dimensionless
+rotation a radius- and speed-free \emph{material invariant},
+\[
+\Omega_{\rm nd,max} \sim \frac{v_{\max}}{c_0}
+ = \sqrt{\frac{\sigma\,(1-\nu^2)}{E}},
+\]
+which for metals ($0.067$--$0.080$; CFRP $0.12$) sits $2$--$4\times$ below
+the measured bulk crossover ($\Omega_{\rm nd}\approx0.29$ on the $N\le1200$
+ladder): a survivable stiff rotor keeps its low spectrum orthogonal at any
+speed. The observable is frequency-resolved --- the crossover frequency
+$f^*(\Omega)$ falls as mode density grows, so at fixed speed the low
+spectrum stays GOE while the high spectrum turns GUE (windowed $\rmean$)
+--- leaving two quantified routes: deep ultrasonic windows in metals at
+the rim limit (steel $R=0.5$\,m: $f^*\approx294$\,kHz at mode
+$\sim$23\,000, modal-resolution $Q\sim5\times10^4$; aluminum $R=0.15$\,m:
+$f^*\approx814$\,kHz --- marginal, within reach of high-$Q$ resonant
+ultrasound in vacuum), and \emph{soft rotors} (elastomers,
+$\Omega_{\rm nd,max}\sim1$--$1.5$), which place the crossover in the first
+$\sim$100 modes at fully safe speeds. At $\Omega_{\rm nd}\sim1$, however,
+the centrifugal prestress deferred in E15 is no longer small for soft
+materials; the prestressed model is the registered prerequisite for the
+quantitative soft-rotor prediction.
+
+\subsection{E15c: the prestressed rotor --- the $\Omega^2$ physics helps}
+
+Adding the deferred terms --- exact spin softening ($-\Omega^2 M$) and the
+geometric stiffness of the static centrifugal prestress (unit-$\Omega^2$
+modal static solve on the certified modes; at $\Omega=0$ the prestressed
+and bare pencils agree exactly, a built-in null) --- the prestressed
+chiral rotor's $\rmean$ \emph{exceeds} the bare-Coriolis value at every
+speed (pooled excess up to $+0.030$): the $\Omega^2$ physics
+\emph{advances} the crossover rather than destroying it, and the
+$\sigma_vT$-protected mirror rotor stays pinned under prestress
+(0.43--0.49 throughout, GUE excluded). Under the preregistered
+linear-validity gate (centrifugal strain $\le15\%$; measured strain scale
+$\varepsilon_{\max}=1.72\,\Omega_{\rm nd}^2$) the verdict is
+\emph{partial}: the top-third window reaches $\rmean=0.547$ at
+$\Omega_{\rm nd}=0.25$ (10.7\% strain) and crosses the GOE/GUE midpoint
+at $\Omega_{\rm nd}=0.30$ (15.5\%, just outside). Translated to a soft
+silicone disk ($R=10$\,cm, $E=2$\,MPa): crossover onset at
+$\approx$1100--1300\,RPM with the measured window at $\approx$2.4\,kHz
+--- laboratory-trivial speeds. The registered follow-up is the
+hyperelastic (finite-deformation) rotor model, to carry the quantitative
+prediction through the 15--25\% strain regime where completion occurs.
+
 \section{Synthesis}
 
 Seven geometries fall on one hierarchy:
@@ -457,8 +512,12 @@ Executed beyond the original registry: the Gap~A reconciliation (E14,
 resolving the protocol question), the sector long ladder ($+3.9\sigma$),
 the aspect sweep, the E6 full-rank close-out (contact operators are
 intrinsically smoothing; the spacing dichotomy saturates at $2.8\sigma$
-while the eigenvector dichotomy and control law carry the prediction), and
-a first non-Hermitian experiment (P7 damping): the 2D-Poisson $\to$
+while the eigenvector dichotomy and control law carry the prediction), the
+rotor feasibility analysis (E15b: the burst invariant caps stiff rotors
+$2$--$4\times$ below the crossover; soft rotors are the accessible route),
+the prestressed rotor (E15c: the $\Omega^2$ terms advance the crossover;
+onset within linear validity at $\sim$1100\,RPM for a silicone disk),
+and a first non-Hermitian experiment (P7 damping): the 2D-Poisson $\to$
 AI$^\dagger$ crossover of the complex resonances is \emph{observed and
 overlap-controlled} on the certified plate --- localized dissipation gives
 uncorrelated resonances even at widths $\sim$ spacings, while distributed
@@ -468,9 +527,10 @@ AI$^\dagger$ with 2D-Poisson excluded at $\sim$5$\sigma$. Registered follow-ups:
 $N\sim1024$--$2048$ ($C^0$-IP, now unobstructed); E14-style protocol
 scrutiny of the E8 unadapted-tier scaling; the sector at the published
 angles; the AI$^\dagger$-vs-Ginibre fine call at $\sim$2k resonances; the
-prestressed (centrifugally stiffened) rotor model and the bladed-disk FE
-re-analysis as the experimental variant of E15; and comparison against the
-measured aluminum-plate spectra of Ref.~\cite{lopez2021}.
+hyperelastic (finite-deformation) rotor --- the E15c follow-up --- and the
+bladed-disk FE re-analysis as the experimental variant of E15; and
+comparison against the measured aluminum-plate spectra of
+Ref.~\cite{lopez2021}.
 
 \section{Reproducibility}
 
@@ -487,12 +547,14 @@ high-order Legendre--Ritz assembly for the free plate (non-monotone in basis
 size beyond $\sim$96 functions/axis).
 
 \begin{thebibliography}{9}
-\bibitem{lopez2021} M.~L\'opez-Gonz\'alez et al., avoided crossings and
-intermediate statistics in free rectangular plates (2021); resonant acoustic
-spectroscopy with mode-shape mapping.
-\bibitem{lopez2024comsol} M.~L\'opez-Gonz\'alez et al., \emph{Discovery of
+\bibitem{lopez2021} J.~L.~L\'opez-Gonz\'alez, J.~A.~Franco-Villafa\~ne,
+R.~A.~M\'endez-S\'anchez, G.~Zavala-Vivar, E.~Flores-Olmedo,
+A.~Arreola-Lucas, G.~B\'aez, \emph{Deviations from Poisson statistics in
+the spectra of free rectangular thin plates}, Phys.\ Rev.\ E \textbf{103},
+043004 (2021).
+\bibitem{lopez2024comsol} J.~L.~L\'opez-Gonz\'alez, \emph{Discovery of
 avoided crossings in plate vibrations using COMSOL}, COMSOL Conference 2024
-Boston.
+Boston (2024).
 \bibitem{ornelas2026} J.~A.~Ornelas Brand, \emph{Why Rosenzweig--Porter?
 Evanescent Coupling and a Random Matrix Hypothesis for Intermediate
 Statistics in Freely Vibrating Plates}, Zenodo (v4 series, 2026).
