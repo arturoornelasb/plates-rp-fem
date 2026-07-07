@@ -250,21 +250,94 @@ def point_mass_modal(basis, X, points):
     return 0.5 * (Mpts + Mpts.T)
 
 
+# ----------------------- centrifugal prestress (E15c) -----------------------
+def centrifugal_modal_static(basis, Lam, X, M, rho=1.0):
+    """Unit-Omega^2 static centrifugal displacement u0 solved in the certified
+    modal basis: body force f = rho * (x, y) (frame origin must be the
+    centroid; caller should verify the rigid components are negligible).
+    u0 = sum_i phi_i (phi_i^T f) / Lam_i over ELASTIC modes. Returns the dof
+    vector u0 (per unit Omega^2) and the modal load residual fraction."""
+    from skfem import LinearForm
+    from skfem.helpers import dot as _dot
+
+    @LinearForm
+    def fload(v, w):
+        return rho * (w.x[0] * v[0] + w.x[1] * v[1])
+
+    f = fload.assemble(basis)
+    q = X.T @ f                                  # modal loads
+    el = np.abs(Lam) > 1e-6 * np.abs(Lam).max()
+    u0 = X[:, el] @ (q[el] / Lam[el])
+    rigid_frac = float(np.linalg.norm(q[~el]) / (np.linalg.norm(q) + 1e-300))
+    return u0, rigid_frac
+
+
+def assemble_geometric(mesh, basis, u0, nu, E=1.0):
+    """Geometric (initial-stress) stiffness for the unit-Omega^2 prestress
+    field sigma0 = C : eps(u0):  Kg(u,v) = int sigma0_kl  d_k u_i  d_l v_i.
+    Real symmetric; scales as Omega^2 in the rotating pencil."""
+    lam, mu = _lame_planestress(E, nu)
+
+    @BilinearForm
+    def geom(u, v, w):
+        du0 = w["disp"].grad                      # (2, 2, ...) = d_j u0_i
+        e00 = du0[0][0]
+        e11 = du0[1][1]
+        e01 = 0.5 * (du0[0][1] + du0[1][0])
+        tr = e00 + e11
+        s00 = lam * tr + 2.0 * mu * e00
+        s11 = lam * tr + 2.0 * mu * e11
+        s01 = 2.0 * mu * e01
+        du, dv = u.grad, v.grad                   # du[i][k] = d_k u_i
+        out = 0.0
+        for i in range(2):
+            out = out + (s00 * du[i][0] * dv[i][0]
+                         + s11 * du[i][1] * dv[i][1]
+                         + s01 * (du[i][0] * dv[i][1] + du[i][1] * dv[i][0]))
+        return out
+
+    disp = basis.interpolate(u0)
+    return geom.assemble(basis, disp=disp).tocsc()
+
+
+def max_prestress_strain(mesh, basis, u0):
+    """Max principal strain magnitude of the unit-Omega^2 field (multiply by
+    Omega^2 for the physical strain -- the linear-validity metric)."""
+    pts = mesh.p[:, mesh.t].mean(axis=1)          # element centroids
+    # evaluate grad(u0) at centroids via probes of the gradient: use the
+    # interpolated field on a low-order quadrature instead (cheap, adequate)
+    b1 = Basis(mesh, basis.elem, intorder=1)
+    du = b1.interpolate(u0).grad                  # (2, 2, nelem, nq)
+    e00 = du[0][0]
+    e11 = du[1][1]
+    e01 = 0.5 * (du[0][1] + du[1][0])
+    mean = 0.5 * (e00 + e11)
+    rad = np.sqrt((0.5 * (e00 - e11)) ** 2 + e01 ** 2)
+    return float(np.max(np.abs(mean) + rad))
+
+
 # --------------------------- rotating pencil solve --------------------------
-def solve_rotor(Lam, G0m, Omega, Mpts=None, delta=0.0, real_tol=1e-6):
+def solve_rotor(Lam, G0m, Omega, Mpts=None, delta=0.0, real_tol=1e-6,
+                Kg_m=None, spin_soften=False):
     """Real positive frequencies of the modal rotating pencil
-        (diag(Lam) - omega^2 M + i omega Omega G0m) phi = 0,
-    with M = I + delta * Mpts (mistuning as a mass perturbation).
+        (K_eff - omega^2 M + i omega Omega G0m) phi = 0,
+    K_eff = diag(Lam) + Omega^2 (Kg_m - I_soften), M = I + delta * Mpts.
 
     Lam    : (N,) modal eigenvalues omega_n^2 (Omega=0 certified spectrum).
     G0m    : (N,N) real antisymmetric modal gyroscopic matrix (Omega=1).
+    Kg_m   : optional (N,N) modal geometric-stiffness (unit-Omega^2 prestress).
+    spin_soften: include the exact -Omega^2 M centrifugal softening.
     Returns dict: omega (sorted positive real freqs), max_imag (realness gate),
     pair_err (|+omega vs -omega| symmetry of the full spectrum)."""
     N = len(Lam)
     M = np.eye(N)
     if Mpts is not None and delta != 0.0:
         M = M + delta * Mpts
-    K = np.diag(Lam)
+    K = np.diag(Lam).astype(float)
+    if Kg_m is not None:
+        K = K + (Omega ** 2) * Kg_m
+    if spin_soften:
+        K = K - (Omega ** 2) * np.eye(N)
     H = Omega * G0m                                  # real antisymmetric
     # QEP (omega^2 M - i omega H - K) phi = 0 ; companion A z = omega B z
     I = np.eye(N)

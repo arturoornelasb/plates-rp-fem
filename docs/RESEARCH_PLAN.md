@@ -274,3 +274,41 @@ sufficient (mistuned cell GUE +0.7 sigma; protected-vs-mistuned +7.8
 sigma). First in-silico mechanical GOE -> GUE with its protection theorem
 on the same operator. Registered next: prestressed rotor model;
 bladed-disk FE re-analysis (experimental variant).
+
+## E15b -- Industrial-speed feasibility [DONE 2026-07-05]
+
+Reduced-model sweep (N = 1200 certified chiral modes, windowed <r>) across
+machine speeds and materials. Rotation speed IS the controlling knob (the
+crossover tracks Omega_nd in every run), but the burst limit makes the
+achievable dimensionless speed a radius- and RPM-free MATERIAL invariant,
+Omega_nd,max ~ v_max / c0 = sqrt(sigma (1 - nu^2) / E): steel 0.067,
+Al 7075 0.080, CFRP 0.122 -- all 2-4x below the bulk crossover ~0.293, so a
+survivable stiff rotor keeps its low spectrum GOE at any speed. The
+observable is frequency-resolved (f*(Omega) falls with mode density: low
+spectrum GOE, high spectrum GUE, windowed <r>). Two quantified routes:
+(1) deep ultrasonic windows in metals at the rim limit (steel R = 0.5 m:
+f* ~ 294 kHz at mode ~23,000, modal-resolution Q ~ 5e4 -- marginal, needs
+high-Q RUS in vacuum); (2) SOFT ROTORS (elastomers, Omega_nd,max ~ 1-1.5):
+crossover in the first ~100 modes at fully safe speeds. Caveat: at
+Omega_nd ~ 1 the centrifugal prestress deferred in E15 is NOT small for
+soft materials -- E15c is the registered prerequisite for a quantitative
+soft-rotor prediction.
+
+## E15c -- Prestressed rotor: the soft-rotor prediction [machinery ready; RUNNING 2026-07-07]
+
+Adds the Omega^2 physics deferred in E15: exact spin softening
+(-Omega^2 M) and the geometric stiffness Kg of the static centrifugal
+prestress (unit-Omega^2 modal static solve on the certified modes; Kg
+assembled from the resulting stress field). Machinery smoke-validated:
+free-particle whirl omega = Omega doubly degenerate; prestress re-stiffens
+what softening softens; strain metric eps_max = s1 * Omega_nd^2. Question:
+does the GOE -> GUE crossover survive the Omega^2 terms inside the
+linear-validity window (centrifugal strain <= ~10-15%)? Preregistered
+reading (verdict logic frozen in run_prestress.py before execution):
+SURVIVES if the prestressed chiral rotor's top-third-window <r> reaches
+the GOE/GUE midpoint (0.565) within strain <= 15% with the mirror rotor's
+sigma_v T protection intact; otherwise PARTIAL (onset visible but not
+completed inside linear validity) and the hyperelastic/large-deformation
+model is registered as the follow-up. Setup: chiral + mirror stars, polar
+mesh (24, 72), 1203 certified modes, same protocol as E15 full scale;
+bare-Coriolis pencil computed alongside as the contrast.
