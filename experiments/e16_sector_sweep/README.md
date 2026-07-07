@@ -30,6 +30,12 @@ sweep of short low-frequency sequences, NOT a fixed-angle long ladder
 - Pooled statistics per class over the sweep, in BOTH ratio conventions:
   P(r) with r = s_n/s_{n+1} (the paper's Fig. 5b convention, for the
   envelope comparison) and r-tilde = min/max (the campaign statistic).
+- Spectral variable (declared before execution, amendment 2026-07-07,
+  pre-run): the PRIMARY reading (R1 gate) is on the eigenvalue scale
+  Lambda = omega^2 (campaign convention; ratio statistics are not
+  invariant under sqrt); the frequency scale f = sqrt(Lambda)/2pi (the
+  paper's variable) is computed and reported alongside for the source
+  comparison, ungated.
 
 ## Preregistered readings
 
