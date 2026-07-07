@@ -349,6 +349,21 @@ fixed-angle references at 50 / 90 / 114.59 deg); R3 hierarchy consistency
 (sector = coordinate-adapted tier; compare the E3c ladder 0.4294 and disk
 0.391). Run after E15c frees the CPU.
 
+**[DONE 2026-07-07 -- SUPPORTS +9.5 sigma; pooling BENIGN;
+hierarchy-consistent.]** All gates green (two-mesh N* = 70/70 at all
+three reference angles; zero ambiguous labels over 200 x 70 modes).
+R1: pooled <r~> = 0.4266 +/- 0.0027 (9200 ratios; S 0.4336 / A 0.4179)
+vs same-protocol pooled-Poisson 0.3865 +/- 0.0032 -> +9.5 sigma: the
+published direction REPLICATES under the faithful protocol. R2: pooled
+vs matched-window fixed-angle mean +0.1 sigma -> the sweep/pooling
+protocol is BENIGN (the E14 worry does NOT apply to the published sector
+methodology). R3: 0.4266 vs E3c ladder 0.4294 +/- 0.0068 and disk
+0.3905 -- the coordinate-adapted tier is protocol- and window-consistent.
+Notable: strong real angle gradient in the low-mode window (50 deg 0.347
+Poisson-consistent; 90 deg 0.443; 114.6 deg 0.483) averaged by the pooled
+statistic; Lambda- vs frequency-scale conventions agree in practice
+(0.4266 vs 0.4261).
+
 ## E17 -- Gap A: true-operator windows at N = 1024-2048 [PREREGISTERED 2026-07-07; runner ready]
 
 The registered continuation of E14 over the full ladder range of the
