@@ -187,10 +187,14 @@ def _tri_quadrature(order):
     return pts, W.ravel()
 
 
-def assemble_c0ip(mesh, k=4, nu=0.33, sigma_factor=10.0):
+def assemble_c0ip(mesh, k=4, nu=0.33, sigma_factor=10.0, guided_facets=None):
     """Assemble (K, M, space) for the free Kirchhoff plate. Boundary
     conditions: none imposed here (free edges natural); SS via essential
-    w = 0 on boundary dofs (see boundary_dofs)."""
+    w = 0 on boundary dofs (see boundary_dofs); GUIDED (symmetry-line,
+    w_n = 0 weakly, shear natural) via Nitsche facet terms on the facets
+    listed in `guided_facets` -- the one-sided Brenner-Sung block (jump ->
+    one-sided trace, average -> one-sided value, same sigma k^2/h_e
+    penalty). Used by the quarter-plate sector reduction."""
     space = C0IPSpace(mesh, k)
     ref = space.ref
     nb, nt = ref.nb, mesh.t.shape[1]
@@ -276,6 +280,37 @@ def assemble_c0ip(mesh, k=4, nu=0.33, sigma_factor=10.0):
         rows_f.append(np.repeat(dofs, 2 * nb))
         cols_f.append(np.tile(dofs, 2 * nb))
         vals_f.append(blk.ravel())
+    # ---------------- guided (symmetry-line) boundary facets ----------------
+    if guided_facets is not None:
+        for f in guided_facets:
+            va, vb = facets[:, f]
+            pa, pb = p[:, va], p[:, vb]
+            h_e = float(np.hypot(*(pb - pa)))
+            tang = (pb - pa) / h_e
+            nrm = np.array([tang[1], -tang[0]])
+            pts_e = pa[:, None] + (pb - pa)[:, None] * xq1[None, :]
+            t1 = f2t[0, f]
+            c1 = p[:, mesh.t[:, t1]].mean(axis=1)
+            if np.dot(nrm, pa + 0.5 * (pb - pa) - c1) < 0:
+                nrm = -nrm
+            loc = space.Ainv[t1] @ (pts_e - space.b0[t1][:, None])
+            _, g_, h_ = ref.eval(loc)
+            gp = np.einsum("ba,ibq->iaq", space.Ainv[t1], g_)
+            hp = np.einsum("ab,ibq->iaq", T[t1], h_)
+            dn = nrm[0] * gp[:, 0, :] + nrm[1] * gp[:, 1, :]
+            nHn = (nrm[0] * nrm[0] * hp[:, 0, :]
+                   + 2 * nrm[0] * nrm[1] * hp[:, 1, :]
+                   + nrm[1] * nrm[1] * hp[:, 2, :])
+            Mnn = (1.0 - nu) * nHn + nu * (hp[:, 0, :] + hp[:, 2, :])
+            dofs = space.elem_dofs[t1]
+            wq_e = wq1 * h_e
+            blk = (- np.einsum("iq,jq,q->ij", Mnn, dn, wq_e)
+                   - np.einsum("iq,jq,q->ij", dn, Mnn, wq_e)
+                   + (sigma / h_e) * np.einsum("iq,jq,q->ij", dn, dn, wq_e))
+            rows_f.append(np.repeat(dofs, nb))
+            cols_f.append(np.tile(dofs, nb))
+            vals_f.append(blk.ravel())
+
     Kf = sp.csr_matrix((np.concatenate(vals_f),
                         (np.concatenate(rows_f), np.concatenate(cols_f))),
                        shape=(space.N, space.N))
@@ -283,12 +318,26 @@ def assemble_c0ip(mesh, k=4, nu=0.33, sigma_factor=10.0):
     return K, M.tocsc(), space
 
 
-def boundary_dofs(space):
-    """Dofs (vertex + edge) lying on the boundary -- the SS essential set."""
+def facets_where(space, pred, tol=1e-9):
+    """Boundary facets whose BOTH endpoints satisfy pred(x, y) -- edge
+    selectors for per-edge boundary conditions."""
+    mesh = space.mesh
+    out = []
+    for f in space.boundary_facets:
+        va, vb = mesh.facets[:, f]
+        if pred(*mesh.p[:, va]) and pred(*mesh.p[:, vb]):
+            out.append(int(f))
+    return np.array(out, dtype=np.int64)
+
+
+def boundary_dofs(space, facet_subset=None):
+    """Dofs (vertex + edge) lying on the boundary -- the SS essential set.
+    With `facet_subset`, only the dofs on those facets (per-edge SS)."""
     mesh = space.mesh
     nv = mesh.p.shape[1]
     out = []
-    for f in space.boundary_facets:
+    it = space.boundary_facets if facet_subset is None else facet_subset
+    for f in it:
         va, vb = mesh.facets[:, f]
         out.extend([int(va), int(vb)])
         out.extend(range(nv + f * space.n_edge,

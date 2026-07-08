@@ -385,6 +385,23 @@ over N >= 512; RECONCILED-RP if in E9's 0.42-0.50 band); else
 INTERMEDIATE. Budget: overnight (~4-10 h solve, ~25 GB peak RAM); run
 serially after E15c and E16.
 
+## i01 -- Quarter-plate C0-IP instrument [VALIDATED 2026-07-08 -- PASS, promoted]
+
+Sector reduction for the rectangle's Gap-A runs: per-edge BCs in
+platefem/c0ip.py (free / ss per edge / NEW guided = one-sided
+Brenner-Sung Nitsche block enforcing w_n = 0 on symmetry lines). The four
+parity sectors become four independent quarter problems (~1/4 dofs,
+~1/4 modes each; orthogonalization cost ~ modes^2 drops ~16x;
+parallelizable across processes -- an E17-class run drops from ~46 h
+serial to ~2-3 h). Gates (experiments/i01_quarter_c0ip): A = merged
+quarter sectors reproduce same-mesh full SSSS at the per-sector
+statistics-grade criterion through 239/240 (required >= 188, the full
+instrument's own exact-accuracy range; residual top-edge mismatch is the
+FULL mesh's diagonal asymmetry -- the quarter is exactly symmetric);
+B = per-sector FFFF quarter-vs-full 48/48 in all four sectors (relerr
+~2e-4), rigid counts exact (ee/eo/oe 1, oo 0). E18 and future rectangle
+rungs use this instrument.
+
 ## E18 -- Unadapted-tier protocol scrutiny (triangle first) [REGISTERED 2026-07-07, design level]
 
 The E8 verdicts that place genuinely SCALING eigenvectors on the

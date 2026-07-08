@@ -1,0 +1,57 @@
+{
+ "gates": {
+  "Ainfo_ee": {
+   "n_star": 51,
+   "max_relerr": 0.0052867157112866684
+  },
+  "Ainfo_eo": {
+   "n_star": 50,
+   "max_relerr": 0.006052283382427656
+  },
+  "Ainfo_oe": {
+   "n_star": 50,
+   "max_relerr": 0.006322489289110634
+  },
+  "Ainfo_oo": {
+   "n_star": 47,
+   "max_relerr": 0.00803017961698781
+  },
+  "A_merged": {
+   "n_star": 239,
+   "n_cmp": 240,
+   "max_relerr": 0.0018054884993035922,
+   "required": 188,
+   "criterion": "0.4 x merged spacing = 0.1 x sector spacing"
+  },
+  "B_ee": {
+   "n_star": 48,
+   "n_cmp": 48,
+   "max_relerr": 0.0001680747536737928,
+   "gap_ok": true,
+   "rigid_expected": 1
+  },
+  "B_eo": {
+   "n_star": 48,
+   "n_cmp": 48,
+   "max_relerr": 0.0001925895203741406,
+   "gap_ok": true,
+   "rigid_expected": 1
+  },
+  "B_oe": {
+   "n_star": 48,
+   "n_cmp": 48,
+   "max_relerr": 0.00017286484391688448,
+   "gap_ok": true,
+   "rigid_expected": 1
+  },
+  "B_oo": {
+   "n_star": 48,
+   "n_cmp": 48,
+   "max_relerr": 0.0007467898803866086,
+   "gap_ok": true,
+   "rigid_expected": 0
+  }
+ },
+ "verdict": "PASS -- promoted to production instrument for E18 and future Gap-A rungs",
+ "wall_time_s": 53.0
+}
