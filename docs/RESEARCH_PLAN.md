@@ -447,3 +447,18 @@ eigenfunctions, diagonalize rung submatrices). Superellipse p = 10
 follows the same design if the triangle verdict warrants it. Runner and
 frozen readings deferred until E17 executes (serial discipline);
 readings will follow the E14 dichotomy.
+
+**[EXECUTED 2026-07-09 -- true ladders VALID and NEW; truncated column
+INVALID by construction; verdict deferred to E18b.]** Gates spectacular
+(free two-mesh 1056/1056 FULL; SS vs exact Lame^2 1999/2000; free vs
+Argyris 1000/1000). Finding: the triangle's TRUE-operator eigenvectors
+delocalize slowly -- E-sector window IPR 0.081 -> 0.063 over
+N = 128..1024, slope -0.138 +/- 0.029 (4.8 sigma from flat, D2_true ~
+0.14); A-sectors consistent -- the first real departure from the
+rectangle (flat -0.01). The truncated comparator collapsed to the
+diagonal identity (SS modes are eigenvectors of the same interior
+operator; constructor error, documented in RESULTS). E18b registered:
+the faithful E9 analog via nested Koornwinder polynomial Ritz (P4
+interpolants, FEM-M orthonormalized, sector-classified rung
+eigenvectors, SS-basis representation), same frozen dichotomy vs the
+valid true ladders.
