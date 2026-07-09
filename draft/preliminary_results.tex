@@ -13,7 +13,7 @@
 for freely vibrating plates:\\ preliminary results}
 \author{J.~Arturo Ornelas Brand\\
 \small Independent Researcher, Aguascalientes, M\'exico}
-\date{July 7, 2026 --- draft v0.7 (companion to the ``Why Rosenzweig--Porter?'' program)}
+\date{July 9, 2026 --- draft v0.8 (companion to the ``Why Rosenzweig--Porter?'' program)}
 
 \begin{document}
 \maketitle
@@ -56,9 +56,11 @@ closes the single-geometry caveat. The central Gap~A question is
 truncated-operator ladder does develop RP-like fractal scaling
 ($D_2=0.42$--$0.50$, flat $D_q$) --- but a purpose-built $C^0$
 interior-penalty discretization shows the \emph{true-operator} eigenvectors
-stay sparse (each mode $\approx$1--2 beam products) through $N=512$ per
-sector at matched windows: the scaling is a property of the truncation
-protocol, not of the plate. Gap~A therefore reads: sparse avoided-crossing
+stay sparse (each mode $\approx$1--2 beam products) through $N=1024$ per
+sector at matched, gate-certified windows --- and indicatively through
+$N=2048$ --- on a sector-reduced (quarter-plate) instrument: the scaling
+is a property of the truncation protocol, not of the plate, at every
+registered rung. Gap~A therefore reads: sparse avoided-crossing
 hybridization at accessible mode numbers, and truncated-ladder numerics
 (including the preregistered P12 recipe applied to simulation data) would
 report an RP phase as an artifact. Finally, an in-plane rotating-plate
@@ -326,9 +328,40 @@ structure is sparse/quasi-separable, the intermediate spacing statistics
 arise from sparse avoided-crossing hybridization, and any Gap~A executed by
 truncated-ladder numerics --- including the preregistered P12 recipe
 applied to simulation eigenmodes --- would report an RP phase as an
-artifact of the protocol. The registered continuation is true-operator
-windows at $N\sim1024$--$2048$ (larger $C^0$-IP meshes, now unobstructed)
-to bound where, if anywhere, genuine scaling begins.
+artifact of the protocol. The registered continuation --- true-operator
+windows at $N\sim1024$--$2048$ --- is executed in \S\ref{sec:e17}.
+
+\subsection{E17: the registered rungs, closed --- flat through $N=1024$
+(certified); $N=2048$ indicative}
+\label{sec:e17}
+
+Executing the continuation at scale required an instrument upgrade: the
+rectangle's four parity sectors decouple exactly, so a per-edge
+boundary-condition extension of the $C^0$-IP discretization (free /
+simply supported / \emph{guided} --- a one-sided Nitsche enforcement of
+$w_n=0$ on the symmetry lines) turns the full-plate eigenproblem into
+four independent quarter-plate problems, cutting the
+$\mathrm{modes}^2$-scaling orthogonalization cost $\sim$16-fold and
+validated against the full instrument (merged sectors reproduce the
+same-mesh SSSS spectrum at the per-sector statistics-grade criterion;
+per-sector free-plate agreement $48/48$ at matched $h$; rigid counts
+exact). At production scale --- four sectors $\times$ 1408 certified
+modes at $\sim$120k dofs each, residuals $\le10^{-4}$, per-sector
+two-mesh gates $N^*=951$--$986/1408$, certifying the $N=1024$ window in
+full --- the E14 verdict extends to every certified rung: the true
+operator's window IPR is \emph{flat}, sine-basis sector means
+$0.16$--$0.19$ across $N=256\to1024$ in all four sectors independently
+(fitted $D_2^{\mathrm{true}}=-0.01$), beam-basis $0.63$--$0.72$ (each
+physical mode remains $\approx$1--2 beam products) --- while the
+registered truncated ladder reads $0.069$ at the same rung and $0.052$
+at $N=2048$ ($D_2=0.42$--$0.50$). The indicative $N=2048$ window
+(including modes beyond the two-mesh gate) sits at $0.182$,
+indistinguishable from the certified flat level; its full certification
+via a properly separated check mesh is registered (the cached eigenpairs
+make it a gate-only rerun). Gap~A on the rectangle is closed at every
+registered scale: sparse avoided-crossing hybridization throughout, and
+truncated-ladder numerics manufacture the RP phase as a protocol
+artifact at every rung for which they were registered.
 
 \subsection{E10--E11: annulus control and thick plates}
 
@@ -539,8 +572,9 @@ The free-edge origin of the coupling is confirmed directly (E2), the
 L\'evy configuration (E7) adds an exactly-reduced member to the top tier,
 and the eigenvector program (E4, E8, E14) shows the hierarchy is not only
 spectral: adapted boundaries carry sparse, $N$-independent eigenvector
-spreads (rectangle $\approx$ beam products through $N=512$/sector on the
-true operator; ellipse $\approx$ 2.5 SS modes), while unadapted boundaries
+spreads (rectangle $\approx$ beam products through $N=1024$/sector
+certified on the true operator, E17; ellipse $\approx$ 2.5 SS modes),
+while unadapted boundaries
 carry same-domain-basis scaling ($D_2\approx0.2$--$0.5$, E8) whose
 protocol-robustness now warrants the same E14-style scrutiny. What the data
 refine is the \emph{selector}: not corners, not curvature, but whether the
@@ -577,11 +611,13 @@ overlap-controlled} on the certified plate --- localized dissipation gives
 uncorrelated resonances even at widths $\sim$ spacings, while distributed
 dissipation at strong overlap ($\gamma^*\!\approx\!16$, or point dashpots
 at $\gamma^*\!=\!4$) drives the markers to within $\sim$3$\sigma$ of
-AI$^\dagger$ with 2D-Poisson excluded at $\sim$5$\sigma$. Registered follow-ups: true-operator windows at
-$N\sim1024$--$2048$ (E17, preregistered and in execution); E14-style
-protocol scrutiny of the E8 unadapted-tier scaling (registered as E18);
-the exact published sweep range of the sector study (unpublished in the
-source; ours bracketed it); the AI$^\dagger$-vs-Ginibre fine call at $\sim$2k resonances; the
+AI$^\dagger$ with 2D-Poisson excluded at $\sim$5$\sigma$. Registered follow-ups: the separated-check-mesh certification of the
+$N=2048$ window (E17 continuation; a gate-only rerun on the cached
+eigenpairs); E14-style protocol scrutiny of the E8 unadapted-tier
+scaling (registered as E18 --- after E17, the unadapted tier is the only
+place a genuine RP eigenvector phase could still live); the exact
+published sweep range of the sector study (unpublished in the source;
+ours bracketed it); the AI$^\dagger$-vs-Ginibre fine call at $\sim$2k resonances; the
 hyperelastic (finite-deformation) rotor --- the E15c follow-up --- and the
 bladed-disk FE re-analysis as the experimental variant of E15; and
 comparison against the measured aluminum-plate spectra of

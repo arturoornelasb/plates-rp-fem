@@ -119,15 +119,25 @@ def main():
     stage_save()
 
     # -------- decisive per-sector two-mesh gate (eigenvalues only) --------
-    t0 = time.time()
-    _, _, Kc, Mc, _ = build_sector(cfg, sector, cfg["mesh_check"])
-    lam_c = solve_lowest(Kc, Mc, cfg["n_modes"] + RIGID[sector])
-    lam_c, _, _, _ = split_expected(lam_c, None, RIGID[sector])
-    n_cmp = min(len(lam), len(lam_c))
-    ns = n_star(lam[:n_cmp], lam_c[:n_cmp], cfg["spacing_frac"])
-    print(f"[{sector}] G3 two-mesh: N* = {ns}/{n_cmp} ({time.time()-t0:.1f} s)")
-    out["gate"] = dict(n_star=int(ns), n_cmp=int(n_cmp))
-    n_use = int(min(ns, len(lam)))
+    gate_path = os.path.join(HERE, f"sector_{sector}_gate.json")
+    if os.path.exists(gate_path):
+        with open(gate_path) as f:
+            out["gate"] = json.load(f)
+        print(f"[{sector}] G3 RESUMED from cache: N* = "
+              f"{out['gate']['n_star']}/{out['gate']['n_cmp']}")
+    else:
+        t0 = time.time()
+        _, _, Kc, Mc, _ = build_sector(cfg, sector, cfg["mesh_check"])
+        lam_c = solve_lowest(Kc, Mc, cfg["n_modes"] + RIGID[sector])
+        lam_c, _, _, _ = split_expected(lam_c, None, RIGID[sector])
+        n_cmp = min(len(lam), len(lam_c))
+        ns = n_star(lam[:n_cmp], lam_c[:n_cmp], cfg["spacing_frac"])
+        print(f"[{sector}] G3 two-mesh: N* = {ns}/{n_cmp} "
+              f"({time.time()-t0:.1f} s)")
+        out["gate"] = dict(n_star=int(ns), n_cmp=int(n_cmp))
+        with open(gate_path, "w") as f:
+            json.dump(out["gate"], f)
+    n_use = int(min(out["gate"]["n_star"], len(lam)))
     stage_save()
 
     # -------- projection: parity-reflected evaluation on the FULL grid ----
@@ -148,8 +158,9 @@ def main():
     Bx, kBx, pBx = bases.beam_1d(cfg["n_funcs_axis"], a, gx, wx)
     By, kBy, pBy = bases.beam_1d(cfg["n_funcs_axis"], b, gy, wy)
     cs_parts, cb_parts = [], []
+    V_use = V[:, :n_use]                 # gate-covered modes ONLY
     for j0 in range(0, n_use, cfg["proj_chunk"]):
-        Wg = (Pq @ V[:, j0:j0 + cfg["proj_chunk"]]) * sgn
+        Wg = (Pq @ V_use[:, j0:j0 + cfg["proj_chunk"]]) * sgn
         cs_parts.append(bases.project_modes(Wg, Sx, wx, Sy, wy, *cfg["grid"]))
         cb_parts.append(bases.project_modes(Wg, Bx, wx, By, wy, *cfg["grid"]))
     C_sine = np.concatenate(cs_parts, axis=0)

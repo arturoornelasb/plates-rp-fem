@@ -385,6 +385,33 @@ over N >= 512; RECONCILED-RP if in E9's 0.42-0.50 band); else
 INTERMEDIATE. Budget: overnight (~4-10 h solve, ~25 GB peak RAM); run
 serially after E15c and E16.
 
+## E17/E17q -- Gap A at N = 1024-2048 [DONE 2026-07-09 -- PROTOCOL ARTIFACT THROUGH THE CERTIFIED RANGE (N <= 1024); indicative 2048 agrees]
+
+Executed on the validated i01 quarter-plate instrument after the serial
+run was killed externally post-G2 (its gates preserved: G1 = 1836/5600
+informational, G2 = 1200/1200). Four sectors x 1408 elastic modes at
+~120k dofs, resid <= 1e-4; decisive per-sector two-mesh gate
+((110,68) vs (102,63)): N* = 951/986/983/952 -> ladders certified
+through N = 1024 (window [409,614] fully covered; the 2048 window needs
+1229). RESULT: the true operator's sine-basis window IPR is FLAT --
+0.16-0.19 across N = 256..1024 in all four sectors independently
+(fitted D2_true = -0.011); beam basis 0.63-0.72 (each mode ~1-2 beam
+products) -- vs the registered truncated ladder's 0.069 at N = 1024
+(interpolated) and 0.052 at 2048 (D2 = 0.42-0.50). The INDICATIVE
+N = 2048 row (pre-clip windows including modes beyond the gate) sits at
+0.1824 -- identical to the certified flat level. Gap A on the rectangle
+closes at every registered scale: sparse avoided-crossing hybridization
+throughout; truncated-ladder numerics (incl. the P12 recipe) manufacture
+the RP phase as a protocol artifact at every rung. REGISTERED
+continuation: full-2048 certification via a properly SEPARATED check
+mesh (the (102,63) check is only 1.08x production -- correlated errors
+make its N* optimistic; a ~1.2x-separated check decides 2048; the
+eigenpair .npz caches make that a gate-only rerun). Notes: oo's "rigid
+ratio 14" is a diagnostic-formula artifact (the oo twist mode is
+legitimately low; ratio matches (mid/first)^2; n_exp = 0, nothing
+dropped). Ops lessons recorded: session-harness reaps long background
+tasks -> detached OS-owned launches + stage caching are the pattern.
+
 ## i01 -- Quarter-plate C0-IP instrument [VALIDATED 2026-07-08 -- PASS, promoted]
 
 Sector reduction for the rectangle's Gap-A runs: per-edge BCs in
