@@ -1,5 +1,20 @@
 # E17 -- Gap A: true-operator windows at N = 1024-2048 (preregistered)
 
+> **E17q instrument swap (2026-07-08).** The serial run was killed
+> externally ~19 h in, after its gates passed (G1 = 1836/5600
+> informational; G2 = 1200/1200 -- preserved in
+> `results_raw_serial_partial.json` / `e17_serial_partial.log`; I did
+> not stop it). The experiment re-executes as **E17q** on the VALIDATED
+> i01 quarter-plate instrument (four independent parity-sector problems,
+> `run_e17q_sector.py <sector>` + `finalize_e17q.py`): SAME preregistered
+> readings, thresholds, references, bases, and windows as below; the
+> decisive accuracy gate becomes the per-sector two-mesh check
+> ((110, 68) vs (94, 58) quarter meshes, spacing_frac 0.1, ladders
+> restricted to gate-covered modes); rigid counts asserted per sector
+> (ee/eo/oe 1, oo 0). Quarter eigenvectors are evaluated on the full
+> Gauss grid by parity reflection, so the T1 projection machinery applies
+> verbatim.
+
 Preregistered 2026-07-07, before any run. The registered continuation of
 E14: bound where, if anywhere, genuine eigenvector scaling begins on the
 TRUE operator, over the full ladder range the paper registers

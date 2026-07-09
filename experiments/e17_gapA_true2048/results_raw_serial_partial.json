@@ -1,0 +1,46 @@
+{
+ "config": {
+  "a": 1.0,
+  "b": 0.6177017291400357,
+  "nu": 0.33,
+  "mesh": [
+   216,
+   133
+  ],
+  "mesh_check": [
+   184,
+   114
+  ],
+  "k_fem": 4,
+  "sigma_factor": 10.0,
+  "n_modes": 5600,
+  "gate_argyris_mesh": [
+   128,
+   80
+  ],
+  "gate_n": 1200,
+  "spacing_frac": 0.1,
+  "n_funcs_axis": 96,
+  "grid": [
+   384,
+   240
+  ],
+  "ladder": [
+   256,
+   512,
+   1024,
+   2048
+  ],
+  "probe_npts": 1500,
+  "proj_chunk": 800
+ },
+ "gates": {
+  "G1": {
+   "n_star": 1836
+  },
+  "G2": {
+   "n_star": 1200,
+   "rigid": 3
+  }
+ }
+}
