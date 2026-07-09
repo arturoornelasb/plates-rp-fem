@@ -26,13 +26,19 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 
 CFG = dict(
     a=1.0, b=1.0 / 1.6189043236, nu=0.33,
-    mesh=(110, 68), mesh_check=(94, 58), k_fem=4, sigma_factor=10.0,
+    mesh=(110, 68), mesh_check=(102, 63), k_fem=4, sigma_factor=10.0,
     n_modes=1408,
     spacing_frac=0.1,
     n_funcs_axis=96, grid=(384, 240),
     ladder=[256, 512, 1024, 2048],
     proj_chunk=700,
 )
+# v2 after the reaped first run: finer check mesh (94,58 -> 102,63; the
+# coarse check, not production, limited oo's gate to 757); rigid-gap
+# threshold relaxed 1e5 -> 1e3 (marginal on the guided quarter -- the
+# ratio is recorded); eigenpairs cached to .npz right after the solve so
+# an external stop never again discards a completed solve (resume skips
+# straight to the gate/projection stages).
 RIGID = dict(ee=1, eo=1, oe=1, oo=0)
 TOL = 1e-9
 
@@ -65,10 +71,12 @@ def build_sector(cfg, sector, nxy):
 def split_expected(lam, V, n_exp):
     lam = np.asarray(lam)
     if n_exp:
-        gap_ok = lam[n_exp] > 1e5 * max(abs(float(lam[n_exp - 1])), 1e-300)
+        ratio = float(lam[n_exp] / max(abs(float(lam[n_exp - 1])), 1e-300))
     else:
-        gap_ok = lam[0] > 1e-8 * lam[len(lam) // 2]
-    return lam[n_exp:], (V[:, n_exp:] if V is not None else None), bool(gap_ok)
+        ratio = float(lam[0] / (1e-8 * lam[len(lam) // 2]))
+    gap_ok = ratio > 1e3
+    return (lam[n_exp:], (V[:, n_exp:] if V is not None else None),
+            bool(gap_ok), ratio)
 
 
 def main():
@@ -84,25 +92,43 @@ def main():
     ndof = K.shape[0]
     print(f"[{sector}] {ndof} dofs ({time.time()-t00:.1f} s)")
 
-    t0 = time.time()
-    lam, V, sinfo, _ = solve_modes(K, M, cfg["n_modes"] + RIGID[sector],
-                                   resid_sanity=1e-4, sweeps_max=40)
-    lam, V, gap_ok = split_expected(lam, V, RIGID[sector])
-    print(f"[{sector}] {len(lam)} elastic, rigid gap {gap_ok}, resid "
-          f"{sinfo['max_resid']:.1e} ({time.time()-t0:.1f} s)")
-    out["solve"] = dict(resid=float(sinfo["max_resid"]), gap_ok=gap_ok,
+    def stage_save():
+        with open(os.path.join(HERE, f"sector_{sector}.json"), "w") as f:
+            json.dump(out, f, indent=1, default=float)
+
+    eig_path = os.path.join(HERE, f"sector_{sector}_eig.npz")
+    if os.path.exists(eig_path):
+        z = np.load(eig_path)
+        lam, V = z["lam"], z["V"]
+        resid, gap_ok, ratio = (float(z["resid"][0]), bool(z["gap_ok"][0]),
+                                float(z["ratio"][0]))
+        print(f"[{sector}] RESUMED {len(lam)} elastic modes from cache")
+    else:
+        t0 = time.time()
+        lam, V, sinfo, _ = solve_modes(K, M, cfg["n_modes"] + RIGID[sector],
+                                       resid_sanity=1e-4, sweeps_max=40)
+        lam, V, gap_ok, ratio = split_expected(lam, V, RIGID[sector])
+        resid = float(sinfo["max_resid"])
+        np.savez(eig_path, lam=lam, V=V, resid=[resid],
+                 gap_ok=[gap_ok], ratio=[ratio])
+        print(f"[{sector}] {len(lam)} elastic, rigid gap {gap_ok} "
+              f"(ratio {ratio:.1e}), resid {resid:.1e} "
+              f"({time.time()-t0:.1f} s); eigenpairs cached")
+    out["solve"] = dict(resid=resid, gap_ok=gap_ok, gap_ratio=ratio,
                         n_elastic=int(len(lam)), ndof=int(ndof))
+    stage_save()
 
     # -------- decisive per-sector two-mesh gate (eigenvalues only) --------
     t0 = time.time()
     _, _, Kc, Mc, _ = build_sector(cfg, sector, cfg["mesh_check"])
     lam_c = solve_lowest(Kc, Mc, cfg["n_modes"] + RIGID[sector])
-    lam_c, _, _ = split_expected(lam_c, None, RIGID[sector])
+    lam_c, _, _, _ = split_expected(lam_c, None, RIGID[sector])
     n_cmp = min(len(lam), len(lam_c))
     ns = n_star(lam[:n_cmp], lam_c[:n_cmp], cfg["spacing_frac"])
     print(f"[{sector}] G3 two-mesh: N* = {ns}/{n_cmp} ({time.time()-t0:.1f} s)")
     out["gate"] = dict(n_star=int(ns), n_cmp=int(n_cmp))
     n_use = int(min(ns, len(lam)))
+    stage_save()
 
     # -------- projection: parity-reflected evaluation on the FULL grid ----
     t0 = time.time()

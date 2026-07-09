@@ -4,3 +4,7 @@ __pycache__/
 build/
 dist/
 .ipynb_checkpoints/
+
+# E17q eigenpair caches (GB-scale, regenerable)
+experiments/e17_gapA_true2048/*_eig.npz
+experiments/e17_gapA_true2048/*.err
