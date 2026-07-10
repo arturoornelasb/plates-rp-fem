@@ -316,6 +316,144 @@ def max_prestress_strain(mesh, basis, u0):
     return float(np.max(np.abs(mean) + rad))
 
 
+# ---------------- finite-deformation prestate (E15d, SVK) ----------------
+def svk_residual_tangent(mesh, basis, u0, nu, Omega, E=1.0, rho=1.0):
+    """Residual and consistent tangent of the St. Venant-Kirchhoff
+    plane-stress rotor prestate in the rotating frame:
+        R(u0; v) = int S(E(u0)) : dE(u0; v) - rho Omega^2 int (x + u0).v
+    with E = (F^T F - I)/2, S = lam_ps tr(E) I + 2 mu E. Tangent =
+    material + geometric + load stiffness (-Omega^2 M term, the exact
+    spin softening of the centrifugal follower load)."""
+    from skfem import BilinearForm, LinearForm
+    lam, mu = _lame_planestress(E, nu)
+
+    def _strain(du):
+        e00 = du[0][0] + 0.5 * (du[0][0] ** 2 + du[1][0] ** 2)
+        e11 = du[1][1] + 0.5 * (du[0][1] ** 2 + du[1][1] ** 2)
+        e01 = 0.5 * (du[0][1] + du[1][0]
+                     + du[0][0] * du[0][1] + du[1][0] * du[1][1])
+        return e00, e11, e01
+
+    def _dE(F_du, dv):
+        de00 = dv[0][0] * (1 + F_du[0][0]) + dv[1][0] * F_du[1][0]
+        de11 = dv[1][1] * (1 + F_du[1][1]) + dv[0][1] * F_du[0][1]
+        de01 = 0.5 * (dv[0][1] * (1 + F_du[0][0]) + dv[1][1] * F_du[1][0]
+                      + dv[0][0] * F_du[0][1] + dv[1][0] * (1 + F_du[1][1]))
+        return de00, de11, de01
+
+    @LinearForm
+    def resid(v, w):
+        du = w["disp"].grad
+        e00, e11, e01 = _strain(du)
+        tr = e00 + e11
+        s00, s11, s01 = (lam * tr + 2 * mu * e00, lam * tr + 2 * mu * e11,
+                         2 * mu * e01)
+        de00, de11, de01 = _dE(du, v.grad)
+        body = rho * Omega ** 2 * ((w.x[0] + w["disp"][0]) * v[0]
+                                   + (w.x[1] + w["disp"][1]) * v[1])
+        return s00 * de00 + s11 * de11 + 2 * s01 * de01 - body
+
+    @BilinearForm
+    def tangent(u, v, w):
+        du0 = w["disp"].grad
+        e00, e11, e01 = _strain(du0)
+        tr = e00 + e11
+        s00, s11, s01 = (lam * tr + 2 * mu * e00, lam * tr + 2 * mu * e11,
+                         2 * mu * e01)
+        deu00, deu11, deu01 = _dE(du0, u.grad)
+        dev00, dev11, dev01 = _dE(du0, v.grad)
+        trdeu = deu00 + deu11
+        mat = ((lam * trdeu + 2 * mu * deu00) * dev00
+               + (lam * trdeu + 2 * mu * deu11) * dev11
+               + 2 * (2 * mu * deu01) * dev01)
+        duu, dv = u.grad, v.grad
+        geo = 0.0
+        for i in range(2):
+            geo = geo + (s00 * duu[i][0] * dv[i][0]
+                         + s11 * duu[i][1] * dv[i][1]
+                         + s01 * (duu[i][0] * dv[i][1]
+                                  + duu[i][1] * dv[i][0]))
+        load = rho * Omega ** 2 * (u[0] * v[0] + u[1] * v[1])
+        return mat + geo - load
+
+    disp = basis.interpolate(u0)
+    return (resid.assemble(basis, disp=disp),
+            tangent.assemble(basis, disp=disp).tocsc())
+
+
+def rigid_inplane_basis(basis, M, with_rotation=True):
+    """M-orthonormal in-plane rigid basis (two translations, optionally +
+    the undeformed rotation), built by L2 projection (layout-agnostic)."""
+    from skfem import LinearForm
+    import scipy.sparse.linalg as spla
+    Msol = spla.factorized(M.tocsc())
+    fields = [(lambda x: 1.0 + 0.0 * x[0], lambda x: 0.0 * x[0]),
+              (lambda x: 0.0 * x[0], lambda x: 1.0 + 0.0 * x[0])]
+    if with_rotation:
+        fields.append((lambda x: -x[1], lambda x: x[0]))
+    cols = []
+    for fx, fy in fields:
+        @LinearForm
+        def l(v, w, fx=fx, fy=fy):
+            return fx(w.x) * v[0] + fy(w.x) * v[1]
+        cols.append(Msol(l.assemble(basis)))
+    R3 = np.column_stack(cols)
+    G = R3.T @ (M @ R3)
+    return R3 @ np.linalg.inv(np.linalg.cholesky(G).T)
+
+
+def newton_prestate(mesh, basis, M, nu, Omega, u0=None, E=1.0, rho=1.0,
+                    tol=1e-9, max_it=30):
+    """Static finite-deformation centrifugal prestate by Newton with the
+    rigid content projected out (free rotor). Continuation-friendly:
+    pass the previous Omega's u0 as the start. Returns (u0, info)."""
+    import scipy.sparse.linalg as spla
+    N = M.shape[0]
+    if u0 is None:
+        u0 = np.zeros(N)
+    # translations ONLY: pinning the deformed center of mass to the axis
+    # zeroes the net centrifugal force identically; the rotation direction
+    # needs no projection (the load is torque-free about the origin, and
+    # its -Omega^2 load-stiffness eigenvalue keeps the tangent invertible;
+    # projecting the UNDEFORMED rotation would misproject at finite
+    # deformation and stall Newton at strain^2-order residuals).
+    R3 = rigid_inplane_basis(basis, M, with_rotation=False)
+    Mr = M @ R3
+    hist, scale0 = [], None
+    for it in range(max_it):
+        R, KT = svk_residual_tangent(mesh, basis, u0, nu, Omega, E, rho)
+        R = R - Mr @ (R3.T @ R)
+        nr = float(np.linalg.norm(R))
+        hist.append(nr)
+        if scale0 is None:
+            scale0 = max(nr, 1e-300)
+        if nr < tol * scale0:
+            return u0, dict(iters=it, resid=nr, hist=hist, ok=True)
+        # rigid directions carry eigenvalue -Omega^2 (load stiffness), so
+        # the tangent is invertible for Omega > 0; tiny mass shift for
+        # safety near Omega = 0.
+        eps = 1e-10 * float(abs(KT).max()) / float(abs(M).max())
+        KTreg = (KT + eps * M).tocsc()
+        du = spla.spsolve(KTreg, -R)
+        du = du - R3 @ (Mr.T @ du)
+        step, best = 1.0, None
+        for _ in range(8):
+            R2, _ = svk_residual_tangent(mesh, basis, u0 + step * du, nu,
+                                         Omega, E, rho)
+            R2 = R2 - Mr @ (R3.T @ R2)
+            if np.linalg.norm(R2) < nr:
+                best = step
+                break
+            step *= 0.5
+        if best is None:
+            # stalled at the assembly/roundoff floor
+            return u0, dict(iters=it, resid=nr, hist=hist,
+                            ok=bool(nr < 1e-7 * scale0), stalled=True)
+        u0 = u0 + best * du
+    return u0, dict(iters=max_it, resid=hist[-1], hist=hist,
+                    ok=bool(hist[-1] < 1e-7 * scale0))
+
+
 # --------------------------- rotating pencil solve --------------------------
 def solve_rotor(Lam, G0m, Omega, Mpts=None, delta=0.0, real_tol=1e-6,
                 Kg_m=None, spin_soften=False):
