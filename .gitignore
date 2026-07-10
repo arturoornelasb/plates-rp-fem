@@ -15,3 +15,5 @@ experiments/e19_superellipse_true/eig_*.npz
 experiments/e19_superellipse_true/*.err
 experiments/e19b_superellipse_icirc/eig_*.npz
 experiments/e19b_superellipse_icirc/*.err
+experiments/e20_mechanical_moe/plate_cache.npz
+experiments/e20_mechanical_moe/*.err
