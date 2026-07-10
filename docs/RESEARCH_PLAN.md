@@ -462,3 +462,22 @@ the faithful E9 analog via nested Koornwinder polynomial Ritz (P4
 interpolants, FEM-M orthonormalized, sector-classified rung
 eigenvectors, SS-basis representation), same frozen dichotomy vs the
 valid true ladders.
+
+## E18b -- Faithful truncated protocol [DONE 2026-07-09 -- PROTOCOL ARTIFACT; Gap A closes negatively for ALL tiers]
+
+Dubiner nested-Ritz (p <= 58, 1770 functions; deg<=4 reproduction
+1.5e-14; degree-blockwise C3v projection: A1 310 / A2 280 / E 1180).
+RESULT: the truncated protocol manufactures near-ergodic scaling in
+every sector -- slopes -0.97 / -1.10 / -0.96 (D2_trunc ~ 1.0) vs the
+true operator's -0.25 / -0.15 / -0.138: EXAGGERATION RATIOS 3.9x / 7.5x
+/ 7.0x. Frozen gates: A2 + E = PROTOCOL ARTIFACT, A1 = INTERMEDIATE
+(flat-bar below its noisy true slope; same ratio story). E-sector
+textbook: trunc starts ABOVE true at N = 128 (0.140 vs 0.081), crashes
+below by N = 1024 (0.021 vs 0.063). Superellipse contingency NOT
+triggered. CAMPAIGN STATEMENT: Gap A closes protocol-negative across
+the whole tier hierarchy -- rectangle flat (E17q), triangle weakly
+delocalizing (4.8 sigma) but protocol-exaggerated ~7x; the artifact's
+mechanism is visible in the Ritz quality itself (corner-singular free
+modes are poorly captured by smooth truncated trial spaces -- A2 Ritz
+error ~2e-2 at p = 58). Note: the Ritz-sanity check as coded is
+rigid-shifted in A1/E (constant/linear content; windows unaffected).

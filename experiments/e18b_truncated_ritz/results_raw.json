@@ -1,0 +1,97 @@
+{
+ "gates": {
+  "interp_deg4": 1.4765966227514582e-14,
+  "sector_counts": {
+   "A1": 310,
+   "A2": 280,
+   "E": 1180
+  },
+  "ritz_sanity_A1": 0.22084187891083956,
+  "ritz_sanity_A2": 0.017478705066944378,
+  "ritz_sanity_E": 0.3705343153922055
+ },
+ "sectors": {
+  "A1": {
+   "rows": [
+    {
+     "N": 128,
+     "mln": -2.2247309322125997,
+     "se": 0.0983241363803012
+    },
+    {
+     "N": 256,
+     "mln": -2.894997101313779,
+     "se": 0.07216453384122516
+    }
+   ],
+   "slope_trunc": -0.9669896782379149,
+   "se_trunc": 0.17595767677916765,
+   "slope_true": -0.25,
+   "se_true": 0.116,
+   "ratio": 3.8679587129516597,
+   "ritz_sanity": 0.22084187891083956,
+   "verdict": "INTERMEDIATE"
+  },
+  "A2": {
+   "rows": [
+    {
+     "N": 128,
+     "mln": -2.406245405356414,
+     "se": 0.10869346194072964
+    },
+    {
+     "N": 256,
+     "mln": -3.165967091884884,
+     "se": 0.06214333601878096
+    }
+   ],
+   "slope_trunc": -1.0960467096104232,
+   "se_trunc": 0.18063131241052852,
+   "slope_true": -0.147,
+   "se_true": 0.183,
+   "ratio": 7.456100065377028,
+   "ritz_sanity": 0.017478705066944378,
+   "verdict": "PROTOCOL ARTIFACT"
+  },
+  "E": {
+   "rows": [
+    {
+     "N": 128,
+     "mln": -1.9655067521809662,
+     "se": 0.11541976505775504
+    },
+    {
+     "N": 256,
+     "mln": -2.4940441181412862,
+     "se": 0.09558121230741567
+    },
+    {
+     "N": 512,
+     "mln": -3.0298486337722133,
+     "se": 0.06819555864977254
+    },
+    {
+     "N": 1024,
+     "mln": -3.862669950410548,
+     "se": 0.040551273949506604
+    }
+   ],
+   "slope_trunc": -0.9609085455086561,
+   "se_trunc": 0.0481622877337661,
+   "slope_true": -0.138,
+   "se_true": 0.029,
+   "ratio": 6.963105402236638,
+   "ritz_sanity": 0.3705343153922055,
+   "verdict": "PROTOCOL ARTIFACT"
+  }
+ },
+ "verdict": {
+  "per_sector": {
+   "A1": "INTERMEDIATE",
+   "A2": "PROTOCOL ARTIFACT",
+   "E": "PROTOCOL ARTIFACT"
+  },
+  "overall": "PROTOCOL ARTIFACT on the unadapted tier; combined with E14/E17, Gap A closes negatively for ALL tiers at accessible N (the triangle's weak true slope notwithstanding -- see ratio)"
+ },
+ "wall_time_s": 254.9
+}

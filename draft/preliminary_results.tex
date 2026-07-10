@@ -13,7 +13,7 @@
 for freely vibrating plates:\\ preliminary results}
 \author{J.~Arturo Ornelas Brand\\
 \small Independent Researcher, Aguascalientes, M\'exico}
-\date{July 9, 2026 --- draft v0.8 (companion to the ``Why Rosenzweig--Porter?'' program)}
+\date{July 9, 2026 --- draft v0.9 (companion to the ``Why Rosenzweig--Porter?'' program)}
 
 \begin{document}
 \maketitle
@@ -60,7 +60,11 @@ stay sparse (each mode $\approx$1--2 beam products) through $N=1024$ per
 sector at matched, gate-certified windows --- and indicatively through
 $N=2048$ --- on a sector-reduced (quarter-plate) instrument: the scaling
 is a property of the truncation protocol, not of the plate, at every
-registered rung. Gap~A therefore reads: sparse avoided-crossing
+registered rung. The same comparison on the unadapted tier (the free
+triangle) finds a weak \emph{genuine} true-operator delocalization
+($D_2\approx0.14$, $4.8\sigma$ from flat) that the truncated protocol
+exaggerates seven-fold to near-ergodic scaling --- Gap~A closes
+protocol-negative across the whole tier hierarchy. Gap~A therefore reads: sparse avoided-crossing
 hybridization at accessible mode numbers, and truncated-ladder numerics
 (including the preregistered P12 recipe applied to simulation data) would
 report an RP phase as an artifact. Finally, an in-plane rotating-plate
@@ -552,6 +556,41 @@ fixed-angle references.}
 \label{fig:e16}
 \end{figure}
 
+\subsection{E18/E18b: the unadapted tier --- weak genuine delocalization,
+protocol-exaggerated seven-fold}
+\label{sec:e18}
+
+The unadapted tier was the last place a genuine RP eigenvector phase
+could live. On the free equilateral triangle ($C^0$-IP at $\sim$290k
+dofs; gates: free two-mesh $1056/1056$ full coverage, SS vs.\ the exact
+Lam\'e$^2$ spectrum $1999/2000$, free vs.\ certified Argyris
+$1000/1000$), the \emph{true} operator's same-domain SS-eigenbasis
+windows fall slowly but significantly --- E-sector IPR $0.081\to0.063$
+over $N=128\to1024$, slope $-0.138\pm0.029$ ($4.8\sigma$ from flat,
+$D_2^{\mathrm{true}}\approx0.14$; A-sectors consistent) --- the first
+true-operator departure from the rectangle's dead-flat spreads, sitting
+exactly where the E5/E8 hierarchy placed the strongest coupling. The
+faithful truncated-protocol comparison (E18b: free-plate Ritz in nested
+total-degree Dubiner polynomial spaces realized as $P_4$ interpolants,
+sector-projected degree-blockwise, rung eigenvectors represented in the
+same SS windows) then manufactures \emph{near-ergodic} scaling in every
+sector --- slopes $-0.96$ to $-1.10$ ($D_2^{\mathrm{trunc}}\approx1$),
+an \textbf{exaggeration of $4$--$7\times$} over the genuine slopes
+(E-sector: the truncated ladder starts \emph{above} the true level at
+$N=128$, $0.140$ vs.\ $0.081$, and crashes far below it by $N=1024$,
+$0.021$ vs.\ $0.063$). The mechanism is visible in the trial-space
+quality itself: corner-singular free-plate modes are captured only
+algebraically by smooth truncated families ($\sim$$2\times10^{-2}$
+relative Ritz error at degree 58 in A2), which is exactly how truncation
+spreads modes across reference functions. Per the preregistered
+dichotomy the tier reads PROTOCOL ARTIFACT (A2, E; A1 intermediate only
+by its noisier true slope against the flat-bar), and the superellipse
+contingency does not trigger. Gap~A therefore closes
+\emph{protocol-negative across the entire tier hierarchy}: the rectangle
+is flat, the triangle carries a weak genuine delocalization that
+truncated-ladder numerics inflate seven-fold toward a spurious RP-like
+phase.
+
 \section{Synthesis}
 
 Seven geometries fall on one hierarchy:
@@ -575,8 +614,11 @@ spectral: adapted boundaries carry sparse, $N$-independent eigenvector
 spreads (rectangle $\approx$ beam products through $N=1024$/sector
 certified on the true operator, E17; ellipse $\approx$ 2.5 SS modes),
 while unadapted boundaries
-carry same-domain-basis scaling ($D_2\approx0.2$--$0.5$, E8) whose
-protocol-robustness now warrants the same E14-style scrutiny. What the data
+carry a weak but genuine true-operator delocalization
+($D_2^{\mathrm{true}}\approx0.14$, $4.8\sigma$; E18) --- the E8
+same-domain-basis values ($D_2\approx0.2$--$0.5$) sit between that
+genuine slope and the $7\times$-exaggerated truncated-protocol values
+(E18b), completing the E14-style scrutiny across the hierarchy. What the data
 refine is the \emph{selector}: not corners, not curvature, but whether the
 boundary is adapted to a separable structure of the fourth-order operator.
 The effective coupling is material-tunable ($\lambda(\nu)$, E7),
@@ -613,9 +655,7 @@ dissipation at strong overlap ($\gamma^*\!\approx\!16$, or point dashpots
 at $\gamma^*\!=\!4$) drives the markers to within $\sim$3$\sigma$ of
 AI$^\dagger$ with 2D-Poisson excluded at $\sim$5$\sigma$. Registered follow-ups: the separated-check-mesh certification of the
 $N=2048$ window (E17 continuation; a gate-only rerun on the cached
-eigenpairs); E14-style protocol scrutiny of the E8 unadapted-tier
-scaling (registered as E18 --- after E17, the unadapted tier is the only
-place a genuine RP eigenvector phase could still live); the exact
+eigenpairs); the exact
 published sweep range of the sector study (unpublished in the source;
 ours bracketed it); the AI$^\dagger$-vs-Ginibre fine call at $\sim$2k resonances; the
 hyperelastic (finite-deformation) rotor --- the E15c follow-up --- and the
