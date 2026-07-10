@@ -460,6 +460,27 @@ legitimately low; ratio matches (mid/first)^2; n_exp = 0, nothing
 dropped). Ops lessons recorded: session-harness reaps long background
 tasks -> detached OS-owned launches + stage caching are the pattern.
 
+## E19/E19b -- Superellipse p = 10 true-operator windows [DONE 2026-07-10 -- INTERMEDIATE 1.7 sigma; hierarchy-ORDERED]
+
+E19 (polar-ring mesh): COVERAGE-LIMITED -- the instrument failed its own
+gates (E5-cross died at mode 224; corner-element conditioning; floor
+~1e-2). The gate architecture did its job. E19b (init_circle-mapped
+E5-validated mesh, refine 6): free side gated by the CROSS-INSTRUMENT
+check at FULL coverage (668/668 vs certified Argyris -- supersedes the
+anti-informative h-ratio-2 two-mesh, amendment documented); SS basis
+gated by PENALTY-ROBUSTNESS order-stability (sigma 20 vs 10: 1040/1040).
+RESULT: pooled true-operator slope -0.205 +/- 0.121 -> D2_true(p10) =
+0.205, Dq spreads 0.13-0.18 (triangle-like, RP-leaning). THE HIERARCHY:
+rectangle 0.011 -> triangle 0.138 -> superellipse 0.205 -- monotone with
+boundary-adaptedness coupling exactly as E5/E8 predicted, now on TRUE
+operators. The p10 point alone is 1.7 sigma (2-rung ladders; oo sector
+coverage-limited at 250 basis); the crisp standalone test needs a
+finer instrument (refine-7 + cross-mesh projection machinery) --
+registered, low priority (the ordering is the finding). Instrument
+lessons: h-ratio-2 checks gate the CHECK, not production; polar-ring
+superellipse meshes are disqualified; penalty-robustness is a valid
+basis gate.
+
 ## i01 -- Quarter-plate C0-IP instrument [VALIDATED 2026-07-08 -- PASS, promoted]
 
 Sector reduction for the rectangle's Gap-A runs: per-edge BCs in

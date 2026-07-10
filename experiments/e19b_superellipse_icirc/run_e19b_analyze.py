@@ -166,7 +166,8 @@ def main():
            if "dq_spread" in results["sectors"][s]]
     md.append(f"- Dq spreads (D_1.5 - D_4): "
               + ", ".join(f"{s}: {results['sectors'][s]['dq_spread']:.3f}"
-                          for s in SECT))
+                          for s in SECT
+                          if "dq_spread" in results["sectors"][s]))
     if sameside and sig >= 3:
         cmpr = ("ABOVE the triangle (hierarchy prediction holds)"
                 if d2 >= TRI_REF else
