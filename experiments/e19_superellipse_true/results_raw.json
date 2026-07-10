@@ -1,0 +1,30 @@
+{
+ "gates": {
+  "free_two_mesh": 327,
+  "free_vs_e5": 224,
+  "n_e5": 1336,
+  "ss_strict": 241,
+  "ss_order": 818,
+  "n_use_f": 224,
+  "n_use_s": 818
+ },
+ "sectors": {
+  "ee": {
+   "Ns": [],
+   "coverage_limited": true
+  },
+  "eo": {
+   "Ns": [],
+   "coverage_limited": true
+  },
+  "oe": {
+   "Ns": [],
+   "coverage_limited": true
+  },
+  "oo": {
+   "Ns": [],
+   "coverage_limited": true
+  }
+ },
+ "verdict": "COVERAGE-LIMITED: no sector covers even the first rung -- the instrument fails its gates (see gates line); E19b (init_circle-mapped mesh) registered."
+}

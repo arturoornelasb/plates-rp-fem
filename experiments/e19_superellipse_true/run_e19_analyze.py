@@ -108,6 +108,11 @@ def main():
             for q in QS:
                 dq_acc[q].append(float(np.mean(np.log(vals[q]))))
             md.append(f"| {s} | {N} | {np.exp(mlns[-1]):.4f} |")
+        if len(Ns) < 2:
+            results["sectors"][s] = dict(Ns=Ns, coverage_limited=True)
+            md.append(f"| {s} | - | COVERAGE-LIMITED ({len(idx_f)} free, "
+                      f"{len(idx_s)} basis in gates) |")
+            continue
         sl, se = wls(Ns, mlns, sess)
         Dq = {q: float(-np.polyfit(np.log(Ns), dq_acc[q], 1)[0] / (q - 1))
               for q in QS}
@@ -117,6 +122,18 @@ def main():
         slopes.append(sl)
         ses.append(se)
         md.append(f"| {s} | slope | {sl:+.3f} ({se:.3f}) |")
+    if not slopes:
+        verdict = ("COVERAGE-LIMITED: no sector covers even the first "
+                   "rung -- the instrument fails its gates (see gates "
+                   "line); E19b (init_circle-mapped mesh) registered.")
+        results["verdict"] = verdict
+        md.append("\n**Reading: " + verdict + "**")
+        with open(os.path.join(HERE, "RESULTS.md"), "w", encoding="utf-8") as f:
+            f.write("\n".join(md) + "\n")
+        with open(os.path.join(HERE, "results_raw.json"), "w") as f:
+            json.dump(results, f, indent=1, default=float)
+        print(verdict)
+        return
     w = 1.0 / np.array(ses) ** 2
     sl_pool = float(np.sum(w * np.array(slopes)) / np.sum(w))
     se_pool = float(np.sqrt(1.0 / np.sum(w)))
