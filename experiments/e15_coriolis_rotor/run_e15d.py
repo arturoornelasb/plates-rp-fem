@@ -37,19 +37,15 @@ def centered_star(nrings, n_th, harms):
     return m2, e2._vector_basis(m2)
 
 
-def solve_pencil(K_m, G0m, Omega, real_tol=1e-6):
-    """Companion solve of (K_m - omega^2 I + i omega Omega G0m) phi = 0
-    (the solve_rotor linearization with a full modal K)."""
-    N = K_m.shape[0]
-    Z = np.zeros((N, N))
-    A = np.block([[Z, K_m], [K_m, Omega * G0m]])
-    B = np.block([[K_m, Z], [Z, -np.eye(N)]])
-    s = eig(A, B, right=False)
-    s = s[np.isfinite(s)]
-    om = np.sort(s[np.abs(s.imag) < real_tol * np.abs(s).max()].real)
-    om = om[om > 0]
-    max_imag = float(np.max(np.abs(s.imag)) / max(np.abs(s).max(), 1e-300))
-    return om, max_imag
+def solve_pencil(K_m, G0m, Omega):
+    """(K_m - omega^2 I + i omega Omega G0m) phi = 0 via the VALIDATED
+    E15 solver: eigendecompose K_m and call solve_rotor in its
+    eigenbasis (exact reuse of the Hermitian companion)."""
+    w_e, Q = np.linalg.eigh(K_m)
+    Gp = Q.T @ G0m @ Q
+    Gp = 0.5 * (Gp - Gp.T)
+    rp = e2.solve_rotor(w_e, Gp, Omega)
+    return np.asarray(rp["omega"]), float(rp["max_imag"])
 
 
 def windowed_r(w):
@@ -97,19 +93,30 @@ def main():
         md.append("| Omega_nd | strain | newton | pooled <r> | "
                   "top-third <r> | max_imag |")
         md.append("|---|---|---|---|---|---|")
+        cache_dir = os.path.join(HERE, "e15d_cache")
+        os.makedirs(cache_dir, exist_ok=True)
         for Om in OMEGAS:
             t1 = time.time()
-            if Om == 0.0:
-                u0 = np.zeros(K.shape[0])
-                ninfo = dict(ok=True, iters=0)
-                KT = K
+            cpath = os.path.join(cache_dir, f"{name}_{Om:g}.npz")
+            if os.path.exists(cpath):
+                z = np.load(cpath)
+                KT_m, strain = z["KT_m"], float(z["strain"][0])
+                ninfo = dict(ok=bool(z["ok"][0]), iters=int(z["iters"][0]))
+                u0 = z["u0"]
             else:
-                u0, ninfo = e2.newton_prestate(m, b, M, NU, Om, u0=u0)
-                _, KT = e2.svk_residual_tangent(m, b, u0, NU, Om)
-                KT = 0.5 * (KT + KT.T)
-            strain = float(e2.max_prestress_strain(m, b, u0))
-            KT_m = Xe.T @ (KT @ Xe)
-            KT_m = 0.5 * (KT_m + KT_m.T)
+                if Om == 0.0:
+                    u0 = np.zeros(K.shape[0])
+                    ninfo = dict(ok=True, iters=0)
+                    KT = K
+                else:
+                    u0, ninfo = e2.newton_prestate(m, b, M, NU, Om, u0=u0)
+                    _, KT = e2.svk_residual_tangent(m, b, u0, NU, Om)
+                    KT = 0.5 * (KT + KT.T)
+                strain = float(e2.max_prestress_strain(m, b, u0))
+                KT_m = Xe.T @ (KT @ Xe)
+                KT_m = 0.5 * (KT_m + KT_m.T)
+                np.savez(cpath, KT_m=KT_m, strain=[strain],
+                         ok=[ninfo["ok"]], iters=[ninfo["iters"]], u0=u0)
             om, mi = solve_pencil(KT_m, G0_e, Om)
             r_p, s_p, _ = mean_r(om, skip_low=max(10, len(om) // 10))
             _, rs_ = windowed_r(om)
