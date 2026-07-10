@@ -415,11 +415,15 @@ N = 2048 row (pre-clip windows including modes beyond the gate) sits at
 0.1824 -- identical to the certified flat level. Gap A on the rectangle
 closes at every registered scale: sparse avoided-crossing hybridization
 throughout; truncated-ladder numerics (incl. the P12 recipe) manufacture
-the RP phase as a protocol artifact at every rung. REGISTERED
-continuation: full-2048 certification via a properly SEPARATED check
-mesh (the (102,63) check is only 1.08x production -- correlated errors
-make its N* optimistic; a ~1.2x-separated check decides 2048; the
-eigenpair .npz caches make that a gate-only rerun). Notes: oo's "rigid
+the RP phase as a protocol artifact at every rung. CERTIFICATION
+HARDENED (2026-07-09, CERT_RESULTS.md): two independent gates agree --
+honest 1.196x two-mesh N* = 680-766, SSSS-exact absolute anchor
+N* = 742-777 (max relerr ~1e-3 at mode 1408) -- the N = 1024 window is
+certified by BOTH gates in all sectors with >= 66 margin; the original
+1.08x check (951-986) confirmed correlated-optimistic (methods lesson);
+the 2048 window is honestly NOT certifiable at this mesh (needs
+1229/sector; finer production ~(140,86)/quarter registered, low
+priority given the uniform flatness of the indicative row). Notes: oo's "rigid
 ratio 14" is a diagnostic-formula artifact (the oo twist mode is
 legitimately low; ratio matches (mid/first)^2; n_exp = 0, nothing
 dropped). Ops lessons recorded: session-harness reaps long background
