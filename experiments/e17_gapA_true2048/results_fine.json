@@ -1,0 +1,381 @@
+{
+ "sectors": {
+  "ee": {
+   "sector": "ee",
+   "config": {
+    "a": 1.0,
+    "b": 0.6177017291400357,
+    "nu": 0.33,
+    "mesh": [
+     140,
+     86
+    ],
+    "mesh_check": [
+     120,
+     74
+    ],
+    "k_fem": 4,
+    "sigma_factor": 10.0,
+    "n_modes": 1472,
+    "spacing_frac": 0.1,
+    "n_funcs_axis": 96,
+    "grid": [
+     384,
+     240
+    ],
+    "ladder": [
+     256,
+     512,
+     1024,
+     2048
+    ],
+    "proj_chunk": 700
+   },
+   "solve": {
+    "resid": 0.0009690284423945626,
+    "gap_ok": true,
+    "gap_ratio": 1618.41777618346,
+    "n_elastic": 1472,
+    "ndof": 193545
+   },
+   "gate": {
+    "n_star": 1025,
+    "n_cmp": 1472
+   },
+   "gapA": {
+    "n": 1025,
+    "sine": [
+     {
+      "N": 256,
+      "n_window": 51,
+      "mlnipr": -1.740301164463108,
+      "slnipr": 0.23131119136687422,
+      "mean_captured": 3.6173922008550092
+     },
+     {
+      "N": 512,
+      "n_window": 103,
+      "mlnipr": -1.6864529611782884,
+      "slnipr": 0.31030898886300945,
+      "mean_captured": 3.7228270051859385
+     },
+     {
+      "N": 1024,
+      "n_window": 205,
+      "mlnipr": -1.7109764085759063,
+      "slnipr": 0.4237374339202444,
+      "mean_captured": 3.801108619341797
+     }
+    ],
+    "beam": [
+     {
+      "N": 256,
+      "n_window": 51,
+      "mlnipr": -0.36727057821194203,
+      "slnipr": 0.23131244011611113,
+      "mean_captured": 3.999426277986981
+     },
+     {
+      "N": 512,
+      "n_window": 103,
+      "mlnipr": -0.3556766202724369,
+      "slnipr": 0.25566617003504466,
+      "mean_captured": 3.999587030821674
+     },
+     {
+      "N": 1024,
+      "n_window": 205,
+      "mlnipr": -0.40810919834764126,
+      "slnipr": 0.3044112347516532,
+      "mean_captured": 3.9997153167822685
+     }
+    ]
+   },
+   "wall_time_s": 13729.8
+  },
+  "eo": {
+   "sector": "eo",
+   "config": {
+    "a": 1.0,
+    "b": 0.6177017291400357,
+    "nu": 0.33,
+    "mesh": [
+     140,
+     86
+    ],
+    "mesh_check": [
+     120,
+     74
+    ],
+    "k_fem": 4,
+    "sigma_factor": 10.0,
+    "n_modes": 1472,
+    "spacing_frac": 0.1,
+    "n_funcs_axis": 96,
+    "grid": [
+     384,
+     240
+    ],
+    "ladder": [
+     256,
+     512,
+     1024,
+     2048
+    ],
+    "proj_chunk": 700
+   },
+   "solve": {
+    "resid": 9.855588685364523e-05,
+    "gap_ok": true,
+    "gap_ratio": 8608.51136913733,
+    "n_elastic": 1472,
+    "ndof": 192984
+   },
+   "gate": {
+    "n_star": 1093,
+    "n_cmp": 1472
+   },
+   "gapA": {
+    "n": 1093,
+    "sine": [
+     {
+      "N": 256,
+      "n_window": 51,
+      "mlnipr": -1.8286721556028607,
+      "slnipr": 0.3091428116061584,
+      "mean_captured": 3.619242080229013
+     },
+     {
+      "N": 512,
+      "n_window": 103,
+      "mlnipr": -1.768224218821848,
+      "slnipr": 0.33646156326850213,
+      "mean_captured": 3.7214479909940383
+     },
+     {
+      "N": 1024,
+      "n_window": 205,
+      "mlnipr": -1.748045543315659,
+      "slnipr": 0.4367792837698092,
+      "mean_captured": 3.8003519322422563
+     }
+    ],
+    "beam": [
+     {
+      "N": 256,
+      "n_window": 51,
+      "mlnipr": -0.4558116569358553,
+      "slnipr": 0.27922578653885166,
+      "mean_captured": 3.999416282086998
+     },
+     {
+      "N": 512,
+      "n_window": 103,
+      "mlnipr": -0.39920697456737486,
+      "slnipr": 0.2860764208567017,
+      "mean_captured": 3.9995564695079224
+     },
+     {
+      "N": 1024,
+      "n_window": 205,
+      "mlnipr": -0.4119969393151726,
+      "slnipr": 0.3293323986272468,
+      "mean_captured": 3.9997093153960845
+     }
+    ]
+   },
+   "wall_time_s": 22684.3
+  },
+  "oe": {
+   "sector": "oe",
+   "config": {
+    "a": 1.0,
+    "b": 0.6177017291400357,
+    "nu": 0.33,
+    "mesh": [
+     140,
+     86
+    ],
+    "mesh_check": [
+     120,
+     74
+    ],
+    "k_fem": 4,
+    "sigma_factor": 10.0,
+    "n_modes": 1472,
+    "spacing_frac": 0.1,
+    "n_funcs_axis": 96,
+    "grid": [
+     384,
+     240
+    ],
+    "ladder": [
+     256,
+     512,
+     1024,
+     2048
+    ],
+    "proj_chunk": 700
+   },
+   "solve": {
+    "resid": 9.782539385655019e-05,
+    "gap_ok": true,
+    "gap_ratio": 10055.8541602196,
+    "n_elastic": 1472,
+    "ndof": 193200
+   },
+   "gate": {
+    "n_star": 1064,
+    "n_cmp": 1472
+   },
+   "gapA": {
+    "n": 1064,
+    "sine": [
+     {
+      "N": 256,
+      "n_window": 51,
+      "mlnipr": -1.7873706841881678,
+      "slnipr": 0.2893712713013029,
+      "mean_captured": 3.621068988311143
+     },
+     {
+      "N": 512,
+      "n_window": 103,
+      "mlnipr": -1.7674740576484862,
+      "slnipr": 0.35221109320465577,
+      "mean_captured": 3.723361365950925
+     },
+     {
+      "N": 1024,
+      "n_window": 205,
+      "mlnipr": -1.7398366572809114,
+      "slnipr": 0.39028695428680477,
+      "mean_captured": 3.8014234577882102
+     }
+    ],
+    "beam": [
+     {
+      "N": 256,
+      "n_window": 51,
+      "mlnipr": -0.3935197671859522,
+      "slnipr": 0.29754329885158604,
+      "mean_captured": 3.9994194994179417
+     },
+     {
+      "N": 512,
+      "n_window": 103,
+      "mlnipr": -0.4065189114215338,
+      "slnipr": 0.2754854881687647,
+      "mean_captured": 3.9995782340279553
+     },
+     {
+      "N": 1024,
+      "n_window": 205,
+      "mlnipr": -0.4155292959218122,
+      "slnipr": 0.2938898190539534,
+      "mean_captured": 3.9997034053370575
+     }
+    ]
+   },
+   "wall_time_s": 22729.0
+  },
+  "oo": {
+   "sector": "oo",
+   "config": {
+    "a": 1.0,
+    "b": 0.6177017291400357,
+    "nu": 0.33,
+    "mesh": [
+     140,
+     86
+    ],
+    "mesh_check": [
+     120,
+     74
+    ],
+    "k_fem": 4,
+    "sigma_factor": 10.0,
+    "n_modes": 1472,
+    "spacing_frac": 0.1,
+    "n_funcs_axis": 96,
+    "grid": [
+     384,
+     240
+    ],
+    "ladder": [
+     256,
+     512,
+     1024,
+     2048
+    ],
+    "proj_chunk": 700
+   },
+   "solve": {
+    "resid": 8.24472943787538e-05,
+    "gap_ok": false,
+    "gap_ratio": 12.946092510061307,
+    "n_elastic": 1472,
+    "ndof": 192640
+   },
+   "gate": {
+    "n_star": 1029,
+    "n_cmp": 1472
+   },
+   "gapA": {
+    "n": 1029,
+    "sine": [
+     {
+      "N": 256,
+      "n_window": 51,
+      "mlnipr": -1.752041315653097,
+      "slnipr": 0.29567249077134206,
+      "mean_captured": 3.619933430071325
+     },
+     {
+      "N": 512,
+      "n_window": 103,
+      "mlnipr": -1.770775123544904,
+      "slnipr": 0.3310077743216944,
+      "mean_captured": 3.7234032749639465
+     },
+     {
+      "N": 1024,
+      "n_window": 205,
+      "mlnipr": -1.761965287730762,
+      "slnipr": 0.3610395637992732,
+      "mean_captured": 3.800236077907529
+     }
+    ],
+    "beam": [
+     {
+      "N": 256,
+      "n_window": 51,
+      "mlnipr": -0.3255877085756997,
+      "slnipr": 0.2815723671049321,
+      "mean_captured": 3.999388382784437
+     },
+     {
+      "N": 512,
+      "n_window": 103,
+      "mlnipr": -0.3760280535038243,
+      "slnipr": 0.25202214163469416,
+      "mean_captured": 3.999555907098796
+     },
+     {
+      "N": 1024,
+      "n_window": 205,
+      "mlnipr": -0.4013794843062139,
+      "slnipr": 0.2529775991353265,
+      "mean_captured": 3.999692265236923
+     }
+    ]
+   },
+   "wall_time_s": 22662.7
+  }
+ },
+ "indicative_2048": false,
+ "verdict": "PROTOCOL ARTIFACT THROUGH THE CERTIFIED RANGE (N <= 1024): true-operator windows stay sparse at every certified rung; truncated-ladder RP is an artifact there; N = 2048 certification is COVERAGE-LIMITED by the two-mesh gate (indicative row agrees; separated-check-mesh continuation registered)",
+ "top_rung": 1024,
+ "i_top": 0.17551483505975643,
+ "d2_true": -0.010898643935938729
+}

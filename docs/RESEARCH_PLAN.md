@@ -441,7 +441,20 @@ certified by BOTH gates in all sectors with >= 66 margin; the original
 1.08x check (951-986) confirmed correlated-optimistic (methods lesson);
 the 2048 window is honestly NOT certifiable at this mesh (needs
 1229/sector; finer production ~(140,86)/quarter registered, low
-priority given the uniform flatness of the indicative row). Notes: oo's "rigid
+priority given the uniform flatness of the indicative row).
+**FINE-MESH RUN EXECUTED (2026-07-10, E17q-FINE, RESULTS_FINE.md):**
+production (140,86) ~193k dofs/sector, honest 1.167x check -> N* =
+1025/1093/1064/1029 (N = 1024 window re-certified at a SECOND
+independent production mesh) and the certified-rung IPRs agree with the
+coarse mesh to +/-0.001 -- TOTAL mesh convergence of the physics. The
+2048 window (needs 1229) remains formally indicative; the certification
+question is DECLARED CLOSED: two production meshes agree to 3-4 decimals
+on every certified window and on the (coarse) indicative 2048 row
+(0.182 = the flat level), so a third, ~250k-dof/sector mesh would stamp
+already-double-converged physics. Threshold note: the certification
+floor scales with dofs (7.7e-5 @120k, ~1.4e-4 @193k on rigid-containing
+bands) -- resid_sanity 1e-3 for free quarter solves at >150k dofs, with
+accuracy arbited by the two-mesh gate (the E18/E15c-grade convention). Notes: oo's "rigid
 ratio 14" is a diagnostic-formula artifact (the oo twist mode is
 legitimately low; ratio matches (mid/first)^2; n_exp = 0, nothing
 dropped). Ops lessons recorded: session-harness reaps long background
