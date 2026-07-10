@@ -246,6 +246,19 @@ near-diagonal modal C): resonances shift quasi-independently -> 2D-Poisson
 markers. Physical lesson recorded; v2 with 24 distributed quartets (the
 dense-contact analog) is the fair realization of the P7 dense case.
 
+## E12b -- AI-dagger vs Ginibre fine call [DONE 2026-07-09 -- UNRESOLVED per frozen gates; mid-flow located]
+
+4 patch realizations x 4 sectors pooled (~2214 bulk ratios at gamma* =
+16), baselines sharpened 3x (AI-dagger/GinUE separation 0.046 vs pooled
+scale se = 0.015 -- the call is resolvable IF saturated). Verdict:
+UNRESOLVED -- the pooled point (0.713, 0.117) sits MID-FLOW on the
+Poisson -> AI-dagger crossover, closer to AI-dagger (6.0 se) than to
+GinUE (9.0 se) or Poisson (9.2 se), but not saturated. The v3 "within
+~3 sigma of AI-dagger" reflected its coarser marker scale. Registered
+next (per the frozen reading): drive the crossover to saturation via a
+damping-model refinement (denser/stronger non-proportional
+dissipation); statistics are no longer the limit.
+
 ## E15 -- Coriolis rotor -> GUE [PLANNED; plan preregistered 2026-07-04]
 
 Full execution plan in experiments/e15_coriolis_rotor/PLAN.md. Core design:
