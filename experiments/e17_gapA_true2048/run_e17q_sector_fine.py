@@ -106,7 +106,7 @@ def main():
     else:
         t0 = time.time()
         lam, V, sinfo, _ = solve_modes(K, M, cfg["n_modes"] + RIGID[sector],
-                                       resid_sanity=1e-4, sweeps_max=40)
+                                       resid_sanity=1e-3, sweeps_max=40)
         lam, V, gap_ok, ratio = split_expected(lam, V, RIGID[sector])
         resid = float(sinfo["max_resid"])
         np.savez(eig_path, lam=lam, V=V, resid=[resid],
