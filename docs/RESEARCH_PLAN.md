@@ -344,6 +344,24 @@ speeds. REGISTERED NEXT (E15d): hyperelastic / finite-deformation rotor
 (neo-Hookean prestate) to carry the quantitative prediction through the
 15-25% strain regime where completion occurs.
 
+## E15d -- SVK finite-deformation rotor [DONE 2026-07-09 -- COMPLETES]
+
+Instrument (validated by e15d_smoke: tangent consistency 3e-16, exact
+spin softening, 0.16% vs linear at small Omega, quadratic Newton to
+machine floor): SVK plane-stress prestate by Newton continuation
+(translations projected = deformed-CoM pinning; rotation torque-free),
+linearized rotating-frame pencil about u0 solved via the validated E15
+companion in the tangent eigenbasis (run 1's hand-rolled companion
+mistreated the gyroscopic block -> NaN; fixed, documented). RESULT:
+**the crossover COMPLETES inside SVK validity** -- chiral top-third
+<r> = 0.5671 at Omega_nd = 0.35 (strain 17.6% <= 25%), midpoint 0.565
+crossed; mirror protection intact under finite deformation (pooled
+<= 0.501 at all speeds to Omega_nd = 0.5); pencil real to ~1e-14
+everywhere. Soft-rotor experiment fully predicted: silicone disk
+R = 10 cm crosses at ~1,500 RPM. Beyond validity (strain 27-32%) the
+window statistic declines -- reported, unclaimed. Neo-Hookean
+refinement NOT needed for the verdict.
+
 ## E16 -- Sector angle-sweep (protocol-faithful COMSOL replication) [PREREGISTERED 2026-07-07]
 
 The published COMSOL-2024 sector result turns out to be a pooled

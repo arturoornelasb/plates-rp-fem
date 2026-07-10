@@ -13,7 +13,7 @@
 for freely vibrating plates:\\ preliminary results}
 \author{J.~Arturo Ornelas Brand\\
 \small Independent Researcher, Aguascalientes, M\'exico}
-\date{July 9, 2026 --- draft v0.9 (companion to the ``Why Rosenzweig--Porter?'' program)}
+\date{July 9, 2026 --- draft v0.10 (companion to the ``Why Rosenzweig--Porter?'' program)}
 
 \begin{document}
 \maketitle
@@ -73,11 +73,12 @@ protection theorem: a chiral rotor lands exactly on GUE
 ($0.5992\pm0.0071$ at $\sim$1080 spacings) while the mirror-symmetric rotor
 is pinned to GOE at every speed by the surviving antiunitary $\sigma_vT$
 (identified by a machine-precision operator gate), and asymmetric mistuning
-breaks that protection at $+7.8\sigma$; feasibility and prestress
-analyses single out soft (elastomer) rotors as the laboratory route ---
-the $\Omega^2$ terms \emph{advance} the crossover, protection survives
-them, and the onset sits at $\sim$10$^3$\,RPM for a decimeter silicone
-disk. All experiments, gates, and raw data are reproducible from the
+breaks that protection at $+7.8\sigma$; feasibility, prestress, and
+finite-deformation analyses single out soft (elastomer) rotors as the
+laboratory route --- the $\Omega^2$ terms \emph{advance} the crossover,
+protection survives finite deformation, and the crossover
+\emph{completes} within validated moderate-strain physics at
+$\approx$1.5$\times$10$^3$\,RPM for a decimeter silicone disk. All experiments, gates, and raw data are reproducible from the
 repository.
 \end{abstract}
 
@@ -507,9 +508,18 @@ at $\Omega_{\rm nd}=0.30$ (15.5\%, just outside). Translated to a soft
 silicone disk ($R=10$\,cm, $E=2$\,MPa): crossover onset at
 $\approx$1100--1300\,RPM with the measured window at $\approx$2.4\,kHz
 --- laboratory-trivial speeds (Fig.~\ref{fig:e15c}). The registered
-follow-up is the hyperelastic (finite-deformation) rotor model, to carry
-the quantitative prediction through the 15--25\% strain regime where
-completion occurs.
+follow-up is executed as E15d: a St.~Venant--Kirchhoff
+finite-deformation prestate (Newton with exact tangents, validated
+against the linear machinery at small $\Omega$; the centrifugal
+follower load's stiffness supplies the exact spin softening) carries
+the sweep to $\Omega_{\rm nd}=0.5$, and \textbf{the crossover completes
+inside the moderate-strain validity window}: top-third
+$\rmean=0.567$ at $\Omega_{\rm nd}=0.35$ (18\% strain), with the
+$\sigma_vT$ protection intact under finite deformation (mirror pooled
+$\le0.50$ at every speed) and the pencil real to machine precision.
+The silicone-disk experiment ($R=10$\,cm) is thereby \emph{fully}
+predicted with finite-deformation physics: crossover at
+$\approx$1500\,RPM.
 
 \begin{figure}[htb]\centering
 \includegraphics[width=0.95\textwidth]{figs/rotor_prestress.png}
@@ -664,7 +674,6 @@ sector; the indicative 2048 row is flat and identical to the certified
 levels, so this is low priority); the exact
 published sweep range of the sector study (unpublished in the source;
 ours bracketed it); the AI$^\dagger$-vs-Ginibre fine call at $\sim$2k resonances; the
-hyperelastic (finite-deformation) rotor --- the E15c follow-up --- and the
 bladed-disk FE re-analysis as the experimental variant of E15; and
 comparison against the measured aluminum-plate spectra of
 Ref.~\cite{lopez2021}.
