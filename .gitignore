@@ -11,3 +11,5 @@ experiments/e17_gapA_true2048/*.err
 experiments/e18_triangle_protocol/eig_*.npz
 experiments/e18_triangle_protocol/*.err
 experiments/e15_coriolis_rotor/e15d_cache/
+experiments/e19_superellipse_true/eig_*.npz
+experiments/e19_superellipse_true/*.err
