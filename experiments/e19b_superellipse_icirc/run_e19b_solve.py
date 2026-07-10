@@ -20,10 +20,13 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 
 def main():
     job = sys.argv[1]
-    bc, stage = job.split("_")
+    bc, stage = job.split("_", 1)
+    sigma_factor = 20.0 if stage == "sigma20" else 10.0
+    if stage == "sigma20":
+        stage = "prod"
     t00 = time.time()
     mesh = build_mesh(LEVEL_PROD if stage == "prod" else LEVEL_CHECK)
-    K, M, space = assemble_c0ip(mesh, k=KFEM, nu=NU)
+    K, M, space = assemble_c0ip(mesh, k=KFEM, nu=NU, sigma_factor=sigma_factor)
     K = 0.5 * (K + K.T)
     if bc == "ss":
         D = boundary_dofs(space)

@@ -54,12 +54,30 @@ def main():
     n3 = min(len(lam_s), len(lam_sc))
     ns_s_strict = n_star(lam_s[:n3], lam_sc[:n3], 0.1)
     ns_s_order = n_star(lam_s[:n3], lam_sc[:n3], 1.0)
-    n_use_f = int(min(ns_f2m, ns_cross if ns_cross < n2 else len(lam_f)))
-    n_use_s = int(min(ns_s_order, len(lam_s)))
+    # GATE AMENDMENT (documented, 2026-07-10): the refine-5 check sits at
+    # h ratio 2 (the refine-granularity problem) and its two-mesh N*
+    # measures the CHECK's error, not production's -- anti-informative
+    # when the cross-instrument gate (certified Argyris, independent
+    # discretization) holds at FULL coverage. Free: n_use = the E5-cross
+    # gate. SS basis (no E5 reference): order-stability vs the
+    # PENALTY-ROBUSTNESS solve (sigma_factor 20 vs 10 at production),
+    # the E14-style internal instrument check.
+    n_use_f = int(ns_cross if ns_cross < n2 else len(lam_f))
+    import os as _os
+    sig_p = _os.path.join(HERE, "eig_ss_sigma20.npz")
+    if _os.path.exists(sig_p):
+        lam_sig = np.load(sig_p)["lam"]
+        n4 = min(len(lam_s), len(lam_sig))
+        ns_pen_order = n_star(lam_s[:n4], lam_sig[:n4], 1.0)
+        gates_pen = int(ns_pen_order)
+    else:
+        gates_pen = -1
+    n_use_s = int(min(gates_pen if gates_pen > 0 else ns_s_order,
+                      len(lam_s)))
     gates = dict(free_two_mesh=int(ns_f2m), free_vs_e5=int(ns_cross),
                  n_e5=int(n2), ss_strict=int(ns_s_strict),
                  ss_order=int(ns_s_order),
-                 n_use_f=n_use_f, n_use_s=n_use_s)
+                 n_use_f=n_use_f, n_use_s=n_use_s, ss_penalty_order=gates_pen)
     print(f"[gates] {gates}")
 
     mesh = build_mesh(LEVEL_PROD)

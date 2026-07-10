@@ -1,0 +1,30 @@
+{
+ "gates": {
+  "free_two_mesh": 61,
+  "free_vs_e5": 668,
+  "n_e5": 668,
+  "ss_strict": 26,
+  "ss_order": 396,
+  "n_use_f": 61,
+  "n_use_s": 396
+ },
+ "sectors": {
+  "ee": {
+   "Ns": [],
+   "coverage_limited": true
+  },
+  "eo": {
+   "Ns": [],
+   "coverage_limited": true
+  },
+  "oe": {
+   "Ns": [],
+   "coverage_limited": true
+  },
+  "oo": {
+   "Ns": [],
+   "coverage_limited": true
+  }
+ },
+ "verdict": "COVERAGE-LIMITED: no sector covers even the first rung -- the instrument fails its gates (see gates line); instrument still insufficient at refine 6."
+}
