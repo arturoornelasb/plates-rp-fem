@@ -460,6 +460,24 @@ legitimately low; ratio matches (mid/first)^2; n_exp = 0, nothing
 dropped). Ops lessons recorded: session-harness reaps long background
 tasks -> detached OS-owned launches + stage caching are the pattern.
 
+## E20/E20b -- The mechanical mixture-of-experts [DONE 2026-07-10 -- FABRICATION BRIDGE CLOSED (qualitative); dimension coupler-dependent]
+
+The constructive inverse of Gap A. K material-detuned certified plates
+(born Poisson) + a designed sparse contact-spring network (E6 modal
+machinery, generic points, per-plate structure fixed vs K). R1: the
+designed coupling drives the FULL Poisson -> GOE transition (extended
+curve 0.368 -> 0.530, endpoints on the ensemble values, q* interior).
+R2: at mid-transition the eigenvectors are GENUINELY sector-multifractal
+-- N_sec ~ K^D2 with D2_mech = 0.268 (canonical audit-immune protocol;
+ladder contrast confirms immunity; M-parametrization systematic
+[0.25, 0.39]). R3: below the AI band [0.56, 0.80]; the densest tested
+coupler rises to 0.465 (directional) but the density dial as-designed
+is confounded by position-on-curve jitter -> E20c registered
+(matched-r-tilde dial + post-rank knob). CAMPAIGN STATEMENT:
+fabrication-under-forced-cooperation holds on BOTH substrates, same
+protocol-immune diagnostics, fabricated dimension set by coupler
+structure -- what Gap A denied to nature's plate, design provides.
+
 ## E19/E19b -- Superellipse p = 10 true-operator windows [DONE 2026-07-10 -- INTERMEDIATE 1.7 sigma; hierarchy-ORDERED]
 
 E19 (polar-ring mesh): COVERAGE-LIMITED -- the instrument failed its own
