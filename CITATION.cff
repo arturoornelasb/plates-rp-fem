@@ -7,8 +7,10 @@ authors:
     affiliation: "Independent Researcher, Aguascalientes, Mexico"
 type: software
 version: "0.1.0"
-date-released: "2026-07-03"
+date-released: "2026-07-11"
 license: MIT
+doi: 10.5281/zenodo.21314728
+# The companion paper deposit (manuscript + reproducible snapshot of this repo)
 keywords:
   - Rosenzweig-Porter model
   - random matrix theory
