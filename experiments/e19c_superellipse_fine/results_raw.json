@@ -1,0 +1,38 @@
+{
+ "gates": {
+  "free_vs_e5": 224,
+  "n_e5": 1500,
+  "free_two_mesh_r6_informative": 224,
+  "ss_penalty_order": 1256,
+  "n_use_f": 224,
+  "n_use_s": 1256,
+  "collar_delta": 0.0012692979846251617
+ },
+ "sectors": {
+  "ee": {
+   "Ns": [],
+   "coverage_limited": true,
+   "n_free": 61,
+   "n_basis": 324
+  },
+  "eo": {
+   "Ns": [],
+   "coverage_limited": true,
+   "n_free": 54,
+   "n_basis": 312
+  },
+  "oe": {
+   "Ns": [],
+   "coverage_limited": true,
+   "n_free": 56,
+   "n_basis": 316
+  },
+  "oo": {
+   "Ns": [],
+   "coverage_limited": true,
+   "n_free": 53,
+   "n_basis": 304
+  }
+ },
+ "verdict": "COVERAGE-LIMITED: no sector covers two rungs."
+}

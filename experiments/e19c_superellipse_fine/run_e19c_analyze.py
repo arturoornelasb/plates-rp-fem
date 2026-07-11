@@ -53,17 +53,23 @@ def main():
         e5 = json.load(f)
     lam_arg = np.array(e5["runs"]["p10"]["lam"])
     n2 = min(len(lam_f), len(lam_arg))
-    ns_cross = n_star(lam_f[:n2], lam_arg[:n2], 0.1)
-    n_use_f = int(ns_cross if ns_cross < n2 else len(lam_f))
+    ns_cross_sp = n_star(lam_f[:n2], lam_arg[:n2], 0.1)   # reported
+    ns_cross_or = n_star(lam_f[:n2], lam_arg[:n2], 1.0)   # BINDING
+    n_use_f = int(ns_cross_or if ns_cross_or < n2 else len(lam_f))
     lam_f6 = np.load(os.path.join(HERE, "..", "e19b_superellipse_icirc",
                                   "eig_free_prod.npz"))["lam"]
     n1 = min(len(lam_f), len(lam_f6))
-    ns_f2m = n_star(lam_f[:n1], lam_f6[:n1], 0.1)   # informative only
+    ns_f2m = n_star(lam_f[:n1], lam_f6[:n1], 1.0)   # informative only
+    # uniform-drift diagnostic (gate amendment 2: the polygon-area scale)
+    drift = float(np.median((lam_arg[:n2] - lam_f[:n2]) / lam_f[:n2]))
     n4 = min(len(lam_s), len(lam_sig))
     ns_pen = n_star(lam_s[:n4], lam_sig[:n4], 1.0)
     n_use_s = int(min(ns_pen, len(lam_s)))
-    gates = dict(free_vs_e5=int(ns_cross), n_e5=int(n2),
+    gates = dict(free_vs_e5_order=int(ns_cross_or),
+                 free_vs_e5_spacing_reported=int(ns_cross_sp),
+                 n_e5=int(n2),
                  free_two_mesh_r6_informative=int(ns_f2m),
+                 uniform_drift_vs_e5=drift,
                  ss_penalty_order=int(ns_pen),
                  n_use_f=n_use_f, n_use_s=n_use_s)
     print(f"[gates] {gates} ({time.time()-t00:.0f} s)", flush=True)

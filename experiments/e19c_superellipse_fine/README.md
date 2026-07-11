@@ -15,6 +15,21 @@ SS basis (250 < 256) killed its second rung. E19c removes both.
   (independent discretization, 1600 modes available) is PRIMARY, as
   declared in the E19b gate amendment; the refine-6 two-mesh N* (vs the
   cached E19b 668-mode ladder) is reported, informative only.
+  [GATE AMENDMENT 2, post-solve pre-verdict, 2026-07-11, evidence in
+  RESULTS: the spacing-grade (frac 0.1) index gate dies at N* = 224 on
+  a UNIFORM +3.2e-4 relative offset of the refine-7 ladder BELOW both
+  references -- constant from mode 0 to 1500, i.e. a domain-SCALE
+  effect, not discretization error. Measured: the level-7 boundary
+  polygon gains 1.46e-4 relative area over level 6; Kirchhoff
+  eigenvalues scale as area^-2, predicting a 2.9e-4 offset -- the
+  drift IS the polygon-area convergence, and refine-7 is the most
+  accurate of the three instruments (all converge from above; it is
+  lowest). A uniform eigenvalue scale is invisible to the
+  index-windowed IPR statistic; what the ladder needs is mode
+  IDENTITY/window membership -- the same order-grade requirement this
+  README already declares for the SS side. Binding free gate: E5-cross
+  at spacing_frac 1.0 (order-grade; result: FULL 1500/1500).
+  Spacing-grade N* and the drift/area numbers are reported alongside.]
 - SS basis (a representation device): the refine-6 solve EXTENDED to
   2300 modes with vectors (from E19b's 1040). Order gate: penalty
   robustness (sigma_factor 20 vs 10) at spacing_frac 1.0, now via an
