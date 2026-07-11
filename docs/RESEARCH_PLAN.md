@@ -524,7 +524,35 @@ dial in coupler connectivity, and at router-like connectivity the
 mechanical assembly and the neural MoE land in the same band ~ 0.6-0.8.
 What Gap A denied to nature's plate, design provides -- to spec.
 
-## E19/E19b -- Superellipse p = 10 true-operator windows [DONE 2026-07-10 -- INTERMEDIATE 1.7 sigma; hierarchy-ORDERED]
+## E19c -- Superellipse p = 10: the crisp standalone point [DONE 2026-07-11 -- THIRD-POINT-CONFIRMED, 3.5 sigma]
+
+The registered E19b follow-up (refine-7 + cross-mesh projection),
+preregistered README + smoke-validated machinery (nodal dof
+reconstruction; self-calibrated collar; tolerant KD-tree point
+location; per-sector nested Cholesky -- projection agrees with the
+native basis to <= 0.048 in ln IPR at level 5->6). Instrument: refine-7
+free ladder (525k dofs, 1500 modes, resid 2.3e-2 at the declared 3e-2
+floor) + refine-6 SS basis extended to 2300. THREE GATE FINDINGS, each
+diagnosed from data and amended pre-verdict: (1) the spacing-grade
+index gate vs E5-Argyris dies at 224 on a UNIFORM +3.2e-4 eigenvalue
+offset = boundary-polygon AREA convergence (measured dA/A = 1.46e-4,
+predicted 2 dA/A = 2.9e-4): refine-7 is the MOST accurate instrument;
+binding free gate = order-grade E5-cross (FULL 1500/1500). (2) the
+global-index sigma20 basis order gate (1256/2300) fails on CROSS-SECTOR
+quasi-degenerate swaps (m,n)<->(n,m), which cannot touch within-sector
+subsequences; per-sector gates (classified sigma20-with-vectors
+companion): ee 417 / eo 467 / oe 473 / oo 561. (3) IPR over first-N is
+permutation-invariant, so span stability is the requirement. RESULT:
+oo unlocks rung 512 (slope -0.271 +/- 0.090); pooled slope
+-0.249 +/- 0.072 -> **D2_true(p10) = 0.249 at 3.5 sigma, all four
+sectors same-side -> THIRD-POINT-CONFIRMED, ABOVE the triangle
+(0.138 +/- 0.029)**. The hierarchy rectangle 0.011 -> triangle 0.138 ->
+superellipse 0.249 is now ordered AND individually significant at its
+top. Dq spreads 0.10-0.18: RP-leaning, nowhere PBRM-like. Under the
+stricter global basis gate the 2-rung result was 0.213 +/- 0.103
+(2.1 sigma; preserved in RESULTS_2RUNG.md). Draft v0.16.
+
+## E19/E19b -- Superellipse p = 10 true-operator windows [DONE 2026-07-10 -- INTERMEDIATE 1.7 sigma; hierarchy-ORDERED; superseded by E19c]
 
 E19 (polar-ring mesh): COVERAGE-LIMITED -- the instrument failed its own
 gates (E5-cross died at mode 224; corner-element conditioning; floor
