@@ -99,6 +99,27 @@ def main():
           f"{dict((s, lab_s[:n_use_s].count(s)) for s in SECT)} "
           f"({time.time()-t00:.0f} s)", flush=True)
 
+    # GATE AMENDMENT 3 (README): per-sector basis order gate from the
+    # classified sigma-20 companion, superseding the global-index cap.
+    sec_cap = None
+    p20 = os.path.join(HERE, "eig_sig20_vec.npz")
+    if os.path.exists(p20):
+        z20 = np.load(p20)
+        lam20, V20 = z20["lam"], z20["V"]
+        lab20, _, _ = classify_parity_resolved(
+            lam20, V20, P6[:, I6], Pmx6[:, I6], Pmy6[:, I6],
+            K6[I6][:, I6].tocsc(), M6[I6][:, I6].tocsc())
+        del V20
+        sec_cap = {}
+        for s in SECT:
+            a = np.array([l for l, t in zip(lam_s, lab_s) if t == s])
+            b = np.array([l for l, t in zip(lam20, lab20) if t == s])
+            sec_cap[s] = int(n_star(a, b, 1.0))
+        gates["ss_sector_order"] = sec_cap
+        n_use_s = len(lam_s)
+        gates["n_use_s"] = n_use_s
+        print(f"[per-sector basis gate] {sec_cap}", flush=True)
+
     # ---- cross-mesh projection operator ----
     delta = sag_delta(mesh6)
     pts7 = collar_pullback(dof_points(space7), delta)
@@ -117,6 +138,8 @@ def main():
     slopes, ses = [], []
     for s in SECT:
         idx_s = [i for i, l in enumerate(lab_s[:n_use_s]) if l == s]
+        if sec_cap is not None:
+            idx_s = idx_s[:sec_cap[s]]
         idx_f = [i for i, l in enumerate(lab_f[:n_use_f]) if l == s]
         if not idx_s or not idx_f:
             results["sectors"][s] = dict(coverage_limited=True)

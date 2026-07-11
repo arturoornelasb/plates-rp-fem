@@ -38,7 +38,7 @@ def main():
               f"{sinfo['max_resid']:.1e}, rigid ratio {ratio:.1e} "
               f"({time.time()-t00:.1f} s)")
     else:
-        sigma_factor = 20.0 if job == "sig20_ext" else 10.0
+        sigma_factor = 10.0 if job == "ss_ext" else 20.0
         mesh = build_mesh(LEVEL_SS)
         K, M, space = assemble_c0ip(mesh, k=KFEM, nu=NU,
                                     sigma_factor=sigma_factor)
@@ -48,10 +48,12 @@ def main():
         K, M = K[I][:, I].tocsc(), M[I][:, I].tocsc()
         print(f"[{job}] {K.shape[0]} dofs ({time.time()-t00:.1f} s)",
               flush=True)
-        if job == "ss_ext":
+        if job in ("ss_ext", "sig20_vec"):
             lam, V, sinfo, _ = solve_modes(K, M, N_SS, resid_sanity=1e-2,
                                            sweeps_max=40)
-            np.savez(os.path.join(HERE, "eig_ss_ext.npz"), lam=lam, V=V,
+            out = "eig_ss_ext.npz" if job == "ss_ext" \
+                else "eig_sig20_vec.npz"
+            np.savez(os.path.join(HERE, out), lam=lam, V=V,
                      resid=[float(sinfo["max_resid"])],
                      ndof=[K.shape[0]])
             print(f"[{job}] {len(lam)} cached, resid "

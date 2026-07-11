@@ -35,6 +35,21 @@ SS basis (250 < 256) killed its second rung. E19c removes both.
   robustness (sigma_factor 20 vs 10) at spacing_frac 1.0, now via an
   EIGENVALUES-ONLY sigma-20 solve (the gate consumes only eigenvalue
   order; declared here, pre-run).
+  [GATE AMENDMENT 3, declared 2026-07-11 BEFORE the sigma20-with-
+  vectors solve completes: the global-index sigma20 order gate bound at
+  1256/2300, capping every sector basis at ~310 and blocking the 512
+  rung. The dominant order-instability mode on this quasi-rectangular
+  domain is the CROSS-SECTOR quasi-degenerate pair (m,n)<->(n,m), which
+  cannot affect within-sector subsequences; and the ladder statistic is
+  permutation-invariant within the first N of a sector (IPR sums
+  |c_i|^2q over i <= N; only the SPAN of the first N enters), so the
+  correct requirement is WITHIN-SECTOR order/set stability. Binding
+  basis gate becomes: per-sector order-grade n_star between the
+  CLASSIFIED sigma10 and sigma20 sector subsequences (sigma20 re-solved
+  with vectors for classification); rung N admitted in sector s iff its
+  gated basis count >= N. Global-index gate reported alongside. The
+  2-rung result under the stricter global gate (D2 = 0.213 +/- 0.103,
+  2.1 sigma) stands recorded in RESULTS as-run.]
 - CROSS-MESH PROJECTION (the new machinery): refine-6 SS functions are
   interpolated onto the refine-7 P4 dof points (Lagrange point
   evaluation via basis.probes). Refine-7 points in the chord-vs-curve
