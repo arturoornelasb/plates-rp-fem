@@ -239,7 +239,7 @@ E6 v4: dense contact rank saturates intrinsically (~75/95); spacing
 dichotomy plateaus at 2.8 sigma; carried result = eigenvector dichotomy +
 in-domain control law.
 
-## E12 -- P7 damping [v1 CHALLENGES-as-run; v2 distributed running]
+## E12 -- P7 damping [v1 CHALLENGES-as-run; chain closed via E12b/E12c: SATURATED BETWEEN, physical-damping model question open (design level)]
 
 Single-patch damping is only weakly non-proportional (commutator 3e-2,
 near-diagonal modal C): resonances shift quasi-independently -> 2D-Poisson
