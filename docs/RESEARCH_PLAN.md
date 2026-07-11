@@ -460,7 +460,7 @@ legitimately low; ratio matches (mid/first)^2; n_exp = 0, nothing
 dropped). Ops lessons recorded: session-harness reaps long background
 tasks -> detached OS-owned launches + stage caching are the pattern.
 
-## E20/E20b -- The mechanical mixture-of-experts [DONE 2026-07-10 -- FABRICATION BRIDGE CLOSED (qualitative); dimension coupler-dependent]
+## E20/E20b/E20c/E20d -- The mechanical mixture-of-experts [DONE 2026-07-10 -- FABRICATION BRIDGE CLOSED QUANTITATIVELY at router-like coupling]
 
 The constructive inverse of Gap A. K material-detuned certified plates
 (born Poisson) + a designed sparse contact-spring network (E6 modal
@@ -472,11 +472,20 @@ R2: at mid-transition the eigenvectors are GENUINELY sector-multifractal
 ladder contrast confirms immunity; M-parametrization systematic
 [0.25, 0.39]). R3: below the AI band [0.56, 0.80]; the densest tested
 coupler rises to 0.465 (directional) but the density dial as-designed
-is confounded by position-on-curve jitter -> E20c registered
-(matched-r-tilde dial + post-rank knob). CAMPAIGN STATEMENT:
-fabrication-under-forced-cooperation holds on BOTH substrates, same
-protocol-immune diagnostics, fabricated dimension set by coupler
-structure -- what Gap A denied to nature's plate, design provides.
+is confounded by position-on-curve jitter -> E20c run same day:
+at MATCHED position (pooled r = 0.460 +/- 0.005 by bisection) the dial
+IS monotone in coupling-graph degree -- D2 = 0.255 / 0.319 / 0.383 for
+degree 3 / 5 / 7 -- and posts-per-pair is INERT ((3,8) = 0.259 ~ (3,2)
+= 0.255): the dial variable is CONNECTIVITY. E20d (the endpoint): the
+COMPLETE graph (degree K-1 at every K -- the mechanical analog of the
+AI router, and it removes the K-varying-degree caveat) lands D2 =
+0.687 (posts 2) / 0.635 (posts 8), INSIDE the AI band [0.56, 0.80];
+even the M-systematic endpoints {80: 0.78, 120: 0.56} stay in-band.
+CAMPAIGN STATEMENT: fabrication-under-forced-cooperation holds on BOTH
+substrates QUANTITATIVELY -- the fabricated dimension is a monotone
+dial in coupler connectivity, and at router-like connectivity the
+mechanical assembly and the neural MoE land in the same band ~ 0.6-0.8.
+What Gap A denied to nature's plate, design provides -- to spec.
 
 ## E19/E19b -- Superellipse p = 10 true-operator windows [DONE 2026-07-10 -- INTERMEDIATE 1.7 sigma; hierarchy-ORDERED]
 
