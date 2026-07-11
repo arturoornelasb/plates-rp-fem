@@ -17,7 +17,8 @@ from platefem.stats import classify_parity_resolved, centered_probe_operators
 from platefem.c0ip import assemble_c0ip, boundary_dofs
 
 from e19c_common import (A_AX, B_AX, KFEM, LADDER, LEVEL_FREE, LEVEL_SS,
-                         NU, build_mesh, collar_pullback)
+                         NU, build_mesh, collar_pullback, dof_points,
+                         sag_delta, vec_probes)
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 SECT = ["ee", "eo", "oe", "oo"]
@@ -93,8 +94,10 @@ def main():
           f"({time.time()-t00:.0f} s)", flush=True)
 
     # ---- cross-mesh projection operator ----
-    pts7 = collar_pullback(np.array(space7.doflocs))
-    P67 = space6.probes(pts7)                       # (N7, N6) sparse
+    delta = sag_delta(mesh6)
+    pts7 = collar_pullback(dof_points(space7), delta)
+    P67 = vec_probes(space6, pts7)                  # (N7, N6) sparse
+    gates["collar_delta"] = delta
     Vfull6 = np.zeros((space6.N, n_use_s))
     Vfull6[I6] = V_s[:, :n_use_s]
     W7 = M7 @ V_f[:, :n_use_f]

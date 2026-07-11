@@ -20,7 +20,8 @@ from platefem import solve_modes
 from platefem.stats import classify_parity_resolved, centered_probe_operators
 from platefem.c0ip import assemble_c0ip, boundary_dofs
 
-from e19c_common import (A_AX, B_AX, KFEM, NU, build_mesh, collar_pullback)
+from e19c_common import (A_AX, B_AX, KFEM, NU, build_mesh, collar_pullback,
+                         dof_points, sag_delta, vec_probes)
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 E19B = os.path.join(HERE, "..", "e19b_superellipse_icirc")
@@ -101,10 +102,19 @@ def main():
         K5[I5][:, I5].tocsc(), M5[I5][:, I5].tocsc())
     print(f"[labels] done ({time.time()-t00:.0f} s)", flush=True)
 
+    # nodal self-test: probes at a space's own dof points ~ identity
+    dp5 = dof_points(space5)
+    Pid = vec_probes(space5, dp5)
+    rv = np.random.default_rng(0).standard_normal(space5.N)
+    nodal_err = float(np.max(np.abs(Pid @ rv - rv)))
+    print(f"[nodal self-test] max |P v - v| = {nodal_err:.2e}",
+          flush=True)
+
     # cross-mesh operator 5 -> 6 (the machinery under test)
     t1 = time.time()
-    pts6 = collar_pullback(np.array(space6.doflocs))
-    P56 = space5.probes(pts6)
+    delta = sag_delta(mesh5)
+    pts6 = collar_pullback(dof_points(space6), delta)
+    P56 = vec_probes(space5, pts6)
     t_probes = time.time() - t1
     Vfull5 = np.zeros((space5.N, V5.shape[1]))
     Vfull5[I5] = V5
@@ -113,13 +123,15 @@ def main():
     W6 = M6 @ V_f
     Vfull6 = np.zeros((space6.N, V_s6.shape[1]))
     Vfull6[I6] = V_s6
-    print(f"[projection] probes {t_probes:.0f} s for {space6.N} pts, "
-          f"nan frac {nan_frac:.2e} ({time.time()-t00:.0f} s)",
-          flush=True)
+    print(f"[projection] delta {delta:.2e}; probes {t_probes:.0f} s for "
+          f"{space6.N} pts, nan frac {nan_frac:.2e} "
+          f"({time.time()-t00:.0f} s)", flush=True)
 
-    lines = [f"probes wall for {space6.N} pts: {t_probes:.0f} s; "
+    lines = [f"collar delta (calibrated to level-5 sag): {delta:.2e}",
+             f"nodal self-test max |P v - v|: {nodal_err:.2e}",
+             f"probes wall for {space6.N} pts: {t_probes:.0f} s; "
              f"nan frac {nan_frac:.2e}"]
-    ok = nan_frac == 0.0
+    ok = nan_frac == 0.0 and nodal_err < 1e-9
     for s in SECT:
         idx_f = [i for i, l in enumerate(lab_f) if l == s]
         i5 = [i for i, l in enumerate(lab_s5) if l == s]

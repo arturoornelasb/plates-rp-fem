@@ -26,7 +26,15 @@ SS basis (250 < 256) killed its second rung. E19c removes both.
   sliver (superellipse coordinate sigma > 1 - delta, delta = 2e-3) are
   radially pulled back to sigma = 1 - delta before evaluation: SS
   functions are Dirichlet-zero at the true boundary, so the collar
-  perturbation is O(delta * grad w), uniform over the basis. The
+  perturbation is O(delta * grad w), uniform over the basis.
+  [AMENDMENT pre-production, 2026-07-10, at smoke stage: delta is
+  SELF-CALIBRATED to the coarse mesh -- 1.5x its worst measured
+  boundary chord sag -- instead of the fixed 2e-3, which is
+  level-dependent and wrong for the level-5 smoke; and dof locations /
+  point evaluation use the nodal-lattice reconstruction + vectorized
+  probes of e19c_common (C0IPSpace has no doflocs; per-point probes too
+  slow at 520k), verified in-run by the nodal self-test
+  (probes-at-dof-points = identity).] The
   interpolated sector family is then re-orthonormalized NESTED (per
   sector, Cholesky of the refine-7 M-Gram in SS eigenvalue order --
   the E18b pattern), so the first-N spans are exact and nested and the
