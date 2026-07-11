@@ -362,6 +362,26 @@ R = 10 cm crosses at ~1,500 RPM. Beyond validity (strain 27-32%) the
 window statistic declines -- reported, unclaimed. Neo-Hookean
 refinement NOT needed for the verdict.
 
+## E15e/E15e-b -- The eigenvector face: phase rigidity and the exact sigma_v T invariant [DONE 2026-07-10 -- PROTECTION-EXACT-AND-FALSIFIABLE]
+
+E15e (naive R = |phi^T phi|/(phi^+ phi) on the E15d SVK tangents):
+chiral <R> falls toward the GUE reference with speed (the eigenvector
+face of the crossover); the mirror's naive R ALSO falls (0.73 at
+Omega_nd = 0.5) -- correct physics, wrong frozen expectation: the
+protector is sigma_v T, not T, so naive R is not its invariant
+(documented in RESULTS_E15E). E15e-b (the corrected observable):
+R_S = |phi^T S phi|/(phi^+ phi), S = parity metric -- eigenvector-phase
+invariant, = 1 exactly for nondegenerate sigma_v T-symmetric states.
+RESULT: mirror rotor R_S = 1.000000 (median AND p5) at every cached
+speed 0.1-0.5 while naive R decays (Omega = 0 has a 2.5% tail from
+zero-rotation near-degeneracies, as expected); structure gates
+machine-exact (KT opp-parity fraction 1.8e-12, G0 same-parity 2.2e-15);
+falsification arm: odd-parity mistuning (RMS element = window spacing,
+Omega = 0.3) collapses R_S to 0.262 (p5 0.068). The correct
+eigenvector-level protection observable: exact, measurable (complex
+operational deflection shapes + the mirror), and breakable to order --
+a sharper lab discriminant than any spacing statistic.
+
 ## E16 -- Sector angle-sweep (protocol-faithful COMSOL replication) [PREREGISTERED 2026-07-07]
 
 The published COMSOL-2024 sector result turns out to be a pooled
@@ -394,6 +414,23 @@ Notable: strong real angle gradient in the low-mode window (50 deg 0.347
 Poisson-consistent; 90 deg 0.443; 114.6 deg 0.483) averaged by the pooled
 statistic; Lambda- vs frequency-scale conventions agree in practice
 (0.4266 vs 0.4261).
+
+## E16b/E16c -- The ~75-deg dip: anatomy and depth [DONE 2026-07-09/10 -- LOW-MODE-ONLY]
+
+E16b (fine sweep, 60 angles in [65, 85] deg, 70-mode window):
+REPRODUCES-AND-LOCALIZES -- smoothed sub-Poisson minimum at 74.49 deg
+reaching ~0.33, nearest candidate special angle 75 = 5pi/12. E16c
+(depth): 400 modes/angle at nrings 60 (cross-mesh 45; certified depth
+395/400 at ALL four angles: rel-diff 1e-3 gate; frac_x = 0 among 1600
+classified modes), certified-depth-capped windows, segment-wise class
+ladders. RESULT: the LOW window reproduces the dip (74.49 deg: 0.329;
+75.0 deg deepest at 0.306) but the DEEP window (class idx 50-195)
+relaxes to Poisson at the dip angle (0.3955 +/- 0.0160 vs 0.3863) with
+flanks at/above -- the dip is a LOW-MODE/boundary effect, not a
+deep-spectrum special angle. At low modes the minimum is deepest at
+exactly 75 deg = 5pi/12 (0.306 vs 0.329; indicative, sem ~0.03 --
+E16b's 74.49 center is consistent with smoothing jitter around 5pi/12).
+Question closed; nothing further registered.
 
 ## E17 -- Gap A: true-operator windows at N = 1024-2048 [PREREGISTERED 2026-07-07; runner ready]
 

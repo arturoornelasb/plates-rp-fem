@@ -1,0 +1,57 @@
+{
+ "n_e": 1199,
+ "gate_KT_oppfrac": 1.7633213591318827e-12,
+ "gate_G0_samefrac": 2.1711733107078358e-15,
+ "protected": [
+  {
+   "Om": 0.0,
+   "med_RS": 0.9999999999574614,
+   "p5_RS": 0.9997046556173205,
+   "frac_low": 0.025,
+   "med_R": 1.0
+  },
+  {
+   "Om": 0.1,
+   "med_RS": 1.0,
+   "p5_RS": 1.0,
+   "frac_low": 0.0,
+   "med_R": 0.9848718652517598
+  },
+  {
+   "Om": 0.2,
+   "med_RS": 1.0,
+   "p5_RS": 1.0,
+   "frac_low": 0.0,
+   "med_R": 0.9473636465499093
+  },
+  {
+   "Om": 0.3,
+   "med_RS": 1.0,
+   "p5_RS": 1.0,
+   "frac_low": 0.0,
+   "med_R": 0.8920640080204945
+  },
+  {
+   "Om": 0.35,
+   "med_RS": 1.0,
+   "p5_RS": 1.0,
+   "frac_low": 0.0,
+   "med_R": 0.8714968455407289
+  },
+  {
+   "Om": 0.5,
+   "med_RS": 1.0,
+   "p5_RS": 1.0,
+   "frac_low": 0.0,
+   "med_R": 0.725742543522194
+  }
+ ],
+ "broken": {
+  "Om": 0.3,
+  "rms_over_d": 1.0,
+  "med_RS": 0.2620247875102915,
+  "p5_RS": 0.06821891094888155
+ },
+ "verdict": "PROTECTION-EXACT-AND-FALSIFIABLE: the sigma_v T invariant R_S stays at 1 (median >= 0.999) at every speed while the naive R falls, and an odd-parity mistuning collapses it to 0.262 -- the correct eigenvector-level protection observable, measured and falsified in one experiment.",
+ "wall_s": 622.3
+}
