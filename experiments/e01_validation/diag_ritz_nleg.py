@@ -3,7 +3,7 @@ Nested even-Legendre bases -> lambda_k(NLEG) must be non-increasing.
 Monotone + slowly decaying increments = corner-singularity algebraic convergence
 (reference-limited); non-monotone = numerical corruption at high order."""
 import sys
-sys.path.insert(0, r"C:\Github\lopez-gonzalez-research-analysis\plates_fem\step1_validation")
+sys.path.insert(0, r"<STEP1_PROTOTYPE_DIR>")  # early cross-check vs the step-1 prototype (path neutralized)
 import numpy as np
 import ritz_reference as ritz
 

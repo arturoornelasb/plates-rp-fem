@@ -18,3 +18,9 @@ experiments/e19b_superellipse_icirc/*.err
 experiments/e20_mechanical_moe/plate_cache.npz
 experiments/e20_mechanical_moe/*.err
 experiments/e19c_superellipse_fine/*.npz
+
+# build and run logs (results of record live in RESULTS.md / results_*.json)
+*.log
+*.aux
+*.out
+*.err
