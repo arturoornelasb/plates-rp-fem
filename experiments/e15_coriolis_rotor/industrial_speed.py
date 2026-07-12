@@ -15,7 +15,7 @@ prestress validity (Omega/omega)^2 per window.
 Measurement: at FIXED physical speeds {3k, 12k, 30k, 100k RPM}, compute the
 windowed <r>(f) of the rotating spectrum (sliding windows of ~200 modes) and
 locate the crossover frequency f* where <r> passes the GOE/GUE midpoint.
-The user's hypothesis under test: rotation speed is the controlling knob and
+The hypothesis under test: rotation speed is the controlling knob and
 industrial speeds suffice (in high-frequency windows)."""
 import json
 import os
