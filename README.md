@@ -73,3 +73,8 @@ python experiments/e01_validation/step1_validate.py
 ## License
 
 Code: MIT. The paper and its Zenodo record are licensed separately (CC-BY-4.0).
+
+## Licensing
+
+- Code: MIT (see `LICENSE`).
+- Findings notes, results documents, manuscript sources, and figures: CC-BY-4.0, matching the paper (see `NOTES-LICENSE.md`).
