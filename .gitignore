@@ -24,3 +24,6 @@ experiments/e19c_superellipse_fine/*.npz
 *.aux
 *.out
 *.err
+
+# Zenodo deposit kitchen (local-only; the record of record is Zenodo itself)
+zenodo_companion/
