@@ -3,11 +3,11 @@
 Preregistered 2026-07-07 (before any run). Runner: `run_sweep.py` (to be
 frozen with this README once executed).
 
-## Source protocol (extracted from the paper, archived in the dossier repo)
+## Source protocol (extracted from the paper, archived in the source archive)
 
 Lopez-Gonzalez, "Discovery of avoided crossings in plate vibrations using
 COMSOL", COMSOL Conference 2024 Boston (PDF:
-`the source-dossier archive, 05_avoided_crossings_comsol/`): the
+`the source archive, 05_avoided_crossings_comsol/`): the
 sector result is a pooled ANGLE-SWEEP statistic -- ~70 out-of-plane modes
 per angle, the angle swept (range unpublished; the one concrete angle shown
 is 50 deg), modes classified S/A by the bisector mirror, 14,000 modes
